@@ -1,0 +1,10 @@
+{
+  "name": "simplicreate-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix simplicreate-angular run start",
+    "build": "npm --prefix simplicreate-angular run build",
+    "test": "npm --prefix simplicreate-angular run test"
+  }
+}
