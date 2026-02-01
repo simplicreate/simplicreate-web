@@ -9,13 +9,37 @@
   color-scheme: dark;
 }
 
-html, body {
+html,
+body {
   height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: #0b1220;
-  color: #e5e7eb;
+  background: #070b14;
+  color: rgba(229, 231, 235, 0.95);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle selection highlight */
+::selection {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Form polish */
+input,
+textarea {
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
 }

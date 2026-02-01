@@ -10,6 +10,7 @@ import { NgFor } from '@angular/common';
 export class SiteHeaderComponent {
   nav = [
     { label: 'Services', href: '#services' },
+    { label: 'Packages', href: '#packages' },
     { label: 'Work', href: '#work' },
     { label: 'Contact', href: '#contact' },
   ];

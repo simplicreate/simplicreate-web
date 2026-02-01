@@ -1,168 +1,196 @@
-<main class="min-h-screen">
+<main id="top" class="min-h-screen bg-[#070B14] text-white">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
     <!-- HERO -->
-<section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
-  <div class="max-w-2xl">
-    <p class="text-sm font-medium opacity-80">SimpliCreate</p>
+    <section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
+      <div class="max-w-2xl">
+        <p class="text-sm font-medium opacity-80">SimpliCreate</p>
 
-    <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-      Manage, secure, and optimise your digital systems.
-    </h1>
+        <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+          Your website and digital systems — managed properly.
+        </h1>
 
-    <p class="mt-5 text-base leading-7 opacity-80 sm:text-lg">
-      We keep your website, domains, email, and core tooling stable, secure, and running smoothly —
-      so you can focus on the business.
-    </p>
-
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a
-        href="#contact"
-        class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium shadow-sm"
-      >
-        Book a Quick Fix Sprint
-      </a>
-
-      <a
-        href="#services"
-        class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium opacity-80 hover:opacity-100"
-      >
-        See services
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- SERVICES -->
-<section id="services" class="py-16 sm:py-20 border-t border-black/10">
-  <app-section-title
-    title="Services"
-    subtitle="Practical, security-first digital care."
-  ></app-section-title>
-
-  <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    <div
-      *ngFor="let service of services"
-      class="rounded-2xl border border-black/10 p-6 shadow-sm"
-    >
-      <h3 class="text-base font-semibold">{{ service.title }}</h3>
-      <p class="mt-2 text-sm opacity-80">{{ service.description }}</p>
-
-      <ul class="mt-4 space-y-2 text-sm opacity-90">
-        <li *ngFor="let bullet of service.bullets" class="flex gap-2">
-          <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-black/60"></span>
-          <span>{{ bullet }}</span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-
-<!-- WORK -->
-<section id="work" class="py-16 sm:py-20 border-t border-black/10">
-  <app-section-title
-    title="Work"
-    subtitle="A few examples of what we deliver."
-  ></app-section-title>
-
-  <div class="mt-10 grid gap-6 sm:grid-cols-2">
-    <div
-      *ngFor="let project of projects"
-      class="rounded-2xl border border-black/10 p-6 shadow-sm"
-    >
-      <h3 class="text-base font-semibold">{{ project.name }}</h3>
-<p class="mt-2 text-sm opacity-80">{{ project.outcome }}</p>
-
-
-      <div class="mt-4 flex flex-wrap gap-2">
-        <span
-          *ngFor="let tag of project.tags"
-          class="rounded-full border border-black/10 px-3 py-1 text-xs opacity-80"
-        >
-          {{ tag }}
-        </span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- CONTACT -->
-<section id="contact" class="py-16 sm:py-20 border-t border-black/10">
-  <app-section-title
-    title="Contact"
-    subtitle="Tell us what you need — we’ll reply quickly."
-  ></app-section-title>
-
-  <div class="mt-10 grid gap-8 lg:grid-cols-2">
-    <div class="rounded-2xl border border-black/10 p-6 shadow-sm">
-      <h3 class="text-base font-semibold">Quick message</h3>
-
-      <form class="mt-6 space-y-4">
-        <div>
-          <label class="text-sm font-medium">Name</label>
-          <input
-            type="text"
-            class="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 text-sm"
-            placeholder="Your name"
-          />
-        </div>
-
-        <div>
-          <label class="text-sm font-medium">Email</label>
-          <input
-            type="email"
-            class="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 text-sm"
-            placeholder="you@company.com"
-          />
-        </div>
-
-        <div>
-          <label class="text-sm font-medium">Message</label>
-          <textarea
-            rows="5"
-            class="mt-2 w-full rounded-xl border border-black/10 px-4 py-3 text-sm"
-            placeholder="What do you want help with?"
-          ></textarea>
-        </div>
-
-        <button
-          type="button"
-          class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium shadow-sm"
-        >
-          Send message
-        </button>
-
-        <p class="text-xs opacity-70">
-          (We’ll wire this to email next — this is UI for now.)
+        <p class="mt-5 text-base leading-7 opacity-80 sm:text-lg">
+          We handle setup, security, fixes, and ongoing care for your website, domains, and email —
+          so everything stays stable, secure, and maintained.
         </p>
-      </form>
-    </div>
 
-    <div class="rounded-2xl border border-black/10 p-6 shadow-sm">
-      <h3 class="text-base font-semibold">What happens next?</h3>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#contact"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+            Request a Quick Fix Sprint
+          </a>
 
-      <ol class="mt-4 space-y-3 text-sm opacity-90">
-        <li class="flex gap-3">
-          <span class="mt-0.5 font-semibold">1.</span>
-          <span>We reply with 2–3 quick questions to confirm scope.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="mt-0.5 font-semibold">2.</span>
-          <span>You get a clear plan + fixed price for the sprint.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="mt-0.5 font-semibold">3.</span>
-          <span>We deliver improvements + handover within days.</span>
-        </li>
-      </ol>
-    </div>
-  </div>
-</section>
+          <a href="#packages"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+            View packages
+          </a>
 
+          <a href="#services"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+            See services
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Services" subtitle="Practical, security-first digital care."></app-section-title>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div *ngFor="let service of services" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <h3 class="text-base font-semibold">{{ service.title }}</h3>
+          <p class="mt-2 text-sm text-white/80">{{ service.description }}</p>
+
+          <ul class="mt-4 space-y-2 text-sm text-white/85">
+            <li *ngFor="let bullet of service.bullets" class="flex gap-2">
+              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-white/70"></span>
+              <span>{{ bullet }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PACKAGES -->
+    <section id="packages" class="py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Packages"
+        subtitle="Fixed setup + monthly care. Choose the level of support you need."></app-section-title>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-3">
+        <div *ngFor="let tier of packages" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 class="text-lg font-semibold">{{ tier.name }}</h3>
+              <p class="mt-2 text-sm text-white/70">{{ tier.bestFor }}</p>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="text-sm text-white/70">Setup</span>
+              <span class="text-base font-semibold">{{ tier.setupPrice }}</span>
+            </div>
+            <div class="mt-2 flex items-baseline justify-between gap-3">
+              <span class="text-sm text-white/70">Care retainer</span>
+              <span class="text-base font-semibold">{{ tier.retainerPrice }}</span>
+            </div>
+          </div>
+
+          <ul class="mt-6 space-y-2 text-sm text-white/85">
+            <li *ngFor="let item of tier.includes" class="flex gap-2">
+              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-white/70"></span>
+              <span>{{ item }}</span>
+            </li>
+          </ul>
+
+          <div class="mt-8">
+            <a href="#contact"
+              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+              Ask about {{ tier.name }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-8 text-sm text-white/60">
+        Care retainers cover ongoing maintenance, monitoring, small updates, and priority fixes.
+        One-off work can be quoted separately when needed.
+      </p>
+    </section>
+
+
+    <!-- WORK -->
+    <section id="work" class="py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Work" subtitle="A few examples of what we deliver."></app-section-title>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <h3 class="text-base font-semibold">{{ project.name }}</h3>
+          <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span *ngFor="let tag of project.tags"
+              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Contact"
+        subtitle="Tell us what you need and we’ll get back to you."></app-section-title>
+
+      <div class="mt-10 grid gap-8 lg:grid-cols-2">
+        <!-- LEFT: Contact form -->
+        <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <h3 class="text-base font-semibold">Contact us</h3>
+          <p class="mt-2 text-sm text-white/70">
+            No phone or email listed — send a message here and we’ll respond.
+          </p>
+
+          <form class="mt-6 space-y-4">
+            <div>
+              <label class="text-sm font-medium">Name</label>
+              <input type="text"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
+                placeholder="Your name" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium">Email</label>
+              <input type="email"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
+                placeholder="you@company.com" />
+            </div>
+
+            <div>
+              <label class="text-sm font-medium">Message</label>
+              <textarea rows="5"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
+                placeholder="What do you want help with?"></textarea>
+            </div>
+
+            <button type="button"
+              class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+              Send message
+            </button>
+
+            <p class="text-xs text-white/60">
+              (We’ll wire this to email next — this is UI for now.)
+            </p>
+          </form>
+        </div>
+
+        <!-- RIGHT: Location + steps -->
+        <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <h3 class="text-base font-semibold">Based in</h3>
+          <p class="mt-2 text-sm text-white/80">Cape Town, South Africa</p>
+
+          <h3 class="mt-8 text-base font-semibold">What happens next?</h3>
+          <ol class="mt-4 space-y-3 text-sm text-white/85">
+            <li class="flex gap-3">
+              <span class="mt-0.5 font-semibold">1.</span>
+              <span>We review your message and confirm what you need help with.</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 font-semibold">2.</span>
+              <span>You get a clear plan and fixed price (no surprises).</span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 font-semibold">3.</span>
+              <span>We deliver improvements fast — and can stay on for ongoing care.</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+    </section>
 
   </div>
 </main>
-
-
