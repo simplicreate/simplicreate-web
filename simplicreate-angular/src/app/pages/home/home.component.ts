@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { SERVICES } from '../../data/services.data';
 import { PROJECTS } from '../../data/projects.data';
 import { PACKAGES } from '../../data/packages.data';
@@ -9,7 +9,7 @@ import { SectionTitleComponent } from '../../shared/components/section-title.com
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, SectionTitleComponent],
+  imports: [NgFor, NgIf, SectionTitleComponent],
   templateUrl: './home.component.html',
 })
 export class HomeComponent {

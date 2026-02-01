@@ -12,6 +12,7 @@ export class SiteHeaderComponent {
     { label: 'Services', href: '#services' },
     { label: 'Packages', href: '#packages' },
     { label: 'Work', href: '#work' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contact' },
   ];
 }

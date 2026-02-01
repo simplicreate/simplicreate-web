@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "auto-commit": "node ../scripts/auto-commit.js",
+    "auto-commit:watch": "node ../scripts/auto-commit-watch.js"
   },
   "prettier": {
     "printWidth": 100,
