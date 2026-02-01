@@ -1,0 +1,33 @@
+<header class="sticky top-0 z-50 border-b border-white/10 bg-[#0b1220]/80 backdrop-blur">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+    <!-- Brand -->
+    <a href="#" class="flex items-center gap-3">
+      <div class="h-9 w-9 rounded-xl bg-white/5 ring-1 ring-white/10 grid place-items-center">
+        <span class="font-bold text-gray-100">SC</span>
+      </div>
+      <div class="leading-tight">
+        <div class="text-sm font-semibold">SimpliCreate</div>
+        <div class="text-xs text-gray-400">Manage • Secure • Optimise</div>
+      </div>
+    </a>
+
+    <!-- Nav -->
+    <nav class="hidden gap-6 text-sm text-gray-300 md:flex">
+      <a
+        *ngFor="let item of nav"
+        [href]="item.href"
+        class="hover:text-white transition"
+      >
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <!-- CTA -->
+    <a
+      href="#contact"
+      class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#0b1220] hover:bg-gray-100 transition"
+    >
+      Get a Quote
+    </a>
+  </div>
+</header>

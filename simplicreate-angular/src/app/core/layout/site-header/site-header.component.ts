@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+import { NgFor } from '@angular/common';
+
+@Component({
+  selector: 'app-site-header',
+  standalone: true,
+  imports: [NgFor],
+  templateUrl: './site-header.component.html',
+})
+export class SiteHeaderComponent {
+  nav = [
+    { label: 'Services', href: '#services' },
+    { label: 'Work', href: '#work' },
+    { label: 'Contact', href: '#contact' },
+  ];
+}
