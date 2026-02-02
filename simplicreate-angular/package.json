@@ -11,7 +11,7 @@
     "lint": "eslint src/**/*.ts",
     "auto-commit": "node ../scripts/auto-commit.js",
     "auto-commit:watch": "node ../scripts/auto-commit-watch.js",
-    "prepare": "husky"
+    "prepare": "node -e \"process.exit(process.env.CI ? 0 : 1)\" || husky"
   },
   "prettier": {
     "printWidth": 100,
