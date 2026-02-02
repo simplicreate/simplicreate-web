@@ -10,4 +10,8 @@ import { SiteFooterComponent } from './core/layout/site-footer/site-footer.compo
   imports: [RouterOutlet, SiteHeaderComponent, SiteFooterComponent],
   templateUrl: './app.component.html',
 })
+/**
+ * Main application component that serves as the root component.
+ * It includes the router outlet and layout components like header and footer.
+ */
 export class AppComponent {}

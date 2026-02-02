@@ -1,14 +1,17 @@
 {
   "name": "simplicreate-angular",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npx ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "lint": "eslint src/**/*.ts",
     "auto-commit": "node ../scripts/auto-commit.js",
-    "auto-commit:watch": "node ../scripts/auto-commit-watch.js"
+    "auto-commit:watch": "node ../scripts/auto-commit-watch.js",
+    "prepare": "husky"
   },
   "prettier": {
     "printWidth": 100,
@@ -38,7 +41,15 @@
     "@angular/build": "^21.1.2",
     "@angular/cli": "^21.1.2",
     "@angular/compiler-cli": "^21.1.0",
+    "@eslint/js": "^9.39.2",
     "@tailwindcss/postcss": "^4.1.12",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "documentation": "^14.0.3",
+    "eslint": "^9.39.2",
+    "eslint-plugin-jsdoc": "^62.5.0",
+    "husky": "^9.1.7",
+    "jsdoc": "^4.0.5",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.3",
     "stylelint": "^17.1.0",

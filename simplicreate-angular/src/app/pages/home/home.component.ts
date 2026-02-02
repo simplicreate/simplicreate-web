@@ -12,8 +12,14 @@ import { SectionTitleComponent } from '../../shared/components/section-title.com
   imports: [NgFor, NgIf, SectionTitleComponent],
   templateUrl: './home.component.html',
 })
+/**
+ * Home page component that displays services, projects, and packages.
+ */
 export class HomeComponent {
+  /** List of services to display */
   services = SERVICES;
+  /** List of projects to display */
   projects = PROJECTS;
+  /** List of packages to display */
   packages = PACKAGES;
 }

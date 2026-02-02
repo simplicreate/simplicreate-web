@@ -7,7 +7,12 @@ import { NgFor } from '@angular/common';
   imports: [NgFor],
   templateUrl: './site-header.component.html',
 })
+/**
+ * Site header component that displays the navigation menu.
+ * Contains links to different sections of the site.
+ */
 export class SiteHeaderComponent {
+  /** Navigation items for the header menu */
   nav = [
     { label: 'Services', href: '#services' },
     { label: 'Packages', href: '#packages' },

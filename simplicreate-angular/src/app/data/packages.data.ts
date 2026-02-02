@@ -1,3 +1,6 @@
+/**
+ * Type definition for a package tier.
+ */
 export type PackageTier = {
   name: string;
   setupPrice: string;
@@ -7,6 +10,9 @@ export type PackageTier = {
   highlight?: boolean;
 };
 
+/**
+ * Array of service packages offered, shown on the home page.
+ */
 export const PACKAGES: PackageTier[] = [
   {
     name: 'Starter',
