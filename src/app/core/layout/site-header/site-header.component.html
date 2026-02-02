@@ -1,5 +1,7 @@
-<header class="sticky top-0 z-50 border-b border-white/10 bg-[#0b1220]/80 backdrop-blur">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-[#070B14]/80 backdrop-blur border-b border-white/10"
+>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
     <!-- Brand -->
     <a href="#top" class="flex items-center gap-3">
       <div class="h-9 w-9 rounded-xl bg-white/5 ring-1 ring-white/10 grid place-items-center">
@@ -13,11 +15,7 @@
 
     <!-- Nav -->
     <nav class="hidden gap-6 text-sm text-gray-300 md:flex">
-      <a
-        *ngFor="let item of nav"
-        [href]="item.href"
-        class="hover:text-white transition"
-      >
+      <a *ngFor="let item of nav" [href]="item.href" class="hover:text-white transition">
         {{ item.label }}
       </a>
     </nav>

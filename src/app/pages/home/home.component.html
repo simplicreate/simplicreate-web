@@ -1,6 +1,5 @@
-<main id="top" class="min-h-screen bg-[#070B14] text-white">
+<main id="top" class="min-h-screen bg-[#070B14] text-white pt-16">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-
     <!-- HERO -->
     <section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div class="max-w-2xl">
@@ -16,31 +15,42 @@
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#contact"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+          <a
+            href="#contact"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
+          >
             Request a Quick Fix Sprint
           </a>
 
-          <a href="#packages"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+          <a
+            href="#packages"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
+          >
             View packages
           </a>
 
-          <a href="#services"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+          <a
+            href="#services"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
+          >
             See services
           </a>
         </div>
-
       </div>
     </section>
 
     <!-- SERVICES -->
-    <section id="services" class="py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Services" subtitle="Practical, security-first digital care."></app-section-title>
+    <section id="services" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="Services"
+        subtitle="Practical, security-first digital care."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div *ngFor="let service of services" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <div
+          *ngFor="let service of services"
+          class="rounded-2xl border border-white/10 p-6 bg-white/5"
+        >
           <h3 class="text-base font-semibold">{{ service.title }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ service.description }}</p>
 
@@ -55,33 +65,33 @@
     </section>
 
     <!-- PACKAGES -->
-    <section id="packages" class="py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Packages"
-        subtitle="Fixed setup + monthly care. Choose the level of support you need."></app-section-title>
+    <section id="packages" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="Packages"
+        subtitle="Fixed setup + monthly care. Choose the level of support you need."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
         <div
-  *ngFor="let tier of packages"
-  class="rounded-2xl border border-white/10 p-6 bg-white/5 transition"
-  [class.border-white/30]="tier.highlight"
-  [class.bg-white/10]="tier.highlight"
-  [class.shadow-lg]="tier.highlight"
->
-
+          *ngFor="let tier of packages"
+          class="rounded-2xl border border-white/10 p-6 bg-white/5 transition"
+          [class.border-white/30]="tier.highlight"
+          [class.bg-white/10]="tier.highlight"
+          [class.shadow-lg]="tier.highlight"
+        >
           <div class="flex items-start justify-between gap-4">
-  <div>
-    <h3 class="text-lg font-semibold">{{ tier.name }}</h3>
-    <p class="mt-2 text-sm text-white/70">{{ tier.bestFor }}</p>
-  </div>
+            <div>
+              <h3 class="text-lg font-semibold">{{ tier.name }}</h3>
+              <p class="mt-2 text-sm text-white/70">{{ tier.bestFor }}</p>
+            </div>
 
-  <span
-    *ngIf="tier.highlight"
-    class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
-  >
-    Most popular
-  </span>
-</div>
-
+            <span
+              *ngIf="tier.highlight"
+              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
+            >
+              Most popular
+            </span>
+          </div>
 
           <div class="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
             <div class="flex items-baseline justify-between gap-3">
@@ -102,8 +112,10 @@
           </ul>
 
           <div class="mt-8">
-            <a href="#contact"
-              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+            <a
+              href="#contact"
+              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
+            >
               Ask about {{ tier.name }}
             </a>
           </div>
@@ -116,19 +128,26 @@
       </p>
     </section>
 
-
     <!-- WORK -->
-    <section id="work" class="py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Work" subtitle="A few examples of what we deliver."></app-section-title>
+    <section id="work" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="Work"
+        subtitle="A few examples of what we deliver."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2">
-        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <div
+          *ngFor="let project of projects"
+          class="rounded-2xl border border-white/10 p-6 bg-white/5"
+        >
           <h3 class="text-base font-semibold">{{ project.name }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span *ngFor="let tag of project.tags"
-              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
+            <span
+              *ngFor="let tag of project.tags"
+              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5"
+            >
               {{ tag }}
             </span>
           </div>
@@ -137,86 +156,93 @@
     </section>
 
     <!-- FAQ -->
-<section id="faq" class="py-16 sm:py-20 border-t border-white/10">
-  <app-section-title
-    title="FAQ"
-    subtitle="Quick answers to the most common questions."
-  ></app-section-title>
+    <section id="FAQ" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="FAQ"
+        subtitle="Quick answers to the most common questions."
+      ></app-section-title>
 
-  <div class="mt-10 space-y-3">
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">What exactly do you manage?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        We manage the practical day-to-day of your website and core digital setup — domains, SSL, hosting/deployments,
-        basic security hardening, updates, monitoring, and fixes. If something breaks, we own the problem and resolve it.
-      </p>
-    </details>
+      <div class="mt-10 space-y-3">
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">What exactly do you manage?</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            We manage the practical day-to-day of your website and core digital setup — domains,
+            SSL, hosting/deployments, basic security hardening, updates, monitoring, and fixes. If
+            something breaks, we own the problem and resolve it.
+          </p>
+        </details>
 
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">Do you offer “hosting only”?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        No — we don’t sell hosting as a standalone product. We provide setup plus ongoing care, so the whole system stays
-        stable, secure, and maintained.
-      </p>
-    </details>
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">Do you offer “hosting only”?</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            No — we don’t sell hosting as a standalone product. We provide setup plus ongoing care,
+            so the whole system stays stable, secure, and maintained.
+          </p>
+        </details>
 
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">What’s the difference between a Sprint and a Package?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        A Quick Fix Sprint is a short, fixed-scope engagement to solve a specific problem or ship an improvement fast.
-        Packages include setup plus a monthly retainer for ongoing maintenance, monitoring, and priority fixes.
-      </p>
-    </details>
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold"
+              >What’s the difference between a Sprint and a Package?</span
+            >
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            A Quick Fix Sprint is a short, fixed-scope engagement to solve a specific problem or
+            ship an improvement fast. Packages include setup plus a monthly retainer for ongoing
+            maintenance, monitoring, and priority fixes.
+          </p>
+        </details>
 
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">How fast can you start?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        Usually within a few days. If it’s urgent, we’ll tell you immediately whether we can take it on and what the fastest
-        path looks like.
-      </p>
-    </details>
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">How fast can you start?</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            Usually within a few days. If it’s urgent, we’ll tell you immediately whether we can
+            take it on and what the fastest path looks like.
+          </p>
+        </details>
 
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">Can you work with what I already have?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        Yes. We can stabilize existing sites and tooling, fix what’s broken, and then improve things progressively.
-        We’ll recommend the smallest change that delivers the most reliability.
-      </p>
-    </details>
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">Can you work with what I already have?</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            Yes. We can stabilize existing sites and tooling, fix what’s broken, and then improve
+            things progressively. We’ll recommend the smallest change that delivers the most
+            reliability.
+          </p>
+        </details>
 
-    <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-        <span class="text-sm font-semibold">What do you need from me to begin?</span>
-        <span class="text-white/60 group-open:rotate-45 transition">+</span>
-      </summary>
-      <p class="mt-3 text-sm text-white/70">
-        A short description of the goal and access to the relevant accounts (domain/DNS, hosting, repository, analytics).
-        If you’re not sure what you have, we’ll help you map it out.
-      </p>
-    </details>
-  </div>
-</section>
-
+        <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">What do you need from me to begin?</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
+          <p class="mt-3 text-sm text-white/70">
+            A short description of the goal and access to the relevant accounts (domain/DNS,
+            hosting, repository, analytics). If you’re not sure what you have, we’ll help you map it
+            out.
+          </p>
+        </details>
+      </div>
+    </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Contact"
-        subtitle="Tell us what you need and we’ll get back to you."></app-section-title>
+    <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="Contact"
+        subtitle="Tell us what you need and we’ll get back to you."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-8 lg:grid-cols-2">
         <!-- LEFT: Contact form -->
@@ -229,33 +255,39 @@
           <form class="mt-6 space-y-4">
             <div>
               <label class="text-sm font-medium">Name</label>
-              <input type="text"
+              <input
+                type="text"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="Your name" />
+                placeholder="Your name"
+              />
             </div>
 
             <div>
               <label class="text-sm font-medium">Email</label>
-              <input type="email"
+              <input
+                type="email"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="you@company.com" />
+                placeholder="you@company.com"
+              />
             </div>
 
             <div>
               <label class="text-sm font-medium">Message</label>
-              <textarea rows="5"
+              <textarea
+                rows="5"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="What do you want help with?"></textarea>
+                placeholder="What do you want help with?"
+              ></textarea>
             </div>
 
-            <button type="button"
-              class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
+            >
               Request a callback
             </button>
 
-            <p class="text-xs text-white/60">
-              
-            </p>
+            <p class="text-xs text-white/60"></p>
           </form>
         </div>
 
@@ -281,8 +313,6 @@
           </ol>
         </div>
       </div>
-
     </section>
-
   </div>
 </main>
