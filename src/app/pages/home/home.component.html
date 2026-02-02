@@ -15,24 +15,18 @@
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a
-            href="#contact"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
-          >
+          <a href="#contact"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
             Request a Quick Fix Sprint
           </a>
 
-          <a
-            href="#packages"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
-          >
+          <a href="#packages"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
             View packages
           </a>
 
-          <a
-            href="#services"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
-          >
+          <a href="#services"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
             See services
           </a>
         </div>
@@ -41,16 +35,10 @@
 
     <!-- SERVICES -->
     <section id="services" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="Services"
-        subtitle="Practical, security-first digital care."
-      ></app-section-title>
+      <app-section-title title="Services" subtitle="Practical, security-first digital care."></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div
-          *ngFor="let service of services"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5"
-        >
+        <div *ngFor="let service of services" class="rounded-2xl border border-white/10 p-6 bg-white/5">
           <h3 class="text-base font-semibold">{{ service.title }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ service.description }}</p>
 
@@ -66,29 +54,21 @@
 
     <!-- PACKAGES -->
     <section id="packages" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="Packages"
-        subtitle="Fixed setup + monthly care. Choose the level of support you need."
-      ></app-section-title>
+      <app-section-title title="Packages"
+        subtitle="Fixed setup + monthly care. Choose the level of support you need."></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
-        <div
-          *ngFor="let tier of packages"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5 transition"
-          [class.border-white/30]="tier.highlight"
-          [class.bg-white/10]="tier.highlight"
-          [class.shadow-lg]="tier.highlight"
-        >
+        <div *ngFor="let tier of packages" class="rounded-2xl border border-white/10 p-6 bg-white/5 transition"
+          [class.border-white/30]="tier.highlight" [class.bg-white/10]="tier.highlight"
+          [class.shadow-lg]="tier.highlight">
           <div class="flex items-start justify-between gap-4">
             <div>
               <h3 class="text-lg font-semibold">{{ tier.name }}</h3>
               <p class="mt-2 text-sm text-white/70">{{ tier.bestFor }}</p>
             </div>
 
-            <span
-              *ngIf="tier.highlight"
-              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
-            >
+            <span *ngIf="tier.highlight"
+              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90">
               Most popular
             </span>
           </div>
@@ -112,10 +92,8 @@
           </ul>
 
           <div class="mt-8">
-            <a
-              href="#contact"
-              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
-            >
+            <a href="#contact"
+              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
               Ask about {{ tier.name }}
             </a>
           </div>
@@ -130,24 +108,16 @@
 
     <!-- WORK -->
     <section id="work" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="Work"
-        subtitle="A few examples of what we deliver."
-      ></app-section-title>
+      <app-section-title title="Work" subtitle="A few examples of what we deliver."></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2">
-        <div
-          *ngFor="let project of projects"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5"
-        >
+        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
           <h3 class="text-base font-semibold">{{ project.name }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span
-              *ngFor="let tag of project.tags"
-              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5"
-            >
+            <span *ngFor="let tag of project.tags"
+              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
               {{ tag }}
             </span>
           </div>
@@ -156,11 +126,8 @@
     </section>
 
     <!-- FAQ -->
-    <section id="FAQ" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="FAQ"
-        subtitle="Quick answers to the most common questions."
-      ></app-section-title>
+    <section id="faq" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="FAQ" subtitle="Quick answers to the most common questions."></app-section-title>
 
       <div class="mt-10 space-y-3">
         <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -188,9 +155,7 @@
 
         <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-            <span class="text-sm font-semibold"
-              >What’s the difference between a Sprint and a Package?</span
-            >
+            <span class="text-sm font-semibold">What’s the difference between a Sprint and a Package?</span>
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
           <p class="mt-3 text-sm text-white/70">
@@ -239,10 +204,8 @@
 
     <!-- CONTACT -->
     <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="Contact"
-        subtitle="Tell us what you need and we’ll get back to you."
-      ></app-section-title>
+      <app-section-title title="Contact"
+        subtitle="Tell us what you need and we’ll get back to you."></app-section-title>
 
       <div class="mt-10 grid gap-8 lg:grid-cols-2">
         <!-- LEFT: Contact form -->
@@ -251,44 +214,53 @@
           <p class="mt-2 text-sm text-white/70">
             No phone or email listed — send a message here and we’ll respond.
           </p>
-
-          <form class="mt-6 space-y-4">
+          <form class="mt-6 space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
             <div>
               <label class="text-sm font-medium">Name</label>
-              <input
-                type="text"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="Your name"
-              />
+              <input type="text" formControlName="name"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
+                placeholder="Your name" />
+              <p *ngIf="name?.touched && name?.invalid" class="mt-2 text-xs text-red-300">
+                Please enter your name (min 2 characters).
+              </p>
             </div>
 
             <div>
               <label class="text-sm font-medium">Email</label>
-              <input
-                type="email"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="you@company.com"
-              />
+              <input type="email" formControlName="email"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
+                placeholder="you@company.com" />
+              <p *ngIf="email?.touched && email?.invalid" class="mt-2 text-xs text-red-300">
+                Please enter a valid email address.
+              </p>
             </div>
 
             <div>
               <label class="text-sm font-medium">Message</label>
-              <textarea
-                rows="5"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40"
-                placeholder="What do you want help with?"
-              ></textarea>
+              <textarea rows="5" formControlName="message"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
+                placeholder="What do you want help with?"></textarea>
+              <p *ngIf="message?.touched && message?.invalid" class="mt-2 text-xs text-red-300">
+                Please enter a message (min 10 characters).
+              </p>
             </div>
 
-            <button
-              type="button"
-              class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
-            >
-              Request a callback
+            <button type="submit" [disabled]="submitting" class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium
+           text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30
+           disabled:opacity-60 disabled:cursor-not-allowed">
+              <span *ngIf="!submitting">Send message</span>
+              <span *ngIf="submitting">Sending…</span>
             </button>
 
-            <p class="text-xs text-white/60"></p>
+            <p *ngIf="submitSuccess" class="text-sm text-emerald-300">
+              Thanks — your message was sent. We’ll get back to you shortly.
+            </p>
+
+            <p *ngIf="submitError" class="text-sm text-red-300">
+              {{ submitError }}
+            </p>
           </form>
+
         </div>
 
         <!-- RIGHT: Location + steps -->
