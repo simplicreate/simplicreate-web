@@ -1,4 +1,4 @@
-<main id="top" class="min-h-screen bg-[#070B14] text-white pt-16">
+﻿<main id="top" class="min-h-screen bg-[#070B14] text-white pt-16">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
     <!-- HERO -->
     <section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
@@ -6,11 +6,11 @@
         <p class="text-sm font-medium opacity-80">SimpliCreate</p>
 
         <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-          Your website and digital systems — managed properly.
+          Your website and digital systems &mdash; managed properly.
         </h1>
 
         <p class="mt-5 text-base leading-7 opacity-80 sm:text-lg">
-          We handle setup, security, fixes, and ongoing care for your website, domains, and email —
+          We handle setup, security, fixes, and ongoing care for your website, domains, and email &mdash;
           so everything stays stable, secure, and maintained.
         </p>
 
@@ -169,7 +169,7 @@
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
           <p class="mt-3 text-sm text-white/70">
-            We manage the practical day-to-day of your website and core digital setup — domains,
+            We manage the practical day-to-day of your website and core digital setup &mdash; domains,
             SSL, hosting/deployments, basic security hardening, updates, monitoring, and fixes. If
             something breaks, we own the problem and resolve it.
           </p>
@@ -177,11 +177,11 @@
 
         <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-            <span class="text-sm font-semibold">Do you offer “hosting only”?</span>
+            <span class="text-sm font-semibold">Do you offer &ldquo;hosting only&rdquo;?</span>
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
           <p class="mt-3 text-sm text-white/70">
-            No — we don’t sell hosting as a standalone product. We provide setup plus ongoing care,
+            No &mdash; we don&rsquo;t sell hosting as a standalone product. We provide setup plus ongoing care,
             so the whole system stays stable, secure, and maintained.
           </p>
         </details>
@@ -189,7 +189,7 @@
         <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
             <span class="text-sm font-semibold"
-              >What’s the difference between a Sprint and a Package?</span
+              >What&rsquo;s the difference between a Sprint and a Package?</span
             >
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
@@ -206,7 +206,7 @@
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
           <p class="mt-3 text-sm text-white/70">
-            Usually within a few days. If it’s urgent, we’ll tell you immediately whether we can
+            Usually within a few days. If it&rsquo;s urgent, we&rsquo;ll tell you immediately whether we can
             take it on and what the fastest path looks like.
           </p>
         </details>
@@ -217,8 +217,8 @@
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
           <p class="mt-3 text-sm text-white/70">
-            Yes. We can stabilize existing sites and tooling, fix what’s broken, and then improve
-            things progressively. We’ll recommend the smallest change that delivers the most
+            Yes. We can stabilize existing sites and tooling, fix what&rsquo;s broken, and then improve
+            things progressively. We&rsquo;ll recommend the smallest change that delivers the most
             reliability.
           </p>
         </details>
@@ -230,7 +230,7 @@
           </summary>
           <p class="mt-3 text-sm text-white/70">
             A short description of the goal and access to the relevant accounts (domain/DNS,
-            hosting, repository, analytics). If you’re not sure what you have, we’ll help you map it
+            hosting, repository, analytics). If you&rsquo;re not sure what you have, we&rsquo;ll help you map it
             out.
           </p>
         </details>
@@ -241,7 +241,7 @@
     <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
       <app-section-title
         title="Contact"
-        subtitle="Tell us what you need and we’ll get back to you."
+        subtitle="Tell us what you need and we&rsquo;ll get back to you."
       ></app-section-title>
 
       <div class="mt-10 grid gap-8 lg:grid-cols-2">
@@ -249,7 +249,7 @@
         <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
           <h3 class="text-base font-semibold">Contact us</h3>
           <p class="mt-2 text-sm text-white/70">
-            No phone or email listed — send a message here and we’ll respond.
+            No phone or email listed &mdash; send a message here and we&rsquo;ll respond.
           </p>
 
           <form class="mt-6 space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
@@ -299,14 +299,14 @@
                 class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <span *ngIf="!submitting">Send message</span>
-                <span *ngIf="submitting">Sending…</span>
+                <span *ngIf="submitting">Sending&hellip;</span>
               </button>
 
               <p class="text-xs text-white/50">We usually reply within 1 business day.</p>
             </div>
 
             <p *ngIf="submitSuccess" class="text-sm text-emerald-300">
-              Thanks — your message was sent. We’ll get back to you shortly.
+              Thanks &mdash; your message was sent. We&rsquo;ll get back to you shortly.
             </p>
 
             <p *ngIf="submitError" class="text-sm text-red-300">
@@ -332,7 +332,7 @@
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
               <span
-                ><span class="font-medium text-white">What’s broken</span> (or what you want
+                ><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want
                 improved)</span
               >
             </li>
@@ -358,3 +358,4 @@
     </section>
   </div>
 </main>
+
