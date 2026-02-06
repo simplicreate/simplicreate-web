@@ -1,9 +1,9 @@
 export const environment = {
   production: false,
   sanity: {
-    projectId: 'YOUR_PROJECT_ID',
+    projectId: '',
     dataset: 'production',
-    apiVersion: '2026-02-01',
+    apiVersion: '2025-01-01',
     useCdn: true,
   },
-}
+};
