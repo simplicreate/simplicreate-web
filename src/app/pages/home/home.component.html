@@ -1,161 +1,166 @@
 ﻿<main id="top" class="min-h-screen bg-[#070B14] text-white pt-16">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-
-      <!-- DEBUG: quick data check -->
-      <div
-        style="padding:8px;background:#111;color:#0f0;font-family:monospace">
-        services: {{ services?.length || 0 }} |
-        projects: {{ projects?.length || 0 }} |
-        faq: {{ faq?.length || 0 }} |
-        contact: {{ contactSettings ? 'yes' : 'no' }}
-        services: {{ services?.length || 0 }} |
-        projects: {{ projects?.length || 0 }} |
-        faq: {{ faq?.length || 0 }} |
-        contact: {{ contactSettings ? 'yes' : 'no' }}
-</div>
     <!-- HERO -->
     <section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
       <div class="max-w-2xl">
-        <p class="text-sm font-medium opacity-80">SimpliCreate</p>
+        <p class="text-sm font-medium opacity-80">
+          {{ siteSettings?.brandLabel || fallbackHero.brandLabel }}
+        </p>
 
         <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-          Your website and digital systems &mdash; managed properly.
+          {{ siteSettings?.heroHeadline || fallbackHero.heroHeadline }}
         </h1>
 
         <p class="mt-5 text-base leading-7 opacity-80 sm:text-lg">
-          We handle setup, security, fixes, and ongoing care for your website, domains, and email &mdash;
-          so everything stays stable, secure, and maintained.
+          {{ siteSettings?.heroSubheadline || fallbackHero.heroSubheadline }}
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
           <a
-            href="#contact"
+            [href]="siteSettings?.ctaPrimaryHref || fallbackHero.ctaPrimaryHref"
             class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
           >
-            Request a Quick Fix Sprint
+            {{ siteSettings?.ctaPrimaryText || fallbackHero.ctaPrimaryText }}
           </a>
 
           <a
-            href="#packages"
+            [href]="siteSettings?.ctaSecondaryHref || fallbackHero.ctaSecondaryHref"
             class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
           >
-            View packages
-          </a>
-
-          <a
-            href="#services"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
-          >
-            See services
+            {{ siteSettings?.ctaSecondaryText || fallbackHero.ctaSecondaryText }}
           </a>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+    <!-- ENGAGEMENTS -->
+    <section id="engagements" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
       <app-section-title
-        title="Services"
-        subtitle="Practical, security-first digital care."
+        title="Engagements"
+        subtitle="Two clean ways to deploy reliability: a once-off stabilisation, or ongoing operations."
       ></app-section-title>
 
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div
-          *ngFor="let service of services"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5"
-        >
-          <h3 class="text-base font-semibold">{{ service.title }}</h3>
-          <p class="mt-2 text-sm text-white/80">{{ service.description }}</p>
-
-          <ul class="mt-4 space-y-2 text-sm text-white/85">
-            <li *ngFor="let bullet of service.bullets" class="flex gap-2">
-              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-white/70"></span>
-              <span>{{ bullet }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- PACKAGES -->
-    <section id="packages" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title
-        title="Packages"
-        subtitle="Fixed setup + monthly care. Choose the level of support you need."
-      ></app-section-title>
-
-      <div class="mt-10 grid gap-6 lg:grid-cols-3">
-        <div
-          *ngFor="let tier of packages"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5 transition"
-          [class.border-white/30]="tier.highlight"
-          [class.bg-white/10]="tier.highlight"
-          [class.shadow-lg]="tier.highlight"
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <button
+          type="button"
+          *ngFor="let e of engagements"
+          (mouseenter)="setActive(e.id)"
+          (focus)="setActive(e.id)"
+          (click)="setActive(e.id)"
+          class="text-left rounded-2xl border border-white/10 p-6 bg-white/5 transition
+                 hover:-translate-y-1 hover:border-[#11D6C3]/60 hover:bg-white/10 hover:shadow-lg hover:shadow-[#11D6C3]/20
+                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#11D6C3]/40"
+          [class.-translate-y-1]="activeEngagementId === e.id"
+          [class.border-[#11D6C3]/70]="activeEngagementId === e.id"
+          [class.bg-white/10]="activeEngagementId === e.id"
+          [class.shadow-lg]="activeEngagementId === e.id"
+          [class.shadow-[#11D6C3]/25]="activeEngagementId === e.id"
         >
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="text-lg font-semibold">{{ tier.name }}</h3>
-              <p class="mt-2 text-sm text-white/70">{{ tier.bestFor }}</p>
+              <h3 class="text-lg font-semibold">{{ e.name }}</h3>
+              <p class="mt-2 text-sm text-white/70">{{ e.subtitle }}</p>
             </div>
 
             <span
-              *ngIf="tier.highlight"
+              *ngIf="e.highlight"
               class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
             >
-              Most popular
+              Recommended
             </span>
           </div>
 
           <div class="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
             <div class="flex items-baseline justify-between gap-3">
-              <span class="text-sm text-white/70">Setup</span>
-              <span class="text-base font-semibold">{{ tier.setupPrice }}</span>
-            </div>
-            <div class="mt-2 flex items-baseline justify-between gap-3">
-              <span class="text-sm text-white/70">Care retainer</span>
-              <span class="text-base font-semibold">{{ tier.retainerPrice }}</span>
+              <span class="text-sm text-white/70">Type</span>
+              <span class="text-sm font-semibold text-white/90">{{ e.priceLine }}</span>
             </div>
           </div>
 
-          <ul class="mt-6 space-y-2 text-sm text-white/85">
-            <li *ngFor="let item of tier.includes" class="flex gap-2">
-              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-white/70"></span>
-              <span>{{ item }}</span>
+          <p class="mt-4 text-sm text-white/80">{{ e.description }}</p>
+
+          <ul class="mt-5 space-y-2 text-sm text-white/85">
+            <li *ngFor="let b of e.bullets" class="flex gap-2">
+              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-[#11D6C3]/80"></span>
+              <span>{{ b }}</span>
             </li>
           </ul>
 
           <div class="mt-8">
             <a
               href="#contact"
-              class="no-underline inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
+              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
             >
-              Ask about {{ tier.name }}
+              Ask about {{ e.name }}
+            </a>
+          </div>
+        </button>
+      </div>
+    </section>
+
+    <!-- THE CIRCUIT -->
+    <section id="circuit" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title
+        title="The Circuit"
+        subtitle="Automation that turns your digital systems into a reliable flow — capture, route, deploy, operate."
+      ></app-section-title>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
+          <h3 class="text-base font-semibold">How the circuit runs</h3>
+          <p class="mt-2 text-sm text-white/70">
+            We design lightweight automations that remove manual work and stop leads from leaking.
+          </p>
+
+          <ol class="mt-6 space-y-4">
+            <li *ngFor="let step of circuitSteps" class="flex gap-4">
+              <span
+                class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs font-semibold text-white/80"
+              >
+                {{ step.name }}
+              </span>
+              <div>
+                <p class="text-sm font-medium">{{ step.name }}</p>
+                <p class="mt-1 text-sm text-white/70">{{ step.description }}</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
+          <h3 class="text-base font-semibold">{{ circuitExample.title }}</h3>
+          <p class="mt-2 text-sm text-white/70">
+            {{ circuitExample.line }}
+          </p>
+
+          <div class="mt-8 rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/[0.06] p-4">
+            <p class="text-sm text-white/80">
+              Want this? Choose <span class="font-semibold text-white">The Operator</span> and we’ll build circuits as part of
+              ongoing operations.
+            </p>
+          </div>
+
+          <div class="mt-8">
+            <a
+              href="#contact"
+              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
+            >
+              Initiate Deployment
             </a>
           </div>
         </div>
       </div>
-
-      <p class="mt-8 text-sm text-white/60">
-        Care retainers cover ongoing maintenance, monitoring, small updates, and priority fixes.
-        One-off work can be quoted separately when needed.
-      </p>
     </section>
 
-    <!-- WORK -->
-    <section id="work" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+    <!-- SOLUTIONS ARCHIVE (was Work) -->
+    <section id="solutions" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
       <app-section-title
-        title="Work"
-        subtitle="A few examples of what we deliver."
+        title="Solutions Archive"
+        subtitle="A few examples of what we deploy."
       ></app-section-title>
-      <pre style="font-size:12px; white-space:pre-wrap; opacity:.8">
-{{ projects?.[0] | json }}
-</pre>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2">
-        <div
-          *ngFor="let project of projects"
-          class="rounded-2xl border border-white/10 p-6 bg-white/5"
-        >
+        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
           <h3 class="text-base font-semibold">{{ project.name }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
 
@@ -179,35 +184,35 @@
       ></app-section-title>
 
       <div class="mt-10 space-y-3">
-        <div class="mt-10 space-y-3">
-  <details
-    *ngFor="let item of faq"
-    class="group rounded-2xl border border-white/10 bg-white/5 p-5"
-  >
-    <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-      <span class="text-sm font-semibold">{{ item.question }}</span>
-      <span class="text-white/60 group-open:rotate-45 transition">+</span>
-    </summary>
+        <details
+          *ngFor="let item of faq"
+          class="group rounded-2xl border border-white/10 bg-white/5 p-5"
+        >
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+            <span class="text-sm font-semibold">{{ item.question }}</span>
+            <span class="text-white/60 group-open:rotate-45 transition">+</span>
+          </summary>
 
-    <p class="mt-3 text-sm text-white/70">
-      {{ item.answer }}
-    </p>
-  </details>
+          <p class="mt-3 text-sm text-white/70">
+            {{ item.answer }}
+          </p>
+        </details>
 
-  <!-- Optional: empty state -->
-  <p *ngIf="faq.length === 0" class="text-sm text-white/60">
-    No FAQs yet.
-  </p>
-</div>
+        <p *ngIf="faq.length === 0" class="text-sm text-white/60">
+          No FAQs yet.
+        </p>
       </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- CONTACT (unchanged logic, same IDs/anchors) -->
     <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
       <app-section-title
         title="Contact"
         subtitle="Tell us what you need and we&rsquo;ll get back to you."
       ></app-section-title>
+
+      <!-- Keep your existing contact block exactly as-is below this line if you want.
+           I’m pasting your current one unchanged for safety. -->
 
       <div class="mt-10 grid gap-8 lg:grid-cols-2">
         <!-- LEFT: Contact form -->
@@ -281,9 +286,7 @@
         </div>
 
         <!-- RIGHT: Expectations / quick checklist -->
-        <div
-          class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]"
-        >
+        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
           <h3 class="text-base font-semibold">What to include</h3>
           <p class="mt-2 text-sm text-white/70">
             A few details help us respond faster and more accurately.
@@ -296,10 +299,7 @@
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span
-                ><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want
-                improved)</span
-              >
+              <span><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want improved)</span>
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
@@ -307,9 +307,7 @@
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span
-                ><span class="font-medium text-white">Links</span> to your website / socials</span
-              >
+              <span><span class="font-medium text-white">Links</span> to your website / socials</span>
             </li>
           </ul>
 
@@ -323,4 +321,3 @@
     </section>
   </div>
 </main>
-
