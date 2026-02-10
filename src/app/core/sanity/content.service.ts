@@ -51,7 +51,7 @@ interface ServiceDoc {
 }
 
 interface ProjectDoc {
-  title: string;
+  name?: string;
   outcome?: string;
   tags?: string[];
   order?: number;
@@ -60,8 +60,10 @@ interface ProjectDoc {
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   get enabled(): boolean {
-  return !!environment.sanity.projectId; // or add && environment.sanity.enabled if you have that flag
-}
+    // Convenience flag for templates/components.
+    return !!environment?.sanity?.projectId;
+  }
+
   private getClient() {
     if (!sanityEnabled || !sanityClient) {
       // Keeps UI running even before projectId is configured
@@ -69,6 +71,7 @@ export class ContentService {
     }
     return sanityClient;
   }
+
   async getSiteSettings(): Promise<SiteSettings | null> {
     const client = this.getClient();
     return client.fetch(
@@ -101,7 +104,7 @@ export class ContentService {
       }`
     );
 
-    return (items ?? []).map(s => ({
+    return (items ?? []).map((s) => ({
       id: s.id,
       title: s.title ?? '',
       description: s.description ?? '',
@@ -110,25 +113,27 @@ export class ContentService {
     }));
   }
 
-   async getProjects(): Promise<Project[]> {
+  async getProjects(): Promise<Project[]> {
     const client = this.getClient();
+
+    // IMPORTANT: schemaTypes/project.ts uses name/outcome (not title/summary)
     const items = await client.fetch<ProjectDoc[]>(
       `*[_type == "project"]|order(order asc){
-        title,
-        "outcome": summary,
+        name,
+        outcome,
         tags,
         order
       }`
     );
 
-    return (items ?? []).map(p => ({
-      name: p.title ?? '',
+    return (items ?? []).map((p) => ({
+      name: p.name ?? '',
       outcome: p.outcome ?? '',
       tags: p.tags ?? [],
     }));
   }
 
-   async getFaq(): Promise<FaqItem[]> {
+  async getFaq(): Promise<FaqItem[]> {
     const client = this.getClient();
     return client.fetch(
       `*[_type == "faq"]|order(order asc){
@@ -138,7 +143,7 @@ export class ContentService {
     );
   }
 
-   async getContactSettings(): Promise<ContactSettings | null> {
+  async getContactSettings(): Promise<ContactSettings | null> {
     const client = this.getClient();
     return client.fetch(
       `*[_type == "contactSettings"][0]{
