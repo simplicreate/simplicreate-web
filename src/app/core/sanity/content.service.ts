@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { sanityClient, sanityEnabled } from './sanity.client';
+import { environment } from '../../../environments/environment';
 
 import type { Project } from '../../data/projects.data';
 import type { Service } from '../../data/services.data';
@@ -58,16 +59,19 @@ interface ProjectDoc {
 
 @Injectable({ providedIn: 'root' })
 export class ContentService {
-  private requireEnabled() {
+  get enabled(): boolean {
+  return !!environment.sanity.projectId; // or add && environment.sanity.enabled if you have that flag
+}
+  private getClient() {
     if (!sanityEnabled || !sanityClient) {
       // Keeps UI running even before projectId is configured
       throw new Error('Sanity not configured: set environment.sanity.projectId');
     }
+    return sanityClient;
   }
-
   async getSiteSettings(): Promise<SiteSettings | null> {
-    this.requireEnabled();
-    return sanityClient.fetch(
+    const client = this.getClient();
+    return client.fetch(
       `*[_type == "siteSettings"][0]{
         brandLabel,
         heroHeadline,
@@ -84,9 +88,9 @@ export class ContentService {
   }
 
   async getServices(): Promise<Service[]> {
-    this.requireEnabled();
+    const client = this.getClient();
 
-    const items = await sanityClient.fetch<ServiceDoc[]>(
+    const items = await client.fetch<ServiceDoc[]>(
       `*[_type == "service"]|order(order asc){
         "id": coalesce(id, _id),
         title,
@@ -106,10 +110,9 @@ export class ContentService {
     }));
   }
 
-  async getProjects(): Promise<Project[]> {
-    this.requireEnabled();
-
-    const items = await sanityClient.fetch<ProjectDoc[]>(
+   async getProjects(): Promise<Project[]> {
+    const client = this.getClient();
+    const items = await client.fetch<ProjectDoc[]>(
       `*[_type == "project"]|order(order asc){
         title,
         "outcome": summary,
@@ -125,9 +128,9 @@ export class ContentService {
     }));
   }
 
-  async getFaq(): Promise<FaqItem[]> {
-    this.requireEnabled();
-    return sanityClient.fetch(
+   async getFaq(): Promise<FaqItem[]> {
+    const client = this.getClient();
+    return client.fetch(
       `*[_type == "faq"]|order(order asc){
         question,
         answer
@@ -135,9 +138,9 @@ export class ContentService {
     );
   }
 
-  async getContactSettings(): Promise<ContactSettings | null> {
-    this.requireEnabled();
-    return sanityClient.fetch(
+   async getContactSettings(): Promise<ContactSettings | null> {
+    const client = this.getClient();
+    return client.fetch(
       `*[_type == "contactSettings"][0]{
         submitLabel,
         successMessage,
