@@ -10,7 +10,7 @@ import type { SiteSettings, FaqItem, ContactSettings } from '../../core/sanity/c
 import { PROJECTS } from '../../data/projects.data';
 
 type Engagement = {
-  id: 'launchpad' | 'operator';
+  id: 'patch' | 'launchpad' | 'operator';
   name: string;
   subtitle: string;
   priceLine: string;
@@ -52,17 +52,31 @@ export class HomeComponent implements OnInit {
       | 'contactEmail'
     >
   > = {
-    brandLabel: 'SimpliCreate',
-    heroHeadline: 'We engineer the digital infrastructure your business runs on.',
-    heroSubheadline: 'Reliability, speed, and automation — standardised.',
-    ctaPrimaryText: 'Initiate Deployment',
-    ctaPrimaryHref: '#engagements',
-    ctaSecondaryText: 'View Engagements',
-    ctaSecondaryHref: '#engagements',
-    contactEmail: 'hello@simplicreate.tech',
-  };
+      brandLabel: 'SimpliCreate',
+      heroHeadline: 'We engineer the digital infrastructure your business runs on.',
+      heroSubheadline: 'Reliability, speed, and automation — standardised.',
+      ctaPrimaryText: 'Initiate Deployment',
+      ctaPrimaryHref: '#engagements',
+      ctaSecondaryText: 'View Engagements',
+      ctaSecondaryHref: '#engagements',
+      contactEmail: 'hello@simplicreate.tech',
+    };
 
   readonly engagements: Engagement[] = [
+    {
+      id: 'patch',
+      name: 'Stability Patch',
+      subtitle: 'Small, focused fix — fast turnaround',
+      priceLine: 'Once-off micro-engagement',
+      description:
+        'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+      bullets: [
+        'Triage + isolate the failure point',
+        'Fix + verify (with rollback safety)',
+        'Baseline performance/security checks',
+        'Handoff notes so it stays fixed',
+      ],
+    },
     {
       id: 'launchpad',
       name: 'The Launchpad',
@@ -139,7 +153,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private content: ContentService,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     try {
