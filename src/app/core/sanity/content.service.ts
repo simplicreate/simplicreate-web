@@ -11,8 +11,10 @@ export interface SiteSettings {
 
   ctaPrimaryText?: string;
   ctaPrimaryHref?: string;
+
   ctaSecondaryText?: string;
   ctaSecondaryHref?: string;
+
   ctaTertiaryText?: string;
   ctaTertiaryHref?: string;
 
@@ -57,8 +59,9 @@ interface ProjectDoc {
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   private requireEnabled() {
-    if (!sanityEnabled) {
-      throw new Error('Sanity not configured');
+    if (!sanityEnabled || !sanityClient) {
+      // Keeps UI running even before projectId is configured
+      throw new Error('Sanity not configured: set environment.sanity.projectId');
     }
   }
 
