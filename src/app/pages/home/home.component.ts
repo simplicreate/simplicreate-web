@@ -53,15 +53,15 @@ export class HomeComponent implements OnInit {
       | 'contactEmail'
     >
   > = {
-      brandLabel: 'SimpliCreate',
-      heroHeadline: 'We engineer the digital infrastructure your business runs on.',
-      heroSubheadline: 'Reliability, speed, and automation — standardised.',
-      ctaPrimaryText: 'Activate Infrastructure',
-      ctaPrimaryHref: '#engagements',
-      ctaSecondaryText: 'View Engagements',
-      ctaSecondaryHref: '#engagements',
-      contactEmail: 'hello@simplicreate.tech',
-    };
+    brandLabel: 'SimpliCreate',
+    heroHeadline: 'We engineer the digital infrastructure your business runs on.',
+    heroSubheadline: 'Reliability, speed, and automation — standardised.',
+    ctaPrimaryText: 'Activate Infrastructure',
+    ctaPrimaryHref: '#engagements',
+    ctaSecondaryText: 'View Engagements',
+    ctaSecondaryHref: '#engagements',
+    contactEmail: 'hello@simplicreate.tech',
+  };
 
   readonly engagements: Engagement[] = [
     {
@@ -78,7 +78,6 @@ export class HomeComponent implements OnInit {
         'Handoff notes so it stays fixed',
       ],
       tag: 'Start Here',
-      
     },
     {
       id: 'launchpad',
@@ -94,7 +93,6 @@ export class HomeComponent implements OnInit {
         'Repeatable deploy pipeline (clean rollbacks)',
       ],
       tag: 'Recommended',
-      
     },
     {
       id: 'operator',
@@ -115,10 +113,22 @@ export class HomeComponent implements OnInit {
 
   readonly circuitSteps: CircuitStep[] = [
     { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },
-    { name: 'Route', description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.' },
-    { name: 'Onboard', description: 'Auto-checklists, access requests, and handoff steps triggered immediately.' },
-    { name: 'Deploy', description: 'Standardised deployments with safety rails and rollback paths.' },
-    { name: 'Operate', description: 'Monitoring, updates, backups, and reliability improvements as a routine.' },
+    {
+      name: 'Route',
+      description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.',
+    },
+    {
+      name: 'Onboard',
+      description: 'Auto-checklists, access requests, and handoff steps triggered immediately.',
+    },
+    {
+      name: 'Deploy',
+      description: 'Standardised deployments with safety rails and rollback paths.',
+    },
+    {
+      name: 'Operate',
+      description: 'Monitoring, updates, backups, and reliability improvements as a routine.',
+    },
   ];
 
   readonly circuitExample = {
@@ -135,6 +145,9 @@ export class HomeComponent implements OnInit {
 
   // ---- Contact form (existing) ----
   private readonly FORM_ENDPOINT = 'https://formspree.io/f/xjgopngn';
+
+  //Timestamp used for antibot time-trap (must wait a few seconds before submitting)
+  formLoadedAt = Date.now();
 
   submitting = false;
   submitSuccess = false;
@@ -153,12 +166,17 @@ export class HomeComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(10)],
     }),
+
+    // Honeypot field: should be left empty by users, bots may fill it out
+    website: new FormControl('', {
+      nonNullable: true,
+    }),
   });
 
   constructor(
     private content: ContentService,
     private http: HttpClient,
-  ) { }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     try {
@@ -192,6 +210,17 @@ export class HomeComponent implements OnInit {
     this.submitError = '';
     this.submitSuccess = false;
 
+    // Honeypot: if filled, silently ignore
+    const website = (this.contactForm.get('website')?.value || '').trim();
+    if (website.length > 0) {
+      return;
+    }
+
+    // Time-trap: bots submit instantly
+    if (Date.now() - this.formLoadedAt < 2500) {
+      return;
+    }
+
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;
@@ -209,7 +238,8 @@ export class HomeComponent implements OnInit {
         next: () => {
           this.submitting = false;
           this.submitSuccess = true;
-          this.contactForm.reset();
+          this.contactForm.reset({ name: '', email: '', message: '', website: '' });
+          this.formLoadedAt = Date.now();
         },
         error: () => {
           this.submitting = false;

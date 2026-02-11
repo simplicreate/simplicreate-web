@@ -256,6 +256,8 @@
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
                 placeholder="you@company.com"
               />
+
+              
               <p *ngIf="email?.touched && email?.invalid" class="mt-2 text-xs text-red-300">
                 Please enter a valid email address.
               </p>
@@ -273,6 +275,12 @@
                 Please enter a message (min 10 characters).
               </p>
             </div>
+            <!-- Honeypot field: hidden from users, bots may fill it out -->
+               <div class="hidden" aria-hidden="true">
+                <label>
+                  <input type="text" formControlName="website" autocomplete="off" tabindex="-1" />
+                  </label>
+              </div>
 
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <button
