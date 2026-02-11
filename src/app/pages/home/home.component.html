@@ -16,13 +16,17 @@
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3">
-          <a [href]="siteSettings?.ctaPrimaryHref || fallbackHero.ctaPrimaryHref"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
+          <a
+            [href]="siteSettings?.ctaPrimaryHref || fallbackHero.ctaPrimaryHref"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
+          >
             {{ siteSettings?.ctaPrimaryText || fallbackHero.ctaPrimaryText }}
           </a>
 
-          <a [href]="siteSettings?.ctaSecondaryHref || fallbackHero.ctaSecondaryHref"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+          <a
+            [href]="siteSettings?.ctaSecondaryHref || fallbackHero.ctaSecondaryHref"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20"
+          >
             {{ siteSettings?.ctaSecondaryText || fallbackHero.ctaSecondaryText }}
           </a>
         </div>
@@ -31,26 +35,36 @@
 
     <!-- ENGAGEMENTS -->
     <section id="engagements" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Engagements"
-        subtitle="Three ways to deploy reliability: patch fast, stabilise properly, or operate monthly."></app-section-title>
+      <app-section-title
+        title="Engagements"
+        subtitle="Three ways to deploy reliability: patch fast, stabilise properly, or operate monthly."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
-        <button type="button" *ngFor="let e of engagements" (mouseenter)="setActive(e.id)" (focus)="setActive(e.id)"
-          (click)="setActive(e.id)" class="text-left rounded-2xl border border-white/10 p-6 bg-white/5 transition
-                 hover:-translate-y-1 hover:border-[#11D6C3]/60 hover:bg-white/10 hover:shadow-lg hover:shadow-[#11D6C3]/20
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#11D6C3]/40"
-          [class.-translate-y-1]="activeEngagementId === e.id" [class.border-[#11D6C3]/70]="activeEngagementId === e.id"
-          [class.bg-white/10]="activeEngagementId === e.id" [class.shadow-lg]="activeEngagementId === e.id"
-          [class.shadow-[#11D6C3]/25]="activeEngagementId === e.id">
+        <button
+          type="button"
+          *ngFor="let e of engagements"
+          (mouseenter)="setActive(e.id)"
+          (focus)="setActive(e.id)"
+          (click)="setActive(e.id)"
+          class="text-left rounded-2xl border border-white/10 p-6 bg-white/5 transition hover:-translate-y-1 hover:border-[#11D6C3]/60 hover:bg-white/10 hover:shadow-lg hover:shadow-[#11D6C3]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#11D6C3]/40"
+          [class.-translate-y-1]="activeEngagementId === e.id"
+          [class.border-[#11D6C3]/70]="activeEngagementId === e.id"
+          [class.bg-white/10]="activeEngagementId === e.id"
+          [class.shadow-lg]="activeEngagementId === e.id"
+          [class.shadow-[#11D6C3]/25]="activeEngagementId === e.id"
+        >
           <div class="flex items-start justify-between gap-4">
             <div>
               <h3 class="text-lg font-semibold">{{ e.name }}</h3>
               <p class="mt-2 text-sm text-white/70">{{ e.subtitle }}</p>
             </div>
 
-            <span *ngIf="e.highlight"
-              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90">
-              Recommended
+            <span
+              *ngIf="e.tag"
+              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90"
+            >
+              {{ e.tag }}
             </span>
           </div>
 
@@ -72,14 +86,20 @@
 
           <div class="mt-8">
             <!-- Teal primary CTA ONLY for Stability Patch -->
-            <a *ngIf="e.id === 'patch'" href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
+            <a
+              *ngIf="e.id === 'patch'"
+              href="#contact"
+              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
+            >
               Request a Stability Patch
             </a>
 
             <!-- Default CTA for others -->
-            <a *ngIf="e.id !== 'patch'" href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+            <a
+              *ngIf="e.id !== 'patch'"
+              href="#contact"
+              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15"
+            >
               Ask about {{ e.name }}
             </a>
           </div>
@@ -89,8 +109,10 @@
 
     <!-- THE CIRCUIT -->
     <section id="circuit" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="The Circuit"
-        subtitle="Automation that turns your digital systems into a reliable flow — capture, route, deploy, operate."></app-section-title>
+      <app-section-title
+        title="The Circuit"
+        subtitle="Automation that turns your digital systems into a reliable flow — capture, route, deploy, operate."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-2">
         <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
@@ -102,7 +124,8 @@
           <ol class="mt-6 space-y-4">
             <li *ngFor="let step of circuitSteps" class="flex gap-4">
               <span
-                class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs font-semibold text-white/80">
+                class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs font-semibold text-white/80"
+              >
                 {{ step.name }}
               </span>
               <div>
@@ -113,7 +136,9 @@
           </ol>
         </div>
 
-        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
+        <div
+          class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]"
+        >
           <h3 class="text-base font-semibold">{{ circuitExample.title }}</h3>
           <p class="mt-2 text-sm text-white/70">
             {{ circuitExample.line }}
@@ -121,16 +146,17 @@
 
           <div class="mt-8 rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/[0.06] p-4">
             <p class="text-sm text-white/80">
-              Want this? Choose <span class="font-semibold text-white">The Operator</span> and we’ll build circuits as
-              part of
-              ongoing operations.
+              Want this? Choose <span class="font-semibold text-white">The Operator</span> and we’ll
+              build circuits as part of ongoing operations.
             </p>
           </div>
 
           <div class="mt-8">
-            <a href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
-              Initiate Deployment
+            <a
+              href="#contact"
+              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
+            >
+              Activate Infrastructure
             </a>
           </div>
         </div>
@@ -139,16 +165,24 @@
 
     <!-- SOLUTIONS ARCHIVE (was Work) -->
     <section id="solutions" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Solutions Archive" subtitle="A few examples of what we deploy."></app-section-title>
+      <app-section-title
+        title="Solutions Archive"
+        subtitle="A few examples of what we deploy."
+      ></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2">
-        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <div
+          *ngFor="let project of projects"
+          class="rounded-2xl border border-white/10 p-6 bg-white/5"
+        >
           <h3 class="text-base font-semibold">{{ project.name }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span *ngFor="let tag of project.tags"
-              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
+            <span
+              *ngFor="let tag of project.tags"
+              class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5"
+            >
               {{ tag }}
             </span>
           </div>
@@ -158,10 +192,16 @@
 
     <!-- FAQ -->
     <section id="faq" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="FAQ" subtitle="Quick answers to the most common questions."></app-section-title>
+      <app-section-title
+        title="FAQ"
+        subtitle="Quick answers to the most common questions."
+      ></app-section-title>
 
       <div class="mt-10 space-y-3">
-        <details *ngFor="let item of faq" class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+        <details
+          *ngFor="let item of faq"
+          class="group rounded-2xl border border-white/10 bg-white/5 p-5"
+        >
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
             <span class="text-sm font-semibold">{{ item.question }}</span>
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
@@ -172,16 +212,16 @@
           </p>
         </details>
 
-        <p *ngIf="faq.length === 0" class="text-sm text-white/60">
-          No FAQs yet.
-        </p>
+        <p *ngIf="faq.length === 0" class="text-sm text-white/60">No FAQs yet.</p>
       </div>
     </section>
 
     <!-- CONTACT (unchanged logic, same IDs/anchors) -->
     <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Contact"
-        subtitle="Tell us what you need and we&rsquo;ll get back to you."></app-section-title>
+      <app-section-title
+        title="Contact"
+        subtitle="Tell us what you need and we&rsquo;ll get back to you."
+      ></app-section-title>
 
       <!-- Keep your existing contact block exactly as-is below this line if you want.
            I’m pasting your current one unchanged for safety. -->
@@ -197,9 +237,12 @@
           <form class="mt-6 space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
             <div>
               <label class="text-sm font-medium">Name</label>
-              <input type="text" formControlName="name"
+              <input
+                type="text"
+                formControlName="name"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
-                placeholder="Your name" />
+                placeholder="Your name"
+              />
               <p *ngIf="name?.touched && name?.invalid" class="mt-2 text-xs text-red-300">
                 Please enter your name (min 2 characters).
               </p>
@@ -207,9 +250,12 @@
 
             <div>
               <label class="text-sm font-medium">Email</label>
-              <input type="email" formControlName="email"
+              <input
+                type="email"
+                formControlName="email"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
-                placeholder="you@company.com" />
+                placeholder="you@company.com"
+              />
               <p *ngIf="email?.touched && email?.invalid" class="mt-2 text-xs text-red-300">
                 Please enter a valid email address.
               </p>
@@ -217,17 +263,23 @@
 
             <div>
               <label class="text-sm font-medium">Message</label>
-              <textarea rows="5" formControlName="message"
+              <textarea
+                rows="5"
+                formControlName="message"
                 class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
-                placeholder="What do you want help with?"></textarea>
+                placeholder="What do you want help with?"
+              ></textarea>
               <p *ngIf="message?.touched && message?.invalid" class="mt-2 text-xs text-red-300">
                 Please enter a message (min 10 characters).
               </p>
             </div>
 
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <button type="submit" [disabled]="submitting"
-                class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30 disabled:opacity-60 disabled:cursor-not-allowed">
+              <button
+                type="submit"
+                [disabled]="submitting"
+                class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
                 <span *ngIf="!submitting">Send message</span>
                 <span *ngIf="submitting">Sending&hellip;</span>
               </button>
@@ -246,7 +298,9 @@
         </div>
 
         <!-- RIGHT: Expectations / quick checklist -->
-        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
+        <div
+          class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]"
+        >
           <h3 class="text-base font-semibold">What to include</h3>
           <p class="mt-2 text-sm text-white/70">
             A few details help us respond faster and more accurately.
@@ -259,7 +313,10 @@
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want improved)</span>
+              <span
+                ><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want
+                improved)</span
+              >
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
@@ -267,7 +324,9 @@
             </li>
             <li class="flex gap-3">
               <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">Links</span> to your website / socials</span>
+              <span
+                ><span class="font-medium text-white">Links</span> to your website / socials</span
+              >
             </li>
           </ul>
 

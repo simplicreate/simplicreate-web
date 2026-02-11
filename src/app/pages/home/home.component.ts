@@ -17,6 +17,7 @@ type Engagement = {
   description: string;
   bullets: string[];
   highlight?: boolean;
+  tag?: string;
 };
 
 type CircuitStep = {
@@ -55,7 +56,7 @@ export class HomeComponent implements OnInit {
       brandLabel: 'SimpliCreate',
       heroHeadline: 'We engineer the digital infrastructure your business runs on.',
       heroSubheadline: 'Reliability, speed, and automation — standardised.',
-      ctaPrimaryText: 'Initiate Deployment',
+      ctaPrimaryText: 'Activate Infrastructure',
       ctaPrimaryHref: '#engagements',
       ctaSecondaryText: 'View Engagements',
       ctaSecondaryHref: '#engagements',
@@ -76,6 +77,8 @@ export class HomeComponent implements OnInit {
         'Baseline performance/security checks',
         'Handoff notes so it stays fixed',
       ],
+      tag: 'Start Here',
+      
     },
     {
       id: 'launchpad',
@@ -90,7 +93,8 @@ export class HomeComponent implements OnInit {
         'Cloudflare sanity check (DNS/SSL/WAF)',
         'Repeatable deploy pipeline (clean rollbacks)',
       ],
-      highlight: true,
+      tag: 'Recommended',
+      
     },
     {
       id: 'operator',
@@ -105,6 +109,7 @@ export class HomeComponent implements OnInit {
         'Speed + SEO maintenance (rankings + conversions)',
         'Optional automation circuits (The Circuit)',
       ],
+      tag: 'Monthly',
     },
   ];
 
@@ -122,7 +127,7 @@ export class HomeComponent implements OnInit {
   };
 
   // ---- Engagement highlight state (hover / focus / tap) ----
-  activeEngagementId: Engagement['id'] = 'launchpad';
+  activeEngagementId: Engagement['id'] = 'patch';
 
   setActive(id: Engagement['id']) {
     this.activeEngagementId = id;
