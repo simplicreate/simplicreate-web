@@ -1,0 +1,161 @@
+import { Injectable } from '@angular/core';
+import { sanityClient, sanityEnabled } from './sanity.client';
+import { environment } from '../../../environments/environment';
+
+import type { Project } from '../../data/projects.data';
+import type { Service } from '../../data/services.data';
+
+export interface SiteSettings {
+  brandLabel?: string;
+  heroHeadline?: string;
+  heroSubheadline?: string;
+
+  ctaPrimaryText?: string;
+  ctaPrimaryHref?: string;
+
+  ctaSecondaryText?: string;
+  ctaSecondaryHref?: string;
+
+  ctaTertiaryText?: string;
+  ctaTertiaryHref?: string;
+
+  contactEmail?: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface ContactSettings {
+  submitLabel?: string;
+  successMessage?: string;
+
+  nameLabel?: string;
+  namePlaceholder?: string;
+
+  emailLabel?: string;
+  emailPlaceholder?: string;
+
+  messageLabel?: string;
+  messagePlaceholder?: string;
+}
+
+interface ServiceDoc {
+  id: string;
+  title: string;
+  description: string;
+  bullets: string[];
+  icon?: string;
+  order?: number;
+}
+
+interface ProjectDoc {
+  name?: string;
+  outcome?: string;
+  tags?: string[];
+  order?: number;
+}
+
+@Injectable({ providedIn: 'root' })
+export class ContentService {
+  get enabled(): boolean {
+    // Convenience flag for templates/components.
+    return !!environment?.sanity?.projectId;
+  }
+
+  private getClient() {
+    if (!sanityEnabled || !sanityClient) {
+      // Keeps UI running even before projectId is configured
+      throw new Error('Sanity not configured: set environment.sanity.projectId');
+    }
+    return sanityClient;
+  }
+
+  async getSiteSettings(): Promise<SiteSettings | null> {
+    const client = this.getClient();
+    return client.fetch(
+      `*[_type == "siteSettings"][0]{
+        brandLabel,
+        heroHeadline,
+        heroSubheadline,
+        ctaPrimaryText,
+        ctaPrimaryHref,
+        ctaSecondaryText,
+        ctaSecondaryHref,
+        ctaTertiaryText,
+        ctaTertiaryHref,
+        contactEmail
+      }`
+    );
+  }
+
+  async getServices(): Promise<Service[]> {
+    const client = this.getClient();
+
+    const items = await client.fetch<ServiceDoc[]>(
+      `*[_type == "service"]|order(order asc){
+        "id": coalesce(id, _id),
+        title,
+        description,
+        bullets,
+        icon,
+        order
+      }`
+    );
+
+    return (items ?? []).map((s) => ({
+      id: s.id,
+      title: s.title ?? '',
+      description: s.description ?? '',
+      bullets: s.bullets ?? [],
+      icon: s.icon,
+    }));
+  }
+
+  async getProjects(): Promise<Project[]> {
+    const client = this.getClient();
+
+    // IMPORTANT: schemaTypes/project.ts uses name/outcome (not title/summary)
+    const items = await client.fetch<ProjectDoc[]>(
+      `*[_type == "project"]|order(order asc){
+        name,
+        outcome,
+        tags,
+        order
+      }`
+    );
+
+    return (items ?? []).map((p) => ({
+      name: p.name ?? '',
+      outcome: p.outcome ?? '',
+      tags: p.tags ?? [],
+    }));
+  }
+
+  async getFaq(): Promise<FaqItem[]> {
+    const client = this.getClient();
+    return client.fetch(
+      `*[_type == "faq"]|order(order asc){
+        question,
+        answer
+      }`
+    );
+  }
+
+  async getContactSettings(): Promise<ContactSettings | null> {
+    const client = this.getClient();
+    return client.fetch(
+      `*[_type == "contactSettings"][0]{
+        submitLabel,
+        successMessage,
+        nameLabel,
+        namePlaceholder,
+        emailLabel,
+        emailPlaceholder,
+        messageLabel,
+        messagePlaceholder
+      }`
+    );
+  }
+}

@@ -1,12 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { SERVICES } from '../../data/services.data';
-import { PROJECTS } from '../../data/projects.data';
-import { PACKAGES } from '../../data/packages.data';
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
+import { ContentService } from '../../core/sanity/content.service';
+import type { SiteSettings, FaqItem, ContactSettings } from '../../core/sanity/content.service';
+
+import { PROJECTS } from '../../data/projects.data';
+
+type Engagement = {
+  id: 'patch' | 'launchpad' | 'operator';
+  name: string;
+  subtitle: string;
+  priceLine: string;
+  description: string;
+  bullets: string[];
+  highlight?: boolean;
+};
+
+type CircuitStep = {
+  name: string;
+  description: string;
+};
 
 @Component({
   selector: 'app-home',
@@ -14,11 +30,105 @@ import { SectionTitleComponent } from '../../shared/components/section-title.com
   imports: [NgFor, NgIf, SectionTitleComponent, ReactiveFormsModule],
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
-  services = SERVICES;
-  projects = PROJECTS;
-  packages = PACKAGES;
+export class HomeComponent implements OnInit {
+  // ---- CMS-driven content ----
+  siteSettings: SiteSettings | null = null;
+  faq: FaqItem[] = [];
+  contactSettings: ContactSettings | null = null;
 
+  // ---- Fallback content (keeps UI stable) ----
+  projects = PROJECTS;
+
+  readonly fallbackHero: Required<
+    Pick<
+      SiteSettings,
+      | 'brandLabel'
+      | 'heroHeadline'
+      | 'heroSubheadline'
+      | 'ctaPrimaryText'
+      | 'ctaPrimaryHref'
+      | 'ctaSecondaryText'
+      | 'ctaSecondaryHref'
+      | 'contactEmail'
+    >
+  > = {
+      brandLabel: 'SimpliCreate',
+      heroHeadline: 'We engineer the digital infrastructure your business runs on.',
+      heroSubheadline: 'Reliability, speed, and automation — standardised.',
+      ctaPrimaryText: 'Initiate Deployment',
+      ctaPrimaryHref: '#engagements',
+      ctaSecondaryText: 'View Engagements',
+      ctaSecondaryHref: '#engagements',
+      contactEmail: 'hello@simplicreate.tech',
+    };
+
+  readonly engagements: Engagement[] = [
+    {
+      id: 'patch',
+      name: 'Stability Patch',
+      subtitle: 'Small, focused fix — fast turnaround',
+      priceLine: 'Once-off micro-engagement',
+      description:
+        'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+      bullets: [
+        'Triage + isolate the failure point',
+        'Fix + verify (with rollback safety)',
+        'Baseline performance/security checks',
+        'Handoff notes so it stays fixed',
+      ],
+    },
+    {
+      id: 'launchpad',
+      name: 'The Launchpad',
+      subtitle: 'One-time setup + stabilisation',
+      priceLine: 'Once-off engagement',
+      description:
+        'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
+      bullets: [
+        'Fix critical breakages + stabilise uptime',
+        'Performance + SEO baseline improvements',
+        'Cloudflare sanity check (DNS/SSL/WAF)',
+        'Repeatable deploy pipeline (clean rollbacks)',
+      ],
+      highlight: true,
+    },
+    {
+      id: 'operator',
+      name: 'The Operator',
+      subtitle: 'Monthly reliability operations',
+      priceLine: 'Monthly engagement',
+      description:
+        'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
+      bullets: [
+        'Monitoring, updates, backups, dependency hygiene',
+        'Security hardening + incident prevention',
+        'Speed + SEO maintenance (rankings + conversions)',
+        'Optional automation circuits (The Circuit)',
+      ],
+    },
+  ];
+
+  readonly circuitSteps: CircuitStep[] = [
+    { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },
+    { name: 'Route', description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.' },
+    { name: 'Onboard', description: 'Auto-checklists, access requests, and handoff steps triggered immediately.' },
+    { name: 'Deploy', description: 'Standardised deployments with safety rails and rollback paths.' },
+    { name: 'Operate', description: 'Monitoring, updates, backups, and reliability improvements as a routine.' },
+  ];
+
+  readonly circuitExample = {
+    title: 'Example circuit',
+    line: 'Lead capture → Notion board → auto-reply email → onboarding checklist',
+  };
+
+  // ---- Engagement highlight state (hover / focus / tap) ----
+  activeEngagementId: Engagement['id'] = 'launchpad';
+
+  setActive(id: Engagement['id']) {
+    this.activeEngagementId = id;
+  }
+
+  // ---- Contact form (existing) ----
   private readonly FORM_ENDPOINT = 'https://formspree.io/f/xjgopngn';
 
   submitting = false;
@@ -26,16 +136,52 @@ export class HomeComponent {
   submitError = '';
 
   contactForm = new FormGroup({
-    name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(2)] }),
-    email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
-    message: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(10)] }),
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(2)],
+    }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+    message: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(10)],
+    }),
   });
 
-  get name() { return this.contactForm.get('name'); }
-  get email() { return this.contactForm.get('email'); }
-  get message() { return this.contactForm.get('message'); }
+  constructor(
+    private content: ContentService,
+    private http: HttpClient,
+  ) { }
 
-  constructor(private http: HttpClient) {}
+  async ngOnInit(): Promise<void> {
+    try {
+      const s = await this.content.getSiteSettings();
+      if (s) this.siteSettings = s;
+
+      const sanityProjects = await this.content.getProjects();
+      if (sanityProjects.length) this.projects = sanityProjects;
+
+      const f = await this.content.getFaq();
+      this.faq = f;
+
+      const cs = await this.content.getContactSettings();
+      this.contactSettings = cs;
+    } catch (e) {
+      console.error('Sanity fetch failed (using fallback):', e);
+    }
+  }
+
+  get name() {
+    return this.contactForm.get('name');
+  }
+  get email() {
+    return this.contactForm.get('email');
+  }
+  get message() {
+    return this.contactForm.get('message');
+  }
 
   onSubmit() {
     this.submitError = '';
@@ -46,27 +192,24 @@ export class HomeComponent {
       return;
     }
 
-    if (this.FORM_ENDPOINT.includes('REPLACE_ME')) {
-      this.submitError = 'Contact form is not configured yet (missing Formspree endpoint).';
-      return;
-    }
-
     this.submitting = true;
 
     const payload = this.contactForm.getRawValue();
 
-    this.http.post(this.FORM_ENDPOINT, payload, {
-      headers: { Accept: 'application/json' },
-    }).subscribe({
-      next: () => {
-        this.submitting = false;
-        this.submitSuccess = true;
-        this.contactForm.reset();
-      },
-      error: () => {
-        this.submitting = false;
-        this.submitError = 'Something went wrong sending your message. Please try again.';
-      }
-    });
+    this.http
+      .post(this.FORM_ENDPOINT, payload, {
+        headers: { Accept: 'application/json' },
+      })
+      .subscribe({
+        next: () => {
+          this.submitting = false;
+          this.submitSuccess = true;
+          this.contactForm.reset();
+        },
+        error: () => {
+          this.submitting = false;
+          this.submitError = 'Something went wrong sending your message. Please try again.';
+        },
+      });
   }
 }

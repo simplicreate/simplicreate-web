@@ -9,7 +9,7 @@ export const project = defineType({
       name: 'name',
       title: 'Name',
       type: 'string',
-      validation: (r) => r.required(),
+      validation: (r) => r.required().min(5),
     }),
     defineField({
       name: 'outcome',
