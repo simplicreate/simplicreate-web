@@ -5,7 +5,14 @@ import { HttpClient } from '@angular/common/http';
 
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
-import type { SiteSettings, FaqItem, ContactSettings, Engagement } from '../../core/sanity/content.service';
+import { environment } from '../../../environments/environment';
+
+import type {
+  SiteSettings,
+  FaqItem,
+  ContactSettings,
+  Engagement,
+} from '../../core/sanity/content.service';
 
 import { PROJECTS } from '../../data/projects.data';
 
@@ -42,84 +49,99 @@ export class HomeComponent implements OnInit {
       | 'contactEmail'
     >
   > = {
-      brandLabel: 'SimpliCreate',
-      heroHeadline: 'We engineer the digital infrastructure your business runs on.',
-      heroSubheadline: 'Reliability, speed, and automation — standardised.',
-      ctaPrimaryText: 'Activate Infrastructure',
-      ctaPrimaryHref: '#engagements',
-      ctaSecondaryText: 'View Engagements',
-      ctaSecondaryHref: '#engagements',
-      contactEmail: 'hello@simplicreate.tech',
-    };
+    brandLabel: 'SimpliCreate',
+    heroHeadline: 'We engineer the digital infrastructure your business runs on.',
+    heroSubheadline: 'Reliability, speed, and automation — standardised.',
+    ctaPrimaryText: 'Activate Infrastructure',
+    ctaPrimaryHref: '#engagements',
+    ctaSecondaryText: 'View Engagements',
+    ctaSecondaryHref: '#engagements',
+    contactEmail: 'hello@simplicreate.tech',
+  };
 
-    getEngagementTag(e: Engagement): string | null {
-  if (e.highlight) return 'Recommended';
+  getEngagementTag(e: Engagement): string | null {
+    if (e.highlight) return 'Recommended';
 
-  switch (e.id) {
-    case 'patch': return 'Start Here';
-    case 'operator': return 'Monthly';
-    
-    default: return null;
+    switch (e.id) {
+      case 'patch':
+        return 'Start Here';
+      case 'operator':
+        return 'Monthly';
+
+      default:
+        return null;
+    }
   }
-}
 
   engagements: Engagement[] = [
-  {
-    id: 'patch',
-    name: 'Stability Patch',
-    subtitle: 'Small, focused fix — fast turnaround',
-    priceLine: 'Once-off micro-engagement',
-    description:
-      'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
-    bullets: [
-      'Triage + isolate the failure point',
-      'Fix + verify (with rollback safety)',
-      'Baseline performance/security checks',
-      'Handoff notes so it stays fixed',
-    ],
-    highlight: false,
-    order: 1,
-  },
-  {
-    id: 'launchpad',
-    name: 'The Launchpad',
-    subtitle: 'One-time setup + stabilisation',
-    priceLine: 'Once-off engagement',
-    description:
-      'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
-    bullets: [
-      'Fix critical breakages + stabilise uptime',
-      'Performance + SEO baseline improvements',
-      'Cloudflare sanity check (DNS/SSL/WAF)',
-      'Repeatable deploy pipeline (clean rollbacks)',
-    ],
-    highlight: true,
-    order: 2,
-  },
-  {
-    id: 'operator',
-    name: 'The Operator',
-    subtitle: 'Monthly reliability operations',
-    priceLine: 'Monthly engagement',
-    description:
-      'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
-    bullets: [
-      'Monitoring, updates, backups, dependency hygiene',
-      'Security hardening + incident prevention',
-      'Speed + SEO maintenance (rankings + conversions)',
-      'Optional automation circuits (The Circuit)',
-    ],
-    highlight: false,
-    order: 3,
-  },
-];
+    {
+      id: 'patch',
+      name: 'Stability Patch',
+      subtitle: 'Small, focused fix — fast turnaround',
+      priceLine: 'Once-off micro-engagement',
+      description:
+        'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+      bullets: [
+        'Triage + isolate the failure point',
+        'Fix + verify (with rollback safety)',
+        'Baseline performance/security checks',
+        'Handoff notes so it stays fixed',
+      ],
+      highlight: false,
+      order: 1,
+    },
+    {
+      id: 'launchpad',
+      name: 'The Launchpad',
+      subtitle: 'One-time setup + stabilisation',
+      priceLine: 'Once-off engagement',
+      description:
+        'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
+      bullets: [
+        'Fix critical breakages + stabilise uptime',
+        'Performance + SEO baseline improvements',
+        'Cloudflare sanity check (DNS/SSL/WAF)',
+        'Repeatable deploy pipeline (clean rollbacks)',
+      ],
+      highlight: true,
+      order: 2,
+    },
+    {
+      id: 'operator',
+      name: 'The Operator',
+      subtitle: 'Monthly reliability operations',
+      priceLine: 'Monthly engagement',
+      description:
+        'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
+      bullets: [
+        'Monitoring, updates, backups, dependency hygiene',
+        'Security hardening + incident prevention',
+        'Speed + SEO maintenance (rankings + conversions)',
+        'Optional automation circuits (The Circuit)',
+      ],
+      highlight: false,
+      order: 3,
+    },
+  ];
 
   readonly circuitSteps: CircuitStep[] = [
     { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },
-    { name: 'Route', description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.' },
-    { name: 'Onboard', description: 'Auto-checklists, access requests, and handoff steps triggered immediately.' },
-    { name: 'Deploy', description: 'Standardised deployments with safety rails and rollback paths.' },
-    { name: 'Operate', description: 'Monitoring, updates, backups, and reliability improvements as a routine.' },
+    {
+      name: 'Route',
+      description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.',
+    },
+    {
+      name: 'Onboard',
+      description: 'Auto-checklists, access requests, and handoff steps triggered immediately.',
+    },
+    {
+      name: 'Deploy',
+      description: 'Standardised deployments with safety rails and rollback paths.',
+    },
+    {
+      name: 'Operate',
+      description: 'Monitoring, updates, backups, and reliability improvements as a routine.',
+    },
   ];
 
   readonly circuitExample = {
@@ -135,7 +157,7 @@ export class HomeComponent implements OnInit {
   }
 
   // ---- Contact form (existing) ----
-  private readonly FORM_ENDPOINT = 'https://formspree.io/f/xjgopngn';
+  private readonly FORM_ENDPOINT = 'https://api.web3forms.com/submit';
 
   submitting = false;
   submitSuccess = false;
@@ -159,7 +181,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private content: ContentService,
     private http: HttpClient,
-  ) { }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     try {
@@ -177,6 +199,12 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.error('Sanity fetch failed (using fallback):', e);
     }
+
+    const sanityEngagements = await this.content.getEngagements();
+    if (sanityEngagements.length) {
+      this.engagements = sanityEngagements;
+      this.activeEngagementId = sanityEngagements[0].id || 'patch';
+    }
   }
 
   get name() {
@@ -189,33 +217,42 @@ export class HomeComponent implements OnInit {
     return this.contactForm.get('message');
   }
 
-  onSubmit() {
-    this.submitError = '';
-    this.submitSuccess = false;
+onSubmit() {
+  this.submitError = '';
+  this.submitSuccess = false;
 
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      return;
-    }
-
-    this.submitting = true;
-
-    const payload = this.contactForm.getRawValue();
-
-    this.http
-      .post(this.FORM_ENDPOINT, payload, {
-        headers: { Accept: 'application/json' },
-      })
-      .subscribe({
-        next: () => {
-          this.submitting = false;
-          this.submitSuccess = true;
-          this.contactForm.reset();
-        },
-        error: () => {
-          this.submitting = false;
-          this.submitError = 'Something went wrong sending your message. Please try again.';
-        },
-      });
+  if (this.contactForm.invalid) {
+    this.contactForm.markAllAsTouched();
+    return;
   }
-}
+
+  this.submitting = true;
+
+  const v = this.contactForm.getRawValue();
+
+  const payload = {
+    access_key: environment.web3forms.accessKey,
+    subject: 'New lead — SimpliCreate',
+    from_name: 'SimpliCreate Website',
+
+    name: v.name,
+    email: v.email,
+    message: v.message,
+  };
+
+  this.http
+    .post(this.FORM_ENDPOINT, payload, {
+      headers: { Accept: 'application/json' },
+    })
+    .subscribe({
+      next: () => {
+        this.submitting = false;
+        this.submitSuccess = true;
+        this.contactForm.reset();
+      },
+      error: () => {
+        this.submitting = false;
+        this.submitError = 'Something went wrong sending your message. Please try again.';
+      },
+    });
+}}

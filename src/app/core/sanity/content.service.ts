@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 import type { Project } from '../../data/projects.data';
 import type { Service } from '../../data/services.data';
 
-
 export interface SiteSettings {
   brandLabel?: string;
   heroHeadline?: string;
@@ -109,7 +108,7 @@ export class ContentService {
         ctaTertiaryText,
         ctaTertiaryHref,
         contactEmail
-      }`
+      }`,
     );
   }
 
@@ -124,7 +123,7 @@ export class ContentService {
         bullets,
         icon,
         order
-      }`
+      }`,
     );
 
     return (items ?? []).map((s) => ({
@@ -137,31 +136,31 @@ export class ContentService {
   }
 
   async getEngagements(): Promise<Engagement[]> {
-  const client = this.getClient();
-  const items = await client.fetch<EngagementDoc[]>(
-    `*[_type == "engagement"]|order(order asc){
-      id,
-      name,
-      subtitle,
-      priceLine,
-      description,
-      bullets,
-      highlight ?? false,
-      order
-    }`
-  );
+    const client = this.getClient();
+    const items = await client.fetch<EngagementDoc[]>(
+      `*[_type == "engagement"]|order(order asc){
+    id,
+    name,
+    subtitle,
+    priceLine,
+    description,
+    bullets,
+    "highlight": coalesce(highlight, false),
+    order
+  }`,
+    );
 
-  return (items ?? []).map(e => ({
-    id: e.id ?? '',
-    name: e.name ?? '',
-    subtitle: e.subtitle ?? '',
-    priceLine: e.priceLine ?? '',
-    description: e.description ?? '',
-    bullets: e.bullets ?? [],
-    highlight: !!e.highlight,
-    order: e.order,
-  }));
-}
+    return (items ?? []).map((e) => ({
+      id: e.id ?? '',
+      name: e.name ?? '',
+      subtitle: e.subtitle ?? '',
+      priceLine: e.priceLine ?? '',
+      description: e.description ?? '',
+      bullets: e.bullets ?? [],
+      highlight: !!e.highlight,
+      order: e.order,
+    }));
+  }
 
   async getProjects(): Promise<Project[]> {
     const client = this.getClient();
@@ -173,7 +172,7 @@ export class ContentService {
         outcome,
         tags,
         order
-      }`
+      }`,
     );
 
     return (items ?? []).map((p) => ({
@@ -189,7 +188,7 @@ export class ContentService {
       `*[_type == "faq"]|order(order asc){
         question,
         answer
-      }`
+      }`,
     );
   }
 
@@ -205,7 +204,7 @@ export class ContentService {
         emailPlaceholder,
         messageLabel,
         messagePlaceholder
-      }`
+      }`,
     );
   }
 }
