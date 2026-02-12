@@ -8,6 +8,6 @@ export const sanityClient = sanityEnabled
       projectId: environment.sanity.projectId,
       dataset: environment.sanity.dataset || 'production',
       apiVersion: environment.sanity.apiVersion || '2024-01-01',
-      useCdn: environment.sanity.useCdn ?? true,
+      useCdn: environment.sanity.useCdn ?? false,
     })
   : null;

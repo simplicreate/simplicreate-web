@@ -50,6 +50,28 @@ interface ServiceDoc {
   order?: number;
 }
 
+export interface Engagement {
+  id: string;
+  name: string;
+  subtitle: string;
+  priceLine: string;
+  description: string;
+  bullets: string[];
+  highlight?: boolean;
+  order?: number;
+}
+
+interface EngagementDoc {
+  id?: string;
+  name?: string;
+  subtitle?: string;
+  priceLine?: string;
+  description?: string;
+  bullets?: string[];
+  highlight?: boolean;
+  order?: number;
+}
+
 interface ProjectDoc {
   name?: string;
   outcome?: string;
@@ -86,7 +108,7 @@ export class ContentService {
         ctaTertiaryText,
         ctaTertiaryHref,
         contactEmail
-      }`
+      }`,
     );
   }
 
@@ -101,7 +123,7 @@ export class ContentService {
         bullets,
         icon,
         order
-      }`
+      }`,
     );
 
     return (items ?? []).map((s) => ({
@@ -110,6 +132,33 @@ export class ContentService {
       description: s.description ?? '',
       bullets: s.bullets ?? [],
       icon: s.icon,
+    }));
+  }
+
+  async getEngagements(): Promise<Engagement[]> {
+    const client = this.getClient();
+    const items = await client.fetch<EngagementDoc[]>(
+      `*[_type == "engagement"]|order(order asc){
+    id,
+    name,
+    subtitle,
+    priceLine,
+    description,
+    bullets,
+    "highlight": coalesce(highlight, false),
+    order
+  }`,
+    );
+
+    return (items ?? []).map((e) => ({
+      id: e.id ?? '',
+      name: e.name ?? '',
+      subtitle: e.subtitle ?? '',
+      priceLine: e.priceLine ?? '',
+      description: e.description ?? '',
+      bullets: e.bullets ?? [],
+      highlight: !!e.highlight,
+      order: e.order,
     }));
   }
 
@@ -123,7 +172,7 @@ export class ContentService {
         outcome,
         tags,
         order
-      }`
+      }`,
     );
 
     return (items ?? []).map((p) => ({
@@ -139,7 +188,7 @@ export class ContentService {
       `*[_type == "faq"]|order(order asc){
         question,
         answer
-      }`
+      }`,
     );
   }
 
@@ -155,7 +204,7 @@ export class ContentService {
         emailPlaceholder,
         messageLabel,
         messagePlaceholder
-      }`
+      }`,
     );
   }
 }

@@ -5,20 +5,16 @@ import { HttpClient } from '@angular/common/http';
 
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
-import type { SiteSettings, FaqItem, ContactSettings } from '../../core/sanity/content.service';
+import { environment } from '../../../environments/environment';
+
+import type {
+  SiteSettings,
+  FaqItem,
+  ContactSettings,
+  Engagement,
+} from '../../core/sanity/content.service';
 
 import { PROJECTS } from '../../data/projects.data';
-
-type Engagement = {
-  id: 'patch' | 'launchpad' | 'operator';
-  name: string;
-  subtitle: string;
-  priceLine: string;
-  description: string;
-  bullets: string[];
-  highlight?: boolean;
-  tag?: string;
-};
 
 type CircuitStep = {
   name: string;
@@ -63,7 +59,21 @@ export class HomeComponent implements OnInit {
     contactEmail: 'hello@simplicreate.tech',
   };
 
-  readonly engagements: Engagement[] = [
+  getEngagementTag(e: Engagement): string | null {
+    if (e.highlight) return 'Recommended';
+
+    switch (e.id) {
+      case 'patch':
+        return 'Start Here';
+      case 'operator':
+        return 'Monthly';
+
+      default:
+        return null;
+    }
+  }
+
+  engagements: Engagement[] = [
     {
       id: 'patch',
       name: 'Stability Patch',
@@ -77,7 +87,8 @@ export class HomeComponent implements OnInit {
         'Baseline performance/security checks',
         'Handoff notes so it stays fixed',
       ],
-      tag: 'Start Here',
+      highlight: false,
+      order: 1,
     },
     {
       id: 'launchpad',
@@ -92,7 +103,8 @@ export class HomeComponent implements OnInit {
         'Cloudflare sanity check (DNS/SSL/WAF)',
         'Repeatable deploy pipeline (clean rollbacks)',
       ],
-      tag: 'Recommended',
+      highlight: true,
+      order: 2,
     },
     {
       id: 'operator',
@@ -107,7 +119,8 @@ export class HomeComponent implements OnInit {
         'Speed + SEO maintenance (rankings + conversions)',
         'Optional automation circuits (The Circuit)',
       ],
-      tag: 'Monthly',
+      highlight: false,
+      order: 3,
     },
   ];
 
@@ -144,10 +157,7 @@ export class HomeComponent implements OnInit {
   }
 
   // ---- Contact form (existing) ----
-  private readonly FORM_ENDPOINT = 'https://formspree.io/f/xjgopngn';
-
-  //Timestamp used for antibot time-trap (must wait a few seconds before submitting)
-  formLoadedAt = Date.now();
+  private readonly FORM_ENDPOINT = 'https://api.web3forms.com/submit';
 
   submitting = false;
   submitSuccess = false;
@@ -194,6 +204,12 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.error('Sanity fetch failed (using fallback):', e);
     }
+
+    const sanityEngagements = await this.content.getEngagements();
+    if (sanityEngagements.length) {
+      this.engagements = sanityEngagements;
+      this.activeEngagementId = sanityEngagements[0].id || 'patch';
+    }
   }
 
   get name() {
@@ -206,45 +222,42 @@ export class HomeComponent implements OnInit {
     return this.contactForm.get('message');
   }
 
-  onSubmit() {
-    this.submitError = '';
-    this.submitSuccess = false;
+onSubmit() {
+  this.submitError = '';
+  this.submitSuccess = false;
 
-    // Honeypot: if filled, silently ignore
-    const website = (this.contactForm.get('website')?.value || '').trim();
-    if (website.length > 0) {
-      return;
-    }
-
-    // Time-trap: bots submit instantly
-    if (Date.now() - this.formLoadedAt < 2500) {
-      return;
-    }
-
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      return;
-    }
-
-    this.submitting = true;
-
-    const payload = this.contactForm.getRawValue();
-
-    this.http
-      .post(this.FORM_ENDPOINT, payload, {
-        headers: { Accept: 'application/json' },
-      })
-      .subscribe({
-        next: () => {
-          this.submitting = false;
-          this.submitSuccess = true;
-          this.contactForm.reset({ name: '', email: '', message: '', website: '' });
-          this.formLoadedAt = Date.now();
-        },
-        error: () => {
-          this.submitting = false;
-          this.submitError = 'Something went wrong sending your message. Please try again.';
-        },
-      });
+  if (this.contactForm.invalid) {
+    this.contactForm.markAllAsTouched();
+    return;
   }
-}
+
+  this.submitting = true;
+
+  const v = this.contactForm.getRawValue();
+
+  const payload = {
+    access_key: environment.web3forms.accessKey,
+    subject: 'New lead — SimpliCreate',
+    from_name: 'SimpliCreate Website',
+
+    name: v.name,
+    email: v.email,
+    message: v.message,
+  };
+
+  this.http
+    .post(this.FORM_ENDPOINT, payload, {
+      headers: { Accept: 'application/json' },
+    })
+    .subscribe({
+      next: () => {
+        this.submitting = false;
+        this.submitSuccess = true;
+        this.contactForm.reset();
+      },
+      error: () => {
+        this.submitting = false;
+        this.submitError = 'Something went wrong sending your message. Please try again.';
+      },
+    });
+}}
