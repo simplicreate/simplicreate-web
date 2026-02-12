@@ -5,20 +5,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
-import type { SiteSettings, FaqItem, ContactSettings } from '../../core/sanity/content.service';
+import type { SiteSettings, FaqItem, ContactSettings, Engagement } from '../../core/sanity/content.service';
 
 import { PROJECTS } from '../../data/projects.data';
-
-type Engagement = {
-  id: 'patch' | 'launchpad' | 'operator';
-  name: string;
-  subtitle: string;
-  priceLine: string;
-  description: string;
-  bullets: string[];
-  highlight?: boolean;
-  tag?: string;
-};
 
 type CircuitStep = {
   name: string;
@@ -63,55 +52,67 @@ export class HomeComponent implements OnInit {
       contactEmail: 'hello@simplicreate.tech',
     };
 
-  readonly engagements: Engagement[] = [
-    {
-      id: 'patch',
-      name: 'Stability Patch',
-      subtitle: 'Small, focused fix — fast turnaround',
-      priceLine: 'Once-off micro-engagement',
-      description:
-        'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
-      bullets: [
-        'Triage + isolate the failure point',
-        'Fix + verify (with rollback safety)',
-        'Baseline performance/security checks',
-        'Handoff notes so it stays fixed',
-      ],
-      tag: 'Start Here',
-      
-    },
-    {
-      id: 'launchpad',
-      name: 'The Launchpad',
-      subtitle: 'One-time setup + stabilisation',
-      priceLine: 'Once-off engagement',
-      description:
-        'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
-      bullets: [
-        'Fix critical breakages + stabilise uptime',
-        'Performance + SEO baseline improvements',
-        'Cloudflare sanity check (DNS/SSL/WAF)',
-        'Repeatable deploy pipeline (clean rollbacks)',
-      ],
-      tag: 'Recommended',
-      
-    },
-    {
-      id: 'operator',
-      name: 'The Operator',
-      subtitle: 'Monthly reliability operations',
-      priceLine: 'Monthly engagement',
-      description:
-        'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
-      bullets: [
-        'Monitoring, updates, backups, dependency hygiene',
-        'Security hardening + incident prevention',
-        'Speed + SEO maintenance (rankings + conversions)',
-        'Optional automation circuits (The Circuit)',
-      ],
-      tag: 'Monthly',
-    },
-  ];
+    getEngagementTag(e: Engagement): string | null {
+  if (e.highlight) return 'Recommended';
+
+  switch (e.id) {
+    case 'patch': return 'Start Here';
+    case 'operator': return 'Monthly';
+    
+    default: return null;
+  }
+}
+
+  engagements: Engagement[] = [
+  {
+    id: 'patch',
+    name: 'Stability Patch',
+    subtitle: 'Small, focused fix — fast turnaround',
+    priceLine: 'Once-off micro-engagement',
+    description:
+      'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+    bullets: [
+      'Triage + isolate the failure point',
+      'Fix + verify (with rollback safety)',
+      'Baseline performance/security checks',
+      'Handoff notes so it stays fixed',
+    ],
+    highlight: false,
+    order: 1,
+  },
+  {
+    id: 'launchpad',
+    name: 'The Launchpad',
+    subtitle: 'One-time setup + stabilisation',
+    priceLine: 'Once-off engagement',
+    description:
+      'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
+    bullets: [
+      'Fix critical breakages + stabilise uptime',
+      'Performance + SEO baseline improvements',
+      'Cloudflare sanity check (DNS/SSL/WAF)',
+      'Repeatable deploy pipeline (clean rollbacks)',
+    ],
+    highlight: true,
+    order: 2,
+  },
+  {
+    id: 'operator',
+    name: 'The Operator',
+    subtitle: 'Monthly reliability operations',
+    priceLine: 'Monthly engagement',
+    description:
+      'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
+    bullets: [
+      'Monitoring, updates, backups, dependency hygiene',
+      'Security hardening + incident prevention',
+      'Speed + SEO maintenance (rankings + conversions)',
+      'Optional automation circuits (The Circuit)',
+    ],
+    highlight: false,
+    order: 3,
+  },
+];
 
   readonly circuitSteps: CircuitStep[] = [
     { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },

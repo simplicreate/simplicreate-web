@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import type { Project } from '../../data/projects.data';
 import type { Service } from '../../data/services.data';
 
+
 export interface SiteSettings {
   brandLabel?: string;
   heroHeadline?: string;
@@ -47,6 +48,28 @@ interface ServiceDoc {
   description: string;
   bullets: string[];
   icon?: string;
+  order?: number;
+}
+
+export interface Engagement {
+  id: string;
+  name: string;
+  subtitle: string;
+  priceLine: string;
+  description: string;
+  bullets: string[];
+  highlight?: boolean;
+  order?: number;
+}
+
+interface EngagementDoc {
+  id?: string;
+  name?: string;
+  subtitle?: string;
+  priceLine?: string;
+  description?: string;
+  bullets?: string[];
+  highlight?: boolean;
   order?: number;
 }
 
@@ -112,6 +135,33 @@ export class ContentService {
       icon: s.icon,
     }));
   }
+
+  async getEngagements(): Promise<Engagement[]> {
+  const client = this.getClient();
+  const items = await client.fetch<EngagementDoc[]>(
+    `*[_type == "engagement"]|order(order asc){
+      id,
+      name,
+      subtitle,
+      priceLine,
+      description,
+      bullets,
+      highlight ?? false,
+      order
+    }`
+  );
+
+  return (items ?? []).map(e => ({
+    id: e.id ?? '',
+    name: e.name ?? '',
+    subtitle: e.subtitle ?? '',
+    priceLine: e.priceLine ?? '',
+    description: e.description ?? '',
+    bullets: e.bullets ?? [],
+    highlight: !!e.highlight,
+    order: e.order,
+  }));
+}
 
   async getProjects(): Promise<Project[]> {
     const client = this.getClient();
