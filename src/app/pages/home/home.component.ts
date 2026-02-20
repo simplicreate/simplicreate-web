@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
-import { environment } from '../../../environments/environment';
 
 import type {
   SiteSettings,
   FaqItem,
   ContactSettings,
-  Engagement,
+  Engagement as CmsEngagement,
 } from '../../core/sanity/content.service';
 
 import { PROJECTS } from '../../data/projects.data';
@@ -20,6 +20,59 @@ type CircuitStep = {
   name: string;
   description: string;
 };
+
+// ---- Fallback engagements (keeps UI stable if CMS has no data) ----
+// NOTE: This is intentionally validated against the CMS Engagement type.
+const FALLBACK_ENGAGEMENTS = [
+  {
+    id: 'patch',
+    name: 'Stability Patch',
+    subtitle: 'Small, focused fix — fast turnaround',
+    priceLine: 'Once-off micro-engagement',
+    description:
+      'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+    bullets: [
+      'Triage + isolate the failure point',
+      'Fix + verify (with rollback safety)',
+      'Baseline performance/security checks',
+      'Handoff notes so it stays fixed',
+    ],
+    highlight: false,
+    order: 1,
+  },
+  {
+    id: 'launchpad',
+    name: 'The Launchpad',
+    subtitle: 'One-time setup + stabilisation',
+    priceLine: 'Once-off engagement',
+    description:
+      'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
+    bullets: [
+      'Fix critical breakages + stabilise uptime',
+      'Performance + SEO baseline improvements',
+      'Cloudflare sanity check (DNS/SSL/WAF)',
+      'Repeatable deploy pipeline (clean rollbacks)',
+    ],
+    highlight: true,
+    order: 2,
+  },
+  {
+    id: 'operator',
+    name: 'The Operator',
+    subtitle: 'Monthly reliability operations',
+    priceLine: 'Monthly engagement',
+    description:
+      'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
+    bullets: [
+      'Monitoring, updates, backups, dependency hygiene',
+      'Security hardening + incident prevention',
+      'Speed + SEO maintenance (rankings + conversions)',
+      'Optional automation circuits (The Circuit)',
+    ],
+    highlight: false,
+    order: 3,
+  },
+] satisfies CmsEngagement[];
 
 @Component({
   selector: 'app-home',
@@ -59,7 +112,10 @@ export class HomeComponent implements OnInit {
     contactEmail: 'hello@simplicreate.tech',
   };
 
-  getEngagementTag(e: Engagement): string | null {
+  // ---- Engagements (CMS overrides fallback when available) ----
+  engagements: CmsEngagement[] = FALLBACK_ENGAGEMENTS;
+
+  getEngagementTag(e: CmsEngagement): string | null {
     if (e.highlight) return 'Recommended';
 
     switch (e.id) {
@@ -67,62 +123,10 @@ export class HomeComponent implements OnInit {
         return 'Start Here';
       case 'operator':
         return 'Monthly';
-
       default:
         return null;
     }
   }
-
-  engagements: Engagement[] = [
-    {
-      id: 'patch',
-      name: 'Stability Patch',
-      subtitle: 'Small, focused fix — fast turnaround',
-      priceLine: 'Once-off micro-engagement',
-      description:
-        'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
-      bullets: [
-        'Triage + isolate the failure point',
-        'Fix + verify (with rollback safety)',
-        'Baseline performance/security checks',
-        'Handoff notes so it stays fixed',
-      ],
-      highlight: false,
-      order: 1,
-    },
-    {
-      id: 'launchpad',
-      name: 'The Launchpad',
-      subtitle: 'One-time setup + stabilisation',
-      priceLine: 'Once-off engagement',
-      description:
-        'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
-      bullets: [
-        'Fix critical breakages + stabilise uptime',
-        'Performance + SEO baseline improvements',
-        'Cloudflare sanity check (DNS/SSL/WAF)',
-        'Repeatable deploy pipeline (clean rollbacks)',
-      ],
-      highlight: true,
-      order: 2,
-    },
-    {
-      id: 'operator',
-      name: 'The Operator',
-      subtitle: 'Monthly reliability operations',
-      priceLine: 'Monthly engagement',
-      description:
-        'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
-      bullets: [
-        'Monitoring, updates, backups, dependency hygiene',
-        'Security hardening + incident prevention',
-        'Speed + SEO maintenance (rankings + conversions)',
-        'Optional automation circuits (The Circuit)',
-      ],
-      highlight: false,
-      order: 3,
-    },
-  ];
 
   readonly circuitSteps: CircuitStep[] = [
     { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },
@@ -150,31 +154,33 @@ export class HomeComponent implements OnInit {
   };
 
   // ---- Engagement highlight state (hover / focus / tap) ----
-  activeEngagementId: Engagement['id'] = 'patch';
+  activeEngagementId: CmsEngagement['id'] = 'patch';
 
-  setActive(id: Engagement['id']) {
+  setActive(id: CmsEngagement['id']) {
     this.activeEngagementId = id;
   }
 
-  // ---- Contact form (existing) ----
-  private readonly FORM_ENDPOINT = 'https://api.web3forms.com/submit';
-
+  // ---- Contact form ----
   submitting = false;
   submitSuccess = false;
   submitError = '';
 
   contactForm = new FormGroup({
-    name: new FormControl('', {
+    name: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(2)],
     }),
-    email: new FormControl('', {
+    email: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.email],
     }),
-    message: new FormControl('', {
+    message: new FormControl<string>('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(10)],
+    }),
+    // Honeypot field: humans leave empty, bots often fill it
+    website: new FormControl<string>('', {
+      nonNullable: true,
     }),
   });
 
@@ -200,10 +206,15 @@ export class HomeComponent implements OnInit {
       console.error('Sanity fetch failed (using fallback):', e);
     }
 
-    const sanityEngagements = await this.content.getEngagements();
-    if (sanityEngagements.length) {
-      this.engagements = sanityEngagements;
-      this.activeEngagementId = sanityEngagements[0].id || 'patch';
+    // Engagements: override fallback only when CMS returns data
+    try {
+      const sanityEngagements = await this.content.getEngagements();
+      if (sanityEngagements.length) {
+        this.engagements = sanityEngagements;
+        this.activeEngagementId = sanityEngagements[0]?.id || 'patch';
+      }
+    } catch (e) {
+      console.error('Engagement fetch failed (using fallback):', e);
     }
   }
 
@@ -217,42 +228,43 @@ export class HomeComponent implements OnInit {
     return this.contactForm.get('message');
   }
 
-onSubmit() {
-  this.submitError = '';
-  this.submitSuccess = false;
+  onSubmit() {
+    this.submitError = '';
+    this.submitSuccess = false;
 
-  if (this.contactForm.invalid) {
-    this.contactForm.markAllAsTouched();
-    return;
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+
+    const v = this.contactForm.getRawValue();
+
+    // Honeypot (bots often fill hidden fields)
+    if (v.website) {
+      return;
+    }
+
+    const payload = {
+      name: v.name,
+      email: v.email,
+      message: v.message,
+    };
+
+    this.submitting = true;
+
+    this.http
+      .post<{ success: boolean; message?: string }>('/api/contact', payload)
+      .pipe(finalize(() => (this.submitting = false)))
+      .subscribe({
+        next: () => {
+          this.submitSuccess = true;
+          this.submitError = '';
+          this.contactForm.reset();
+        },
+        error: () => {
+          this.submitSuccess = false;
+          this.submitError = 'Something went wrong sending your message. Please try again.';
+        },
+      });
   }
-
-  this.submitting = true;
-
-  const v = this.contactForm.getRawValue();
-
-  const payload = {
-    access_key: environment.web3forms.accessKey,
-    subject: 'New lead — SimpliCreate',
-    from_name: 'SimpliCreate Website',
-
-    name: v.name,
-    email: v.email,
-    message: v.message,
-  };
-
-  this.http
-    .post(this.FORM_ENDPOINT, payload, {
-      headers: { Accept: 'application/json' },
-    })
-    .subscribe({
-      next: () => {
-        this.submitting = false;
-        this.submitSuccess = true;
-        this.contactForm.reset();
-      },
-      error: () => {
-        this.submitting = false;
-        this.submitError = 'Something went wrong sending your message. Please try again.';
-      },
-    });
-}}
+}
