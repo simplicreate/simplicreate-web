@@ -4,7 +4,25 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 import jsdoc from 'eslint-plugin-jsdoc';
 
+
 export default [
+  {
+  files: ['api/**/*.{js,ts}'],
+  languageOptions: {
+    ecmaVersion: 2022,
+    sourceType: 'module',
+    globals: {
+      ...globals.node,
+      fetch: 'readonly',
+      Request: 'readonly',
+      Response: 'readonly',
+    },
+  },
+  rules: {
+    'no-console': 'off',
+  },
+},
+  
   js.configs.recommended,
   {
     files: ['src/**/*.ts'],
