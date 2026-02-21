@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   sanity: {
     projectId: 'zr082jb6',
     dataset: 'production',
