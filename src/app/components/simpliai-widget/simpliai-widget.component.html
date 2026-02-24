@@ -1,0 +1,65 @@
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end font-sans">
+
+  <div *ngIf="isModalOpen" 
+       class="mb-4 w-80 bg-[#070B14] rounded-xl shadow-2xl border border-white/10 overflow-hidden transform transition-all duration-300 ease-out origin-bottom-right">
+    
+    <div class="bg-white/5 border-b border-white/10 p-4 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-[#11D6C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <h3 class="text-white font-medium text-sm tracking-wide">SimpliAi Agent</h3>
+      </div>
+      <button (click)="toggleModal()" class="text-white/60 hover:text-white transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    
+    <div class="p-5">
+      <ng-container *ngIf="!isSubmitted; else successMessage">
+        <p class="text-sm text-white/70 mb-4 leading-relaxed">
+          Our automated IT triage and onboarding agent is currently compiling. Join the beta to experience frictionless systems management.
+        </p>
+        
+        <form (ngSubmit)="joinWaitlist()" class="flex flex-col gap-3">
+          <input 
+            type="email" 
+            [(ngModel)]="userEmail" 
+            name="email"
+            placeholder="Enter your email..." 
+            required
+            class="w-full px-3 py-2 text-sm bg-white/5 border border-white/10 text-white rounded-xl focus:outline-none focus:border-[#11D6C3]/50 transition-colors placeholder-white/30"
+          >
+          <button 
+            type="submit" 
+            class="w-full bg-[#11D6C3] text-[#041018] text-sm font-semibold py-2 rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[#11D6C3]/20">
+            Request Early Access
+          </button>
+        </form>
+      </ng-container>
+
+      <ng-template #successMessage>
+        <div class="text-center py-6">
+          <svg class="w-8 h-8 text-[#11D6C3] mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          <p class="text-sm font-medium text-white mb-1">Coordinates logged.</p>
+          <p class="text-xs text-white/60">We will notify you when SimpliAi is online.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <button 
+    (click)="toggleModal()"
+    class="relative flex items-center justify-center w-14 h-14 bg-[#070B14] border border-[#11D6C3]/30 rounded-full shadow-lg shadow-[#11D6C3]/10 hover:bg-white/10 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none">
+    
+    <span class="absolute top-0 right-0 flex h-3 w-3">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#11D6C3] opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-3 w-3 bg-[#11D6C3]"></span>
+    </span>
+
+    <svg class="w-6 h-6 text-[#11D6C3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+    </svg>
+  </button>
+
+</div>
