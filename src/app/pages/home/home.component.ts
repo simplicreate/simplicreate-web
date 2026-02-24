@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
 
+
 import type {
   SiteSettings,
   FaqItem,
@@ -237,20 +238,23 @@ export class HomeComponent implements OnInit {
       return;
     }
 
+    this.submitting = true;
     const v = this.contactForm.getRawValue();
 
-    // Honeypot (bots often fill hidden fields)
-    if (v.website) {
-      return;
-    }
+      // Honeypot: silently succeed
+  if ((v.website ?? '').trim().length > 0) {
+    this.submitting = false;
+    this.submitSuccess = true;
+    this.contactForm.reset();
+    return;
+  }
 
     const payload = {
       name: v.name,
       email: v.email,
       message: v.message,
+      website: v.website, // Honeypot field included in payload for server-side bot detection 
     };
-
-    this.submitting = true;
 
     this.http
       .post<{ success: boolean; message?: string }>('/api/contact', payload)
