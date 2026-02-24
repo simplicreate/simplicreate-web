@@ -46,4 +46,7 @@ Thumbs.db
 
 .env
 .env.local
-.env.*.local
+.env.*.localnode_modules/
+.angular/
+node_modules/
+.angular/

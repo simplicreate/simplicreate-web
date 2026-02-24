@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "createdAt": "2026-02-21T06:22:11.611Z",
+  "workspaces": [
+    {
+      "name": "default",
+      "title": "simplicreate-web",
+      "basePath": "/",
+      "projectId": "zr082jb6",
+      "dataset": "production",
+      "icon": null,
+      "mediaLibrary": {
+        "enabled": false,
+        "__internal": {}
+      },
+      "schema": "1ba92a4e.create-schema.json",
+      "tools": "d8640c31.create-tools.json"
+    }
+  ],
+  "studioVersion": "5.11.0"
+}
