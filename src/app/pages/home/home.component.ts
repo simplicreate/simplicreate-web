@@ -179,8 +179,9 @@ export class HomeComponent implements OnInit {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(10)],
     }),
-    // Honeypot field: humans leave empty, bots often fill it
-    website: new FormControl<string>('', {
+
+    // Honeypot field: should be left empty by users, bots may fill it out
+    website: new FormControl('', {
       nonNullable: true,
     }),
   });
