@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
 import { environment } from '../../../environments/environment';
@@ -18,63 +19,73 @@ import type {
 
 import { PROJECTS } from '../../data/projects.data';
 
-type CircuitStep = {
-  name: string;
-  description: string;
-};
+type CircuitStep = { name: string; description: string; };
 
 // ---- Fallback engagements (keeps UI stable if CMS has no data) ----
 // NOTE: This is intentionally validated against the CMS Engagement type.
 const FALLBACK_ENGAGEMENTS = [
   {
     id: 'patch',
-    name: 'Stability Patch',
-    subtitle: 'Small, focused fix — fast turnaround',
-    priceLine: 'Once-off micro-engagement',
-    description:
-      'Target a specific instability: broken forms, DNS/SSL issues, performance regressions, deploy failures, or security misconfig.',
+    name: 'Quick Fix (Once-off)',
+    subtitle: 'A small, focused repair when something is broken or risky.',
+    priceLine: 'Once-off engagement',
+    description: 'Fix broken forms, email/DNS/SSL issues, deployment failures, or security misconfig.',
     bullets: [
-      'Triage + isolate the failure point',
-      'Fix + verify (with rollback safety)',
-      'Baseline performance/security checks',
-      'Handoff notes so it stays fixed',
+      'Triage, fix, and verify (with rollback safety)',
+      'Handover notes so it stays fixed'
     ],
     highlight: false,
     order: 1,
   },
   {
     id: 'launchpad',
-    name: 'The Launchpad',
-    subtitle: 'One-time setup + stabilisation',
+    name: 'Stabilise & Harden',
+    subtitle: 'We clean up your setup and make it reliable.',
     priceLine: 'Once-off engagement',
-    description:
-      'Fix critical issues, harden infrastructure, and standardise deployments so the system becomes reliable.',
+    description: 'Fix critical breakages, harden infrastructure, and standardise deployments.',
     bullets: [
-      'Fix critical breakages + stabilise uptime',
-      'Performance + SEO baseline improvements',
-      'Cloudflare sanity check (DNS/SSL/WAF)',
-      'Repeatable deploy pipeline (clean rollbacks)',
+      'Baseline performance and technical SEO improvements',
+      'Harden Cloudflare (DNS/SSL/WAF) to reduce risk',
+      'Set up a clean deployment pipeline with safe rollbacks'
     ],
     highlight: true,
     order: 2,
   },
   {
     id: 'operator',
-    name: 'The Operator',
-    subtitle: 'Monthly reliability operations',
+    name: 'Managed Ops (Monthly)',
+    subtitle: 'We run the technical side so you don’t lose leads.',
     priceLine: 'Monthly engagement',
-    description:
-      'Ongoing reliability + improvements. We run the system so you don’t lose leads to downtime, slowness, or broken deployments.',
+    description: 'Ongoing reliability. We handle the monitoring and updates so you don’t experience downtime or slowness.',
     bullets: [
       'Monitoring, updates, backups, dependency hygiene',
-      'Security hardening + incident prevention',
-      'Speed + SEO maintenance (rankings + conversions)',
-      'Optional automation circuits (The Circuit)',
+      'Security hardening and incident prevention',
+      'Performance maintenance (speed + conversion hygiene)',
+      'Optional automations (handoffs, lead routing, onboarding)'
     ],
     highlight: false,
     order: 3,
   },
-] satisfies CmsEngagement[];
+];
+
+const FALLBACK_FAQ: FaqItem[] = [
+  {
+    question: 'What do you actually do—are you a web design company?',
+    answer: 'We’re an infrastructure and operations partner. We don’t focus on "designing pages"; we focus on keeping your website and systems stable, secure, fast, and easy to change safely.'
+  },
+  {
+    question: 'Do you provide hosting?',
+    answer: 'We can manage hosting on your behalf (using reputable modern platforms), or work with your existing host. The goal is reliability and clear ownership—no finger-pointing when something breaks.'
+  },
+  {
+    question: 'Can you do small fixes without a full engagement?',
+    answer: 'Yes—request a once-off quick fix. If you need ongoing care, we’ll recommend a monthly plan.'
+  },
+  {
+    question: 'Can you work with our current developer or agency?',
+    answer: 'Absolutely. We often act as the "engine room" that supports your creative team, handling the server-side operations while they focus on your brand.'
+  }
+];
 
 @Component({
   selector: 'app-home',
@@ -83,152 +94,83 @@ const FALLBACK_ENGAGEMENTS = [
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  // ---- CMS-driven content ----
   siteSettings: SiteSettings | null = null;
-  faq: FaqItem[] = [];
+  faq: FaqItem[] = FALLBACK_FAQ;
   contactSettings: ContactSettings | null = null;
-
-  // ---- Fallback content (keeps UI stable) ----
   projects = PROJECTS;
+  engagements: CmsEngagement[] = FALLBACK_ENGAGEMENTS;
+  activeEngagementId: string = 'patch';
 
-  readonly fallbackHero: Required<
-    Pick<
-      SiteSettings,
-      | 'brandLabel'
-      | 'heroHeadline'
-      | 'heroSubheadline'
-      | 'ctaPrimaryText'
-      | 'ctaPrimaryHref'
-      | 'ctaSecondaryText'
-      | 'ctaSecondaryHref'
-      | 'contactEmail'
-    >
-  > = {
+  readonly fallbackHero = {
     brandLabel: 'SimpliCreate',
-    heroHeadline: 'We engineer the digital infrastructure your business runs on.',
-    heroSubheadline: 'Reliability, speed, and automation — standardised.',
-    ctaPrimaryText: 'Activate Infrastructure',
-    ctaPrimaryHref: '#engagements',
-    ctaSecondaryText: 'View Engagements',
-    ctaSecondaryHref: '#engagements',
+    heroHeadline: 'Managed website & cloud infrastructure for South African SMEs.',
+    heroSubheadline: 'We keep your website, email and cloud systems online, secure, and fast—handling monitoring, security, backups, DNS/SSL, and reliable deployments.',
+    ctaPrimaryText: 'Book a 15-minute call',
+    ctaPrimaryHref: '#contact',
+    ctaSecondaryText: 'See services',
+    ctaSecondaryHref: '#services',
     contactEmail: 'hello@simplicreate.tech',
   };
 
-  // ---- Engagements (CMS overrides fallback when available) ----
-  engagements: CmsEngagement[] = FALLBACK_ENGAGEMENTS;
-
-  getEngagementTag(e: CmsEngagement): string | null {
-    if (e.highlight) return 'Recommended';
-
-    switch (e.id) {
-      case 'patch':
-        return 'Start Here';
-      case 'operator':
-        return 'Monthly';
-      default:
-        return null;
-    }
-  }
-
   readonly circuitSteps: CircuitStep[] = [
-    { name: 'Capture', description: 'Leads enter via forms, WhatsApp, email, or landing pages.' },
-    {
-      name: 'Route',
-      description: 'Auto-sort to the right pipeline (sales/support), with labels + owners.',
-    },
-    {
-      name: 'Onboard',
-      description: 'Auto-checklists, access requests, and handoff steps triggered immediately.',
-    },
-    {
-      name: 'Deploy',
-      description: 'Standardised deployments with safety rails and rollback paths.',
-    },
-    {
-      name: 'Operate',
-      description: 'Monitoring, updates, backups, and reliability improvements as a routine.',
-    },
+    { name: 'Route', description: 'Route leads from WhatsApp/forms into a pipeline with owners + labels.' },
+    { name: 'Auto-reply', description: 'Auto-reply to new enquiries and trigger an onboarding checklist.' },
+    { name: 'Handoffs', description: 'Create repeatable handoffs (sales → ops → support) with fewer mistakes.' },
+    { name: 'Notify', description: 'Notify you immediately when forms fail, domains expire, or SSL breaks.' },
   ];
 
-  readonly circuitExample = {
-    title: 'Example circuit',
-    line: 'Lead capture → Notion board → auto-reply email → onboarding checklist',
-  };
-
-  // ---- Engagement highlight state (hover / focus / tap) ----
-  activeEngagementId: CmsEngagement['id'] = 'patch';
-
-  setActive(id: CmsEngagement['id']) {
-    this.activeEngagementId = id;
-  }
-
-  // ---- Contact form ----
   submitting = false;
   submitSuccess = false;
   submitError = '';
 
   contactForm = new FormGroup({
-    name: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(2)],
-    }),
-    email: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.email],
-    }),
-    message: new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.minLength(10)],
-    }),
-
-    // Honeypot field: should be left empty by users, bots may fill it out
-    website: new FormControl('', {
-      nonNullable: true,
-    }),
+    name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(2)] }),
+    email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    message: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(10)] }),
+    website: new FormControl('', { nonNullable: true }), // Honeypot
   });
 
-  constructor(
-    private content: ContentService,
-    private http: HttpClient,
-  ) {}
+  constructor(private content: ContentService, private http: HttpClient) {}
 
   async ngOnInit(): Promise<void> {
     try {
-      const s = await this.content.getSiteSettings();
+      const [s, sanityProjects, f, cs, sanityEngagements] = await Promise.all([
+        this.content.getSiteSettings(),
+        this.content.getProjects(),
+        this.content.getFaq(),
+        this.content.getContactSettings(),
+        this.content.getEngagements()
+      ]);
+
       if (s) this.siteSettings = s;
-
-      const sanityProjects = await this.content.getProjects();
-      if (sanityProjects.length) this.projects = sanityProjects;
-
-      const f = await this.content.getFaq();
-      this.faq = f;
-
-      const cs = await this.content.getContactSettings();
-      this.contactSettings = cs;
-    } catch (e) {
-      console.error('Sanity fetch failed (using fallback):', e);
-    }
-
-    // Engagements: override fallback only when CMS returns data
-    try {
-      const sanityEngagements = await this.content.getEngagements();
-      if (sanityEngagements.length) {
+      if (sanityProjects?.length) this.projects = sanityProjects;
+      if (f?.length) this.faq = f;
+      if (cs) this.contactSettings = cs;
+      
+      if (sanityEngagements?.length) {
         this.engagements = sanityEngagements;
         this.activeEngagementId = sanityEngagements[0]?.id || 'patch';
       }
     } catch (e) {
-      console.error('Engagement fetch failed (using fallback):', e);
+      console.error('CMS fetch failed. Using hardcoded SME fallbacks:', e);
     }
   }
 
-  get name() {
-    return this.contactForm.get('name');
+  get name() { return this.contactForm.get('name'); }
+  get email() { return this.contactForm.get('email'); }
+  get message() { return this.contactForm.get('message'); }
+
+  getEngagementTag(e: CmsEngagement): string | null {
+    if (e.highlight) return 'Recommended';
+    switch (e.id) {
+      case 'patch': return 'Start Here';
+      case 'operator': return 'Monthly';
+      default: return null;
+    }
   }
-  get email() {
-    return this.contactForm.get('email');
-  }
-  get message() {
-    return this.contactForm.get('message');
+
+  setActive(id: string) {
+    this.activeEngagementId = id;
   }
 
   onSubmit() {
@@ -243,6 +185,7 @@ export class HomeComponent implements OnInit {
   this.submitting = true;
   const v = this.contactForm.getRawValue();
 
+<<<<<<< HEAD
   // Honeypot: silently succeed
   if ((v.website ?? '').trim().length > 0) {
     this.submitting = false;
@@ -285,3 +228,42 @@ export class HomeComponent implements OnInit {
     },
   });
 }}
+=======
+    if ((v.website || '').trim().length > 0) {
+      this.submitting = false;
+      this.submitSuccess = true;
+      this.contactForm.reset();
+      return;
+    }
+
+    const payload = {
+      access_key: environment.web3forms.accessKey,
+      name: v.name,
+      email: v.email,
+      message: v.message,
+      subject: 'New lead — SimpliCreate',
+      from_name: 'SimpliCreate Website'
+    };
+
+    // 1. We tell the post method exactly what data shape to expect
+    this.http.post<{ success: boolean; message?: string }>('https://api.web3forms.com/submit', payload, {
+      headers: { 'Accept': 'application/json' }
+    })
+    .pipe(finalize(() => this.submitting = false))
+    .subscribe({
+      // 2. We remove the ': any' because TypeScript now knows 'res' matches the shape above
+      next: (res) => {
+        if (res.success) {
+          this.submitSuccess = true;
+          this.contactForm.reset();
+        } else {
+          this.submitError = res.message || 'Error sending message.';
+        }
+      },
+      error: () => {
+        this.submitError = 'Failed to connect. Please check your internet.';
+      }
+    });
+  }
+}
+>>>>>>> design-refresh

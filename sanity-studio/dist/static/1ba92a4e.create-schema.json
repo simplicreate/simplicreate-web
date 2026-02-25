@@ -1,0 +1,435 @@
+[
+  {
+    "fields": [
+      {
+        "name": "brandLabel",
+        "type": "string",
+        "title": "Small brand label (top)"
+      },
+      {
+        "name": "heroHeadline",
+        "type": "string",
+        "title": "Hero headline"
+      },
+      {
+        "name": "heroSubheadline",
+        "type": "text",
+        "title": "Hero subheadline"
+      },
+      {
+        "name": "ctaPrimaryText",
+        "type": "string",
+        "title": "Primary CTA text"
+      },
+      {
+        "name": "ctaPrimaryHref",
+        "type": "string",
+        "title": "Primary CTA link"
+      },
+      {
+        "name": "ctaSecondaryText",
+        "type": "string",
+        "title": "Secondary CTA text"
+      },
+      {
+        "name": "ctaSecondaryHref",
+        "type": "string",
+        "title": "Secondary CTA link"
+      },
+      {
+        "name": "ctaTertiaryText",
+        "type": "string",
+        "title": "Tertiary CTA text"
+      },
+      {
+        "name": "ctaTertiaryHref",
+        "type": "string",
+        "title": "Tertiary CTA link"
+      },
+      {
+        "name": "contactEmail",
+        "type": "string",
+        "title": "Contact email"
+      }
+    ],
+    "name": "siteSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text",
+        "title": "Short description"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "bullets",
+        "type": "array"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "service",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 5
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "outcome",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "initialValue": 10,
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 5
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "question",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 10
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "answer",
+        "type": "text"
+      },
+      {
+        "initialValue": 10,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 0
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "faq",
+    "type": "document",
+    "title": "FAQ"
+  },
+  {
+    "fields": [
+      {
+        "name": "submitLabel",
+        "type": "string",
+        "title": "Submit button label"
+      },
+      {
+        "name": "successMessage",
+        "type": "string",
+        "title": "Success message"
+      },
+      {
+        "name": "nameLabel",
+        "type": "string",
+        "title": "Name label"
+      },
+      {
+        "name": "namePlaceholder",
+        "type": "string",
+        "title": "Name placeholder"
+      },
+      {
+        "name": "emailLabel",
+        "type": "string",
+        "title": "Email label"
+      },
+      {
+        "name": "emailPlaceholder",
+        "type": "string",
+        "title": "Email placeholder"
+      },
+      {
+        "name": "messageLabel",
+        "type": "string",
+        "title": "Message label"
+      },
+      {
+        "name": "messagePlaceholder",
+        "type": "string",
+        "title": "Message placeholder"
+      }
+    ],
+    "name": "contactSettings",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Unique key used in the frontend (e.g. launchpad, operator)",
+        "name": "id",
+        "type": "string",
+        "title": "Internal ID"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Short pricing label (e.g. Once-off engagement, Monthly engagement)",
+        "name": "priceLine",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "bullets",
+        "type": "array",
+        "title": "Bullet Points"
+      },
+      {
+        "initialValue": false,
+        "name": "highlight",
+        "type": "boolean",
+        "title": "Highlight / Recommended"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Lower numbers appear first",
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "engagement",
+    "type": "document"
+  }
+]
