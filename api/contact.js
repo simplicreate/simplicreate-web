@@ -26,28 +26,23 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Bot detected' });
     }
 
-    const web3formsPayload = {
-      access_key: accessKey,
-      subject: body.subject ?? 'New lead — SimpliCreate',
-      from_name: 'SimpliCreate Website',
-      name: name ?? '',
-      email,
-      message,
-      // include any extra fields you send
-      ...body,
-    };
+    // Convert your JSON payload into Form-Encoded data
+    const formData = new URLSearchParams();
+    formData.append('access_key', accessKey);
+    formData.append('name', name ?? '');
+    formData.append('email', email);
+    formData.append('message', message);
+    formData.append('subject', body.subject ?? 'New lead — SimpliCreate');
+    formData.append('from_name', 'SimpliCreate Website');
 
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
-        // The Disguise: Tells Cloudflare this is a normal human using Google Chrome
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+        // We do NOT set Content-Type here; fetch will auto-set it for URLSearchParams
       },
-      body: JSON.stringify(web3formsPayload),
+      body: formData,
     });
-
     // Safe parsing: Check what Web3Forms actually sent back before parsing
     const contentType = response.headers.get("content-type");
     let data;

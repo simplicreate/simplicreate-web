@@ -250,11 +250,10 @@ export class HomeComponent implements OnInit {
     return;
   }
 
-    const payload = {
+   const payload = {
       name: v.name,
       email: v.email,
-      message: v.message,
-      website: v.website, // Honeypot field included in payload for server-side bot detection 
+      message: v.message
     };
 
     this.http
