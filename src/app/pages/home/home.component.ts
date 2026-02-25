@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
+import { environment } from '../../../environments/environment';
 
 
 import type {
@@ -231,18 +232,18 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitError = '';
-    this.submitSuccess = false;
+  this.submitError = '';
+  this.submitSuccess = false;
 
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      return;
-    }
+  if (this.contactForm.invalid) {
+    this.contactForm.markAllAsTouched();
+    return;
+  }
 
-    this.submitting = true;
-    const v = this.contactForm.getRawValue();
+  this.submitting = true;
+  const v = this.contactForm.getRawValue();
 
-      // Honeypot: silently succeed
+  // Honeypot: silently succeed
   if ((v.website ?? '').trim().length > 0) {
     this.submitting = false;
     this.submitSuccess = true;
@@ -250,25 +251,37 @@ export class HomeComponent implements OnInit {
     return;
   }
 
-   const payload = {
-      name: v.name,
-      email: v.email,
-      message: v.message
-    };
+  const payload = {
+    access_key: environment.web3forms.accessKey,
+    name: v.name,
+    email: v.email,
+    message: v.message,
+    subject: 'New lead — SimpliCreate',
+    from_name: 'SimpliCreate Website',
+    // Optional: botcheck: true (Web3Forms reserved field)
+  };
 
-    this.http
-      .post<{ success: boolean; message?: string }>('/api/contact', payload)
-      .pipe(finalize(() => (this.submitting = false)))
-      .subscribe({
-        next: () => {
-          this.submitSuccess = true;
-          this.submitError = '';
-          this.contactForm.reset();
-        },
-        error: () => {
-          this.submitSuccess = false;
-          this.submitError = 'Something went wrong sending your message. Please try again.';
-        },
-      });
-  }
-}
+  this.http.post<any>(
+    'https://api.web3forms.com/submit',
+    payload,
+    { headers: { Accept: 'application/json' } }  // Angular sets Content-Type: application/json automatically
+  )
+  .pipe(finalize(() => (this.submitting = false)))
+  .subscribe({
+    next: (res) => {
+      // Web3Forms returns JSON; treat non-success as error
+      if (res?.success) {
+        this.submitSuccess = true;
+        this.submitError = '';
+        this.contactForm.reset();
+      } else {
+        this.submitSuccess = false;
+        this.submitError = res?.message || 'Submission failed. Please try again.';
+      }
+    },
+    error: (err) => {
+      this.submitSuccess = false;
+      this.submitError = err?.error?.message || 'Something went wrong sending your message. Please try again.';
+    },
+  });
+}}
