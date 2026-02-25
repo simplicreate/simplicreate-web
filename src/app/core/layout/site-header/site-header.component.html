@@ -1,59 +1,47 @@
 ﻿<header class="fixed top-0 left-0 right-0 z-50 bg-[#070B14]/80 backdrop-blur border-b border-white/10">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
-    <!-- Brand -->
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    
     <a href="#top" class="flex items-center gap-3" (click)="closeMenu()">
-      <img src="/brand/simplicreate-logo.webp" alt="SimpliCreate logo" class="h-10 w-auto" />
-
+      <img src=".\assets\brand\simplicreate-logo.webp" alt="SimpliCreate logo" class="h-10 w-auto" />
       <div class="leading-tight">
-        <div class="text-sm font-semibold tracking-tight bg-linear-to-r from-[#0B2A6F] via-[#1557C6] to-[#11D6C3]
-         bg-clip-text text-transparent">
-          SimpliCreate
+        <div class="text-sm font-semibold tracking-tight bg-linear-to-r from-[#0B2A6F] via-[#1557C6] to-[#11D6C3] bg-clip-text text-transparent">
+           SimpliCreate
         </div>
-        <div class="text-xs text-white/50">
-          Manage &bull; Secure &bull; Optimise
+        <div class="text-[10px] uppercase tracking-widest text-white/50 font-medium">
+          Web Ops & Infrastructure
         </div>
       </div>
     </a>
 
-    <!-- Desktop Nav -->
-    <nav class="hidden gap-6 text-sm text-gray-300 md:flex">
-      <a *ngFor="let item of nav" [href]="item.href" class="hover:text-white transition">
+    <nav class="hidden md:flex items-center gap-8">
+      <a *ngFor="let item of nav" [href]="item.href" class="text-sm font-medium text-white/70 hover:text-white transition">
         {{ item.label }}
       </a>
     </nav>
 
-    <!-- Right controls -->
-    <div class="flex items-center gap-2">
-      <!-- Desktop CTA -->
-      <a href="#contact"
-        class="hidden md:inline-flex rounded-xl bg-[#11D6C3] px-4 py-2 text-sm font-semibold text-[#041018] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
-        Get a Quote
+    <div class="hidden md:flex items-center gap-4">
+      <a href="#contact" class="text-sm font-medium text-white/70 hover:text-white transition">Contact</a>
+      <a href="#contact" class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/20">
+        Book a call
       </a>
+    </div>
 
-      <!-- Mobile menu button -->
-      <button type="button" class="md:hidden rounded-xl border border-white/10 bg-white/5 px-3 py-2"
-        (click)="toggleMenu()" aria-label="Open menu" [attr.aria-expanded]="isMenuOpen">
-        <span class="block h-0.5 w-5 bg-white/90"></span>
-        <span class="mt-1.5 block h-0.5 w-5 bg-white/90"></span>
-        <span class="mt-1.5 block h-0.5 w-5 bg-white/90"></span>
-      </button>
+    <button class="md:hidden p-2 text-white/70 hover:text-white" (click)="toggleMenu()">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path *ngIf="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        <path *ngIf="isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <div *ngIf="isMenuOpen" class="md:hidden border-t border-white/10 bg-[#070B14]">
+    <div class="px-4 pt-2 pb-6 space-y-1">
+      <a *ngFor="let item of nav" [href]="item.href" class="block px-3 py-3 text-base font-medium text-white/80 hover:text-white hover:bg-white/5 rounded-lg" (click)="closeMenu()">
+        {{ item.label }}
+      </a>
+      <a href="#contact" class="block px-3 py-3 text-base font-medium text-[#11D6C3] hover:bg-[#11D6C3]/10 rounded-lg mt-4" (click)="closeMenu()">
+        Book a call
+      </a>
     </div>
   </div>
-
-  <!-- Mobile dropdown -->
-  <div *ngIf="isMenuOpen" class="md:hidden border-t border-white/10 bg-[#070B14]/95 backdrop-blur">
-    <nav class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 space-y-2 text-sm text-gray-200">
-      <a *ngFor="let item of nav" [href]="item.href" class="block rounded-lg px-3 py-2 hover:bg-white/5"
-        (click)="closeMenu()">
-        {{ item.label }}
-      </a>
-
-      <a href="#contact"
-        class="mt-2 block rounded-xl bg-[#11D6C3] px-4 py-2 text-sm font-semibold text-[#041018] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30"
-        (click)="closeMenu()">
-        Get a Quote
-      </a>
-    </nav>
-  </div>
 </header>
-

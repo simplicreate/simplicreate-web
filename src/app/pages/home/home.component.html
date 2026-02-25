@@ -1,186 +1,173 @@
 ﻿<main id="top" class="min-h-screen bg-[#070B14] text-white pt-16">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-    <!-- HERO -->
+
     <section class="pt-16 pb-12 sm:pt-20 sm:pb-16">
-      <div class="max-w-2xl">
-        <p class="text-sm font-medium opacity-80">
-          {{ siteSettings?.brandLabel || fallbackHero.brandLabel }}
+      <div class="max-w-3xl">
+        <p class="text-sm font-medium tracking-wide text-[#11D6C3] uppercase mb-4">
+          Ideal for SMEs that rely on their website for leads & sales.
         </p>
 
-        <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+        <h1 class="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
           {{ siteSettings?.heroHeadline || fallbackHero.heroHeadline }}
         </h1>
 
-        <p class="mt-5 text-base leading-7 opacity-80 sm:text-lg">
+        <p class="mt-6 text-base leading-relaxed text-white/80 sm:text-lg max-w-2xl">
           {{ siteSettings?.heroSubheadline || fallbackHero.heroSubheadline }}
         </p>
 
-        <div class="mt-8 flex flex-wrap gap-3">
+        <ul class="mt-8 space-y-3 text-sm text-white/90">
+          <li class="flex items-center gap-3">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#11D6C3]/20 text-[#11D6C3]">✓</span>
+            Stop downtime and "site not found" errors.
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#11D6C3]/20 text-[#11D6C3]">✓</span>
+            Improve speed for better conversions and rankings.
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#11D6C3]/20 text-[#11D6C3]">✓</span>
+            Get dependable backups and recovery plans.
+          </li>
+        </ul>
+
+        <div class="mt-10 flex flex-wrap gap-4 items-center">
           <a [href]="siteSettings?.ctaPrimaryHref || fallbackHero.ctaPrimaryHref"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
+            class="no-underline inline-flex items-center justify-center rounded-xl px-6 py-3.5 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
             {{ siteSettings?.ctaPrimaryText || fallbackHero.ctaPrimaryText }}
           </a>
 
-          <a [href]="siteSettings?.ctaSecondaryHref || fallbackHero.ctaSecondaryHref"
-            class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
+          <a href="#services"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-6 py-3.5 text-sm font-medium text-white/80 hover:text-white border border-white/10 hover:border-white/20">
             {{ siteSettings?.ctaSecondaryText || fallbackHero.ctaSecondaryText }}
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ENGAGEMENTS -->
-    <section id="engagements" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Engagements"
-        subtitle="Three ways to deploy reliability: patch fast, stabilise properly, or operate monthly."></app-section-title>
+    <section id="services" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Services"
+        subtitle="Choose how you want help—once-off fixes, a full stabilisation setup, or monthly managed operations."></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-3">
-        <button type="button" *ngFor="let e of engagements" (mouseenter)="setActive(e.id)" (focus)="setActive(e.id)"
-          (click)="setActive(e.id)"
-          class="text-left rounded-2xl border border-white/10 p-6 bg-white/5 transition hover:-translate-y-1 hover:border-[#11D6C3]/60 hover:bg-white/10 hover:shadow-lg hover:shadow-[#11D6C3]/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#11D6C3]/40"
+        <button type="button" *ngFor="let e of (engagements || [])" (mouseenter)="setActive(e.id)"
+          (focus)="setActive(e.id)" (click)="setActive(e.id)"
+          class="text-left rounded-2xl border border-white/10 p-6 bg-white/5 transition hover:-translate-y-1 hover:border-[#11D6C3]/60 hover:bg-white/10 hover:shadow-lg focus:outline-none flex flex-col"
           [class.-translate-y-1]="activeEngagementId === e.id" [class.border-[#11D6C3]/70]="activeEngagementId === e.id"
-          [class.bg-white/10]="activeEngagementId === e.id" [class.shadow-lg]="activeEngagementId === e.id"
-          [class.shadow-[#11D6C3]/25]="activeEngagementId === e.id">
+          [class.bg-white/10]="activeEngagementId === e.id">
+
           <div class="flex items-start justify-between gap-4">
             <div>
-              <h3 class="text-lg font-semibold">{{ e.name }}</h3>
+              <h3 class="text-xl font-semibold">{{ e.name }}</h3>
               <p class="mt-2 text-sm text-white/70">{{ e.subtitle }}</p>
             </div>
 
             <span *ngIf="getEngagementTag(e) as tag"
-              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/90">
+              class="shrink-0 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-[#11D6C3]">
               {{ tag }}
             </span>
           </div>
 
           <div class="mt-6 rounded-xl border border-white/10 bg-white/5 p-4">
-            <div class="flex items-baseline justify-between gap-3">
-              <span class="text-sm text-white/70">Type</span>
-              <span class="text-sm font-semibold text-white/90">{{ e.priceLine }}</span>
-            </div>
+            <span class="text-sm font-semibold text-white">{{ e.priceLine }}</span>
           </div>
 
           <p class="mt-4 text-sm text-white/80">{{ e.description }}</p>
 
-          <ul class="mt-5 space-y-2 text-sm text-white/85">
-            <li *ngFor="let b of e.bullets" class="flex gap-2">
-              <span class="mt-1 block h-1.5 w-1.5 rounded-full bg-[#11D6C3]/80"></span>
+          <ul class="mt-5 space-y-3 text-sm text-white/85 flex-grow">
+            <li *ngFor="let b of (e.bullets || [])" class="flex gap-3">
+              <span class="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-[#11D6C3]"></span>
               <span>{{ b }}</span>
             </li>
           </ul>
 
-          <div class="mt-8">
-            <!-- Teal primary CTA ONLY for Stability Patch -->
+          <div class="mt-8 w-full">
             <a *ngIf="e.id === 'patch'" href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
-              Request a Stability Patch
+              class="w-full no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition">
+              Request a quick fix
             </a>
 
-            <!-- Default CTA for others -->
-            <a *ngIf="e.id !== 'patch'" href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
-              Ask about {{ e.name }}
+            <a *ngIf="e.id === 'launchpad'" href="#contact"
+              class="w-full no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+              Plan my stabilisation
+            </a>
+
+            <a *ngIf="e.id === 'operator'" href="#contact"
+              class="w-full no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-medium text-white bg-white/10 hover:bg-white/15 border border-white/15">
+              Start managed ops
             </a>
           </div>
         </button>
       </div>
     </section>
 
-    <!-- THE CIRCUIT -->
-    <section id="circuit" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="The Circuit"
-        subtitle="Automation that turns your digital systems into a reliable flow — capture, route, deploy, operate."></app-section-title>
-
+    <section id="automations" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Automations (The Circuit)"
+        subtitle="We build lightweight automations that remove manual admin and stop leads from leaking—without buying a massive CRM."></app-section-title>
 
       <div class="mt-10 grid gap-6 lg:grid-cols-2">
         <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
-          <h3 class="text-base font-semibold">How the circuit runs</h3>
-          <p class="mt-2 text-sm text-white/70">
-            We design lightweight automations that remove manual work and stop leads from leaking.
-          </p>
+          <h3 class="text-base font-semibold">Common Automations</h3>
 
-          <ol class="mt-6 space-y-4">
-            <li *ngFor="let step of circuitSteps" class="flex gap-4">
+          <ol class="mt-6 space-y-5">
+            <li *ngFor="let step of (circuitSteps || [])" class="flex gap-4 items-start">
               <span
-                class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-xs font-semibold text-white/80">
-                {{ step.name }}
+                class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/10 text-xs font-semibold text-[#11D6C3]">
+                {{ step.name.substring(0,1) }}
               </span>
               <div>
-                <p class="text-sm font-medium">{{ step.name }}</p>
+                <p class="text-sm font-semibold text-white">{{ step.name }}</p>
                 <p class="mt-1 text-sm text-white/70">{{ step.description }}</p>
               </div>
             </li>
           </ol>
         </div>
 
-        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
-          <h3 class="text-base font-semibold">{{ circuitExample.title }}</h3>
-          <p class="mt-2 text-sm text-white/70">
-            {{ circuitExample.line }}
-          </p>
-
-          <div class="mt-8 rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/[0.06] p-4">
-            <p class="text-sm text-white/80">
-              Want this? Choose <span class="font-semibold text-white">The Operator</span> and we’ll
-              build circuits as part of ongoing operations.
-            </p>
-          </div>
-
-          <div class="mt-8">
-            <a href="#contact"
-              class="no-underline inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30">
-              Activate Infrastructure
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="w-full flex flex-col items-center justify-center py-16 sm:py-20">
-
-      <div class="w-full">
-
         <div
-          class="w-full rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.02] overflow-hidden flex flex-col items-center py-10 px-4 md:px-12 shadow-sm">
-
-          <h2 class="text-2xl md:text-3xl font-semibold text-white mb-2 text-center">Deployment Pipeline</h2>
-          <p class="text-gray-400 text-sm md:text-base mb-8 text-center">Version-controlled builds, automated deploys,
-            edge security.</p>
-
-          <img src="assets/images/deployment-pipeline.webp"
-            alt="Angular, GitHub Actions, Vercel, Cloudflare Pipeline" loading="lazy"
-            class="w-full max-w-3xl h-auto mb-8 object-contain" />
-
-          <p class="text-gray-400 text-sm md:text-base text-center max-w-2xl">
-            This is the same deployment model used by modern SaaS teams — packaged for small business.
-          </p>
-
+          class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02] flex flex-col justify-center">
+          <div class="rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/[0.06] p-6 text-center">
+            <h3 class="text-lg font-semibold text-white mb-3">Stop losing leads to manual errors</h3>
+            <p class="text-sm text-white/80 mb-6">
+              Automations run quietly in the background, ensuring your customers get instant replies and your team gets
+              notified.
+            </p>
+            <a href="#contact"
+              class="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg">
+              Ask about automations
+            </a>
+            <p class="mt-3 text-xs text-white/50">(Included with Managed Ops)</p>
+          </div>
         </div>
-
-        <div class="mt-4 text-center">
-          <p class="text-[10px] leading-relaxed text-gray-600 max-w-2xl mx-auto">
-            All product names, logos, and brands displayed on this site are the property of their respective owners.
-            The use of these names, logos, and brands is for identification and informational purposes only and does not
-            imply endorsement, sponsorship, or affiliation with SimpliCreate.
-          </p>
-        </div>
-
       </div>
-
     </section>
 
-    <!-- SOLUTIONS ARCHIVE (was Work) -->
-    <section id="solutions" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Solutions Archive" subtitle="A few examples of what we deploy."></app-section-title>
+    <section class="py-16 sm:py-20 border-t border-white/10">
+      <div
+        class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-white/[0.02] overflow-hidden flex flex-col items-center py-10 px-4 md:px-12 shadow-sm">
+        <h2 class="text-2xl md:text-3xl font-semibold text-white mb-2 text-center">Built on Professional Infrastructure
+        </h2>
+        <p class="text-gray-400 text-sm md:text-base mb-8 text-center">We use modern architecture to ensure your website
+          is fast, secure, and easy to update.</p>
+
+        <img src="assets/images/deployment-pipeline.webp" alt="Angular, GitHub Actions, Vercel, Cloudflare Pipeline"
+          loading="lazy" class="w-full max-w-3xl h-auto mb-8 object-contain" />
+
+        <p class="text-gray-400 text-sm md:text-base text-center max-w-2xl">
+          This is the same deployment model used by modern tech teams — packaged and managed for small businesses.
+        </p>
+      </div>
+    </section>
+
+    <section id="work" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+      <app-section-title title="Work & Examples"
+        subtitle="Real-world technical problems we've solved."></app-section-title>
 
       <div class="mt-10 grid gap-6 sm:grid-cols-2">
-        <div *ngFor="let project of projects" class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <div *ngFor="let project of (projects || [])" class="rounded-2xl border border-white/10 p-6 bg-white/5">
           <h3 class="text-base font-semibold">{{ project.name }}</h3>
           <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span *ngFor="let tag of project.tags"
+            <span *ngFor="let tag of (project.tags || [])"
               class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
               {{ tag }}
             </span>
@@ -189,136 +176,90 @@
       </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="FAQ" subtitle="Quick answers to the most common questions."></app-section-title>
+      <app-section-title title="FAQ" subtitle="Common questions from business owners."></app-section-title>
 
       <div class="mt-10 space-y-3">
-        <details *ngFor="let item of faq" class="group rounded-2xl border border-white/10 bg-white/5 p-5">
+        <details *ngFor="let item of (faq || [])" class="group rounded-2xl border border-white/10 bg-white/5 p-5">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
             <span class="text-sm font-semibold">{{ item.question }}</span>
             <span class="text-white/60 group-open:rotate-45 transition">+</span>
           </summary>
-
-          <p class="mt-3 text-sm text-white/70">
-            {{ item.answer }}
-          </p>
+          <p class="mt-3 text-sm text-white/70">{{ item.answer }}</p>
         </details>
-
-        <p *ngIf="faq.length === 0" class="text-sm text-white/60">No FAQs yet.</p>
       </div>
     </section>
 
-    <!-- CONTACT (unchanged logic, same IDs/anchors) -->
     <section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-section-title title="Contact"
-        subtitle="Tell us what you need and we&rsquo;ll get back to you."></app-section-title>
-
-      <!-- Keep your existing contact block exactly as-is below this line if you want.
-           I’m pasting your current one unchanged for safety. -->
+      <app-section-title title="Book a Call or Request a Fix"
+        subtitle="Send a message and we'll respond within 1 business day."></app-section-title>
 
       <div class="mt-10 grid gap-8 lg:grid-cols-2">
-        <!-- LEFT: Contact form -->
         <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
-          <h3 class="text-base font-semibold">Contact us</h3>
-          <p class="mt-2 text-sm text-white/70">
-            No phone or email listed &mdash; send a message here and we&rsquo;ll respond.
-          </p>
 
-          <form class="mt-6 space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <form class="space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
             <div>
               <label class="text-sm font-medium">Name</label>
               <input type="text" formControlName="name"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50"
                 placeholder="Your name" />
-              <p *ngIf="name?.touched && name?.invalid" class="mt-2 text-xs text-red-300">
-                Please enter your name (min 2 characters).
-              </p>
             </div>
 
             <div>
               <label class="text-sm font-medium">Email</label>
               <input type="email" formControlName="email"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
-                placeholder="you@company.com"
-              />
-
-              
-              <p *ngIf="email?.touched && email?.invalid" class="mt-2 text-xs text-red-300">
-                Please enter a valid email address.
-              </p>
+                class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50"
+                placeholder="you@company.com" />
             </div>
 
             <div>
               <label class="text-sm font-medium">Message</label>
-              <textarea rows="5" formControlName="message"
-                class="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/25"
-                placeholder="What do you want help with?"></textarea>
-              <p *ngIf="message?.touched && message?.invalid" class="mt-2 text-xs text-red-300">
-                Please enter a message (min 10 characters).
-              </p>
-            </div>
-            <!-- Honeypot field: hidden from users, bots may fill it out -->
-               <div class="hidden" aria-hidden="true">
-                <label>
-                  <input type="text" formControlName="website" autocomplete="off" tabindex="-1" />
-                  </label>
-              </div>
-
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <button type="submit" [disabled]="submitting"
-                class="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/30 disabled:opacity-60 disabled:cursor-not-allowed">
-                <span *ngIf="!submitting">Send message</span>
-                <span *ngIf="submitting">Sending&hellip;</span>
-              </button>
-
-              <p class="text-xs text-white/50">We usually reply within 1 business day.</p>
+              <textarea rows="4" formControlName="message"
+                class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50"
+                placeholder="What do you need help with?"></textarea>
             </div>
 
-            <p *ngIf="submitSuccess" class="text-sm text-emerald-300">
-              Thanks &mdash; your message was sent. We&rsquo;ll get back to you shortly.
-            </p>
+            <div class="hidden" aria-hidden="true">
+              <input type="text" formControlName="website" tabindex="-1" />
+            </div>
 
-            <p *ngIf="submitError" class="text-sm text-red-300">
-              {{ submitError }}
-            </p>
+            <button type="submit" [disabled]="submitting"
+              class="w-full inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/20 disabled:opacity-60">
+              <span *ngIf="!submitting">Send Message</span>
+              <span *ngIf="submitting">Sending&hellip;</span>
+            </button>
+
+            <p *ngIf="submitSuccess" class="text-sm text-emerald-400 text-center mt-2">Message sent successfully.</p>
+            <p *ngIf="submitError" class="text-sm text-red-400 text-center mt-2">{{ submitError }}</p>
           </form>
         </div>
 
-        <!-- RIGHT: Expectations / quick checklist -->
-        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02]">
-          <h3 class="text-base font-semibold">What to include</h3>
-          <p class="mt-2 text-sm text-white/70">
-            A few details help us respond faster and more accurately.
-          </p>
+        <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02] flex flex-col">
 
-          <ul class="mt-6 space-y-3 text-sm text-white/80">
-            <li class="flex gap-3">
-              <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">Your business</span> + what you do</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">What&rsquo;s broken</span> (or what you want
-                improved)</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">Your deadline</span> (if any)</span>
-            </li>
-            <li class="flex gap-3">
-              <span class="mt-1 h-2 w-2 rounded-full bg-[#11D6C3]"></span>
-              <span><span class="font-medium text-white">Links</span> to your website / socials</span>
-            </li>
-          </ul>
-
-          <div class="mt-8 rounded-xl border border-white/10 bg-white/5 p-4">
-            <p class="text-sm text-white/80">
-              Prefer email? <span class="text-white font-medium">hello@simplicreate.tech</span>
+          <div class="mb-8">
+            <h3 class="text-lg font-semibold mb-2">Direct Access</h3>
+            <p class="text-sm text-white/70 mb-4">
+              Based in Cape Town, serving SMEs across South Africa. When you reach out, you speak directly to the
+              engineer doing the work—no account managers or call centres.
             </p>
+
+            <a href="https://wa.me/27616434495" target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2.5 text-sm font-medium text-green-400 hover:bg-green-500/20 transition">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
+
+          <div class="mt-auto border-t border-white/10 pt-6">
+            <h4 class="text-sm font-semibold mb-2">Email</h4>
+            <p class="text-sm text-[#11D6C3]">hello&#64;simplicreate.tech</p>
           </div>
         </div>
       </div>
     </section>
+
   </div>
 </main>

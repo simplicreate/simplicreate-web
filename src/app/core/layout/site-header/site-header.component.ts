@@ -8,13 +8,14 @@ import { NgFor, NgIf } from '@angular/common';
   templateUrl: './site-header.component.html',
 })
 export class SiteHeaderComponent {
+  // Updated with the new SME-friendly labels and matching section IDs
   nav = [
-  { label: 'Engagements', href: '#engagements' },
-  { label: 'The Circuit', href: '#circuit' },
-  { label: 'Solutions Archive', href: '#solutions' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Contact', href: '#contact' },
-];
+    { label: 'Services', href: '#services' },
+    { label: 'Automations', href: '#automations' },
+    { label: 'Work', href: '#work' },
+    { label: 'FAQ', href: '#faq' }
+  ];
+  
   isMenuOpen = false;
 
   toggleMenu() {
