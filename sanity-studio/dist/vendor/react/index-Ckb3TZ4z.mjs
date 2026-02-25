@@ -245,11 +245,11 @@ var h = typeof reportError == "function" ? reportError : function(e) {
     throw Error(
       "The argument must be a React element, but you passed " + e + "."
     );
-  var r = w({}, e.props), o = e.key;
+  var r = w({}, e.props), o = e.key, s;
   if (t != null)
     for (s in t.key !== void 0 && (o = "" + t.key), t)
       !N.call(t, s) || s === "key" || s === "__self" || s === "__source" || s === "ref" && t.ref === void 0 || (r[s] = t[s]);
-  var s = arguments.length - 2;
+  s = arguments.length - 2;
   if (s === 1) r.children = n;
   else if (1 < s) {
     for (var f = Array(s), a = 0; a < s; a++)
