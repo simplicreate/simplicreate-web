@@ -37,11 +37,13 @@ export default async function handler(req, res) {
       ...body,
     };
 
-   const response = await fetch('https://api.web3forms.com/submit', {
+    const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json' // Forces Web3Forms to return strict JSON
+        'Accept': 'application/json',
+        // The Disguise: Tells Cloudflare this is a normal human using Google Chrome
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
       },
       body: JSON.stringify(web3formsPayload),
     });
@@ -49,7 +51,7 @@ export default async function handler(req, res) {
     // Safe parsing: Check what Web3Forms actually sent back before parsing
     const contentType = response.headers.get("content-type");
     let data;
-    
+
     if (contentType && contentType.includes("application/json")) {
       data = await response.json();
     } else {
