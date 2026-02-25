@@ -20,9 +20,11 @@ if (typeof window !== 'undefined') {
 }
 
 bootstrapApplication(AppComponent, {
-  ...appConfig,
+  // Use empty object as fallback if appConfig is missing
+  ...(appConfig || {}), 
   providers: [
-    ...appConfig.providers,
+    // Use empty array as fallback if providers is missing
+    ...(appConfig?.providers || []), 
     provideHttpClient()
   ]
 })
