@@ -7,8 +7,6 @@ import { finalize } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { SectionTitleComponent } from '../../shared/components/section-title.component';
 import { ContentService } from '../../core/sanity/content.service';
-import { environment } from '../../../environments/environment';
-
 
 import type {
   SiteSettings,
@@ -21,9 +19,7 @@ import { PROJECTS } from '../../data/projects.data';
 
 type CircuitStep = { name: string; description: string; };
 
-// ---- Fallback engagements (keeps UI stable if CMS has no data) ----
-// NOTE: This is intentionally validated against the CMS Engagement type.
-const FALLBACK_ENGAGEMENTS = [
+const FALLBACK_ENGAGEMENTS: CmsEngagement[] = [
   {
     id: 'patch',
     name: 'Quick Fix (Once-off)',
@@ -174,61 +170,17 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit() {
-  this.submitError = '';
-  this.submitSuccess = false;
+    this.submitError = '';
+    this.submitSuccess = false;
 
-  if (this.contactForm.invalid) {
-    this.contactForm.markAllAsTouched();
-    return;
-  }
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
 
-  this.submitting = true;
-  const v = this.contactForm.getRawValue();
+    this.submitting = true;
+    const v = this.contactForm.getRawValue();
 
-<<<<<<< HEAD
-  // Honeypot: silently succeed
-  if ((v.website ?? '').trim().length > 0) {
-    this.submitting = false;
-    this.submitSuccess = true;
-    this.contactForm.reset();
-    return;
-  }
-
-  const payload = {
-    access_key: environment.web3forms.accessKey,
-    name: v.name,
-    email: v.email,
-    message: v.message,
-    subject: 'New lead — SimpliCreate',
-    from_name: 'SimpliCreate Website',
-    // Optional: botcheck: true (Web3Forms reserved field)
-  };
-
-  this.http.post<any>(
-    'https://api.web3forms.com/submit',
-    payload,
-    { headers: { Accept: 'application/json' } }  // Angular sets Content-Type: application/json automatically
-  )
-  .pipe(finalize(() => (this.submitting = false)))
-  .subscribe({
-    next: (res) => {
-      // Web3Forms returns JSON; treat non-success as error
-      if (res?.success) {
-        this.submitSuccess = true;
-        this.submitError = '';
-        this.contactForm.reset();
-      } else {
-        this.submitSuccess = false;
-        this.submitError = res?.message || 'Submission failed. Please try again.';
-      }
-    },
-    error: (err) => {
-      this.submitSuccess = false;
-      this.submitError = err?.error?.message || 'Something went wrong sending your message. Please try again.';
-    },
-  });
-}}
-=======
     if ((v.website || '').trim().length > 0) {
       this.submitting = false;
       this.submitSuccess = true;
@@ -245,13 +197,11 @@ export class HomeComponent implements OnInit {
       from_name: 'SimpliCreate Website'
     };
 
-    // 1. We tell the post method exactly what data shape to expect
     this.http.post<{ success: boolean; message?: string }>('https://api.web3forms.com/submit', payload, {
       headers: { 'Accept': 'application/json' }
     })
     .pipe(finalize(() => this.submitting = false))
     .subscribe({
-      // 2. We remove the ': any' because TypeScript now knows 'res' matches the shape above
       next: (res) => {
         if (res.success) {
           this.submitSuccess = true;
@@ -266,4 +216,3 @@ export class HomeComponent implements OnInit {
     });
   }
 }
->>>>>>> design-refresh
