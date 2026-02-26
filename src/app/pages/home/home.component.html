@@ -228,7 +228,7 @@
           is fast, secure, and easy to update.</p>
 
         <img src="assets/images/deployment-pipeline.webp" alt="Angular, GitHub Actions, Vercel, Cloudflare Pipeline"
-          loading="lazy" class="w-full max-w-3xl h-auto mb-8 object-contain" />
+          width="800" height="400" loading="lazy" class="w-full max-w-3xl h-auto mb-8 object-contain" />
 
         <p class="text-gray-400 text-sm md:text-base text-center max-w-2xl">
           This is the same deployment model used by modern tech teams — packaged and managed for small businesses.
@@ -302,7 +302,7 @@
               <input type="text" formControlName="website" tabindex="-1" />
             </div>
 
-            <button type="submit" [disabled]="submitting"
+            <button type="submit" aria-label="Submit" [disabled]="submitting"
               class="w-full inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/20 disabled:opacity-60">
               <span *ngIf="!submitting">Send Message</span>
               <span *ngIf="submitting">Sending&hellip;</span>
