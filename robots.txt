@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /sanity-studio/
 
-Sitemap: https://www.simplicreate.tech/sitemap.xml
+Sitemap: https://simplicreate.tech/sitemap.xml

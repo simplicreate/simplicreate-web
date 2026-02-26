@@ -2,7 +2,7 @@
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
     
     <a href="#top" class="flex items-center gap-3" (click)="closeMenu()">
-      <img src="assets/brand/simplicreate-logo.webp" alt="SimpliCreate logo" class="h-10 w-auto" />
+      <img src="assets/brand/simplicreate-logo.webp" alt="SimpliCreate logo" width="160" height="40" class="h-10 w-auto" />
       <div class="leading-tight">
         <div class="text-sm font-semibold tracking-tight bg-linear-to-r from-[#0B2A6F] via-[#1557C6] to-[#11D6C3] bg-clip-text text-transparent">
            SimpliCreate
@@ -26,7 +26,7 @@
       </a>
     </div>
 
-    <button class="md:hidden p-2 text-white/70 hover:text-white" (click)="toggleMenu()">
+    <button class="md:hidden p-2 text-white/70 hover:text-white" aria-label="Toggle menu" (click)="toggleMenu()">
       <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path *ngIf="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         <path *ngIf="isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
