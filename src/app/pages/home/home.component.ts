@@ -68,11 +68,15 @@ const FALLBACK_ENGAGEMENTS: CmsEngagement[] = [
 const FALLBACK_FAQ: FaqItem[] = [
   {
     question: 'What do you actually do—are you a web design company?',
-    answer: 'We’re an infrastructure and operations partner. We don’t focus on "designing pages"; we focus on keeping your website and systems stable, secure, fast, and easy to change safely.'
+    answer: 'We are an infrastructure partner. We don\'t focus on "designing pages"; we focus on keeping your website and systems stable, secure, fast, and easy to change safely.'
   },
   {
     question: 'Do you provide hosting?',
-    answer: 'We can manage hosting on your behalf (using reputable modern platforms), or work with your existing host. The goal is reliability and clear ownership—no finger-pointing when something breaks.'
+    answer: 'We manage professional hosting on your behalf or work with your existing host. Our goal is reliability and clear ownership—no finger-pointing when something breaks.'
+  },
+  {
+    question: 'What is a "Secure Site Migration"?',
+    answer: 'It is a one-time stabilisation and upgrade process. We migrate your website off fragile hosting (like old WordPress setups) and onto our modern, secure infrastructure. We fix critical performance issues, harden your security, and set up a clean deployment pipeline so your site becomes lightning-fast, stable, and fully owned by you.'
   },
   {
     question: 'Can you do small fixes without a full engagement?',
