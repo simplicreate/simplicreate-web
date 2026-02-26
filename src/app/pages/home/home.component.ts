@@ -35,23 +35,24 @@ const FALLBACK_ENGAGEMENTS: CmsEngagement[] = [
   },
   {
     id: 'launchpad',
-    name: 'Stabilise & Harden',
-    subtitle: 'We clean up your setup and make it reliable.',
-    priceLine: 'Once-off engagement',
-    description: 'Fix critical breakages, harden infrastructure, and standardise deployments.',
-    bullets: [
-      'Baseline performance and technical SEO improvements',
-      'Harden Cloudflare (DNS/SSL/WAF) to reduce risk',
-      'Set up a clean deployment pipeline with safe rollbacks'
-    ],
-    highlight: true,
-    order: 2,
+  name: 'Secure Site Migration',
+  subtitle: 'Move off fragile setups. Site stays fast, secure, and reliable.',
+  priceLine: 'Once-off Setup',
+  description: 'We migrate your website onto our modern Angular stack, harden your security, and set up safe, zero-downtime deployments.',
+  bullets: [
+    'Complete migration to our standard, high-performance stack.',
+    'Speed & SEO baseline: metadata cleanup and image optimization.',
+    'Cloudflare hardening: DNS/SSL/WAF and clean redirects.',
+    'Standardized deployments: GitHub + safe rollbacks via Vercel.'
+  ],
+  highlight: true,
+  order: 2,
   },
   {
     id: 'operator',
     name: 'Managed Ops (Monthly)',
     subtitle: 'We run the technical side so you don’t lose leads.',
-    priceLine: 'Monthly engagement',
+    priceLine: 'Monthly Reliability',
     description: 'Ongoing reliability. We handle the monitoring and updates so you don’t experience downtime or slowness.',
     bullets: [
       'Monitoring, updates, backups, dependency hygiene',
