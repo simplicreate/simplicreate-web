@@ -134,6 +134,7 @@ export class HomeComponent implements OnInit {
   constructor(private content: ContentService, private http: HttpClient) {}
 
   async ngOnInit(): Promise<void> {
+    setTimeout(async () => {
     try {
       const [s, sanityProjects, f, cs, sanityEngagements] = await Promise.all([
         this.content.getSiteSettings(),
@@ -155,6 +156,7 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.error('CMS fetch failed. Using hardcoded SME fallbacks:', e);
     }
+  }, 100);
   }
 
   get name() { return this.contactForm.get('name'); }
@@ -172,6 +174,9 @@ export class HomeComponent implements OnInit {
 
   setActive(id: string) {
     this.activeEngagementId = id;
+  }
+  trackByEngagementId(index: number, engagement: CmsEngagement): string {
+    return engagement.id;
   }
 
   onSubmit() {
