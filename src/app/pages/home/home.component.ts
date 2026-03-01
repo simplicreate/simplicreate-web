@@ -22,6 +22,7 @@ import type {
   HomeData,
 } from '../../core/sanity/content.service';
 import { SiteHeaderComponent } from '../../core/layout/site-header/site-header.component';
+import { TrustBarComponent } from './components/trust-bar/trust-bar.component';
 
 
 type CircuitStep = { name: string; description: string; };
@@ -108,7 +109,8 @@ const FALLBACK_FAQ: FaqItem[] = [
     DeploymentComponent,
     ProjectsComponent,
     FaqComponent,
-    ContactComponent
+    ContactComponent,
+    TrustBarComponent,
   ],
   templateUrl: './home.component.html'
 })
@@ -117,6 +119,7 @@ export class HomeComponent implements OnInit {
   loading = true;
   // 1. Fixed the variable names to match your HTML exactly!
   siteSettings: SiteSettings | null = null;
+  activeService: string = 'migration';
   services: CmsEngagement[] = []; // renamed from 'engagements'
   projects: Project[] = [];
   contactSettings: ContactSettings | null = null;
@@ -161,8 +164,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  setActive(id: string) {
-    this.activeEngagementId = id;
+  setActive(serviceId: string) {
+  this.activeService = serviceId;
+  this.cdr.detectChanges();
   }
   trackByEngagementId(index: number, engagement: CmsEngagement): string {
     return engagement.id;

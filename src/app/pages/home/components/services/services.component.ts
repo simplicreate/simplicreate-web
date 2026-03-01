@@ -6,23 +6,18 @@ import { SectionTitleComponent } from '../../../../shared/components/section-tit
 @Component({
   selector: 'app-services',
   standalone: true,
-  // 1. Added SectionTitleComponent to imports so the HTML recognizes it
   imports: [CommonModule, SectionTitleComponent], 
   templateUrl: './services.component.html'
 })
 export class ServicesComponent {
   @Input() services: Engagement[] = [];
-  
-  // 2. Renamed to activeEngagementId to match exactly what your HTML expects
+  // This is what the Home component will pass down to keep everything in sync
   @Input() activeEngagementId: string = 'patch'; 
 
   @Output() selectionChange = new EventEmitter<string>();
 
-  get displayEngagements(): Engagement[] {
-    return this.services && this.services.length > 0 ? this.services : [];
-  }
-
-  // 3. Added this method because your HTML is calling it
+  // Use the @for or *ngFor loop variable, don't define 'e' here.
+  
   getEngagementTag(e: Engagement): string | null {
     if (e.highlight) return 'Most Popular';
     switch (e.id) {

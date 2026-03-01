@@ -1,14 +1,18 @@
 ﻿<ng-container *ngIf="!loading; else loader">
   <app-site-header class="fixed top-0 left-0 w-full z-50"></app-site-header>
 
-  <main>
-    <div class="min-h-screen md:min-h-[700px]">
-  <app-hero [siteSettings]="siteSettings!"></app-hero>
-</div>
+  <main class="min-h-screen">
+    <div class="min-h-[600px] md:min-h-[800px]">
+      <app-hero [siteSettings]="siteSettings!"></app-hero>
+    </div>
 
-    <section id="services" class="min-h-[400px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-  <app-services [services]="services"></app-services> 
-</section>
+    <app-trust-bar></app-trust-bar>
+
+    <app-services 
+  [services]="services" 
+  [activeEngagementId]="activeEngagementId"
+  (selectionChange)="setActive($event)">
+</app-services>
 
     @defer (on viewport) {
     <app-golden-path></app-golden-path>
@@ -25,8 +29,8 @@
     }
 
     <section id="work" class="min-h-[600px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-  <app-projects [projects]="projects"></app-projects>
-</section>
+      <app-projects [projects]="projects"></app-projects>
+    </section>
 
     <app-faq [faq]="faq"></app-faq>
 
