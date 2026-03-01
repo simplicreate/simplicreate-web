@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 
 // Services
-import { environment } from '../../../environments/environment';
 import { ContentService } from '../../core/sanity/content.service';
 
 // Child Components
@@ -12,7 +11,7 @@ import { ServicesComponent } from './components/services/services.component'; //
 import { GoldenPathComponent } from './components/golden-path/golden-path.component';
 import { AutomationsComponent } from './components/automations/automations.component';
 import { DeploymentComponent } from './components/deployment/deployment.component';
-import { ProjectsComponent } from './components/projects/projects.component';
+import { Project, ProjectsComponent } from './components/projects/projects.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { ContactComponent } from './components/contact/contact.component';
 import type {
@@ -119,14 +118,14 @@ export class HomeComponent implements OnInit {
   // 1. Fixed the variable names to match your HTML exactly!
   siteSettings: SiteSettings | null = null;
   services: CmsEngagement[] = []; // renamed from 'engagements'
-  projects: any[] = [];
-  faq: FaqItem[] = [];
-  contactSettings: ContactSettings | any = null;
+  projects: Project[] = [];
+  contactSettings: ContactSettings | null = null;
   activeEngagementId: string = 'patch';
 
   // Fallbacks...
   readonly fallbackHero = { /* your fallback data */ };
   readonly circuitSteps: CircuitStep[] = [ /* your steps */];
+  faq: FaqItem[] | undefined;
 
   constructor(
     private content: ContentService,
@@ -134,27 +133,24 @@ export class HomeComponent implements OnInit {
   ) { }
   // 2. Removed the setTimeout so it fetches INSTANTLY
   async ngOnInit(): Promise<void> {
-  try {
-    const data: HomeData = await this.content.getFullHomeData();
-    
-    // Mapping the batched results to your component variables
-    this.siteSettings = data.siteSettings;
-    this.projects = data.projects;
-    this.faq = data.faq.length > 0 ? data.faq : FALLBACK_FAQ;
-    this.services = data.engagements.length > 0 ? data.engagements : FALLBACK_ENGAGEMENTS;
-    this.contactSettings = data.contactSettings;
+    try {
+      const data: HomeData = await this.content.getFullHomeData();
 
-    this.loading = false;
-    this.cdr.detectChanges();
-  } catch (e) {
-    this.loading = false;
-    console.error('CMS fetch failed', e);
-  }
+      // Mapping the batched results to your component variables
+      this.siteSettings = data.siteSettings;
+      this.projects = data.projects;
+      this.faq = data.faq.length > 0 ? data.faq : FALLBACK_FAQ;
+      this.services = data.engagements.length > 0 ? data.engagements : FALLBACK_ENGAGEMENTS;
+      this.contactSettings = data.contactSettings;
 
-    setTimeout(() => { 100 }); // <-- This is just to trigger change detection after the async call, you can remove it if not needed.
-    // ... keep your helper functions below this line ..., 
-
-  }
+      this.loading = false;
+      this.cdr.detectChanges();
+    } catch (e) {
+      this.loading = false;
+      console.error('CMS fetch failed', e);
+    }
+  };
+  
 
   getEngagementTag(e: CmsEngagement): string | null {
     if (e.highlight) return 'Recommended';

@@ -1,0 +1,15 @@
+{
+  "name": "SimpliCreate",
+  "short_name": "SimpliCreate",
+  "icons": [
+    {
+      "src": "/favicon.svg?v=7",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#070B14",
+  "background_color": "#070B14",
+  "display": "standalone",
+  "start_url": "/"
+}

@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SiteSettings } from '../../../../core/sanity/content.service';
-import { SectionTitleComponent } from '../../../../shared/components/section-title.component';
 
 @Component({
   selector: 'app-hero',
