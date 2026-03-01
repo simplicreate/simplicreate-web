@@ -1,3 +1,9 @@
+## 6.10.2 (2026-02-06)
+
+### Bug fixes
+
+Move the selection to a less surprising place when undoing, moving the selection, redoing, then undoing again.
+
 ## 6.10.1 (2025-12-17)
 
 ### Bug fixes
