@@ -1,0 +1,62 @@
+<section id="services" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <app-section-title title="Services"
+      subtitle="Choose how you want help—once-off fixes, a full stabilisation setup, or monthly managed operations."></app-section-title>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-3 items-center">
+     <div *ngFor="let e of displayEngagements; trackBy: trackByEngagementId" 
+     [id]="e.id" 
+     (mouseenter)="setActive(e.id)"
+     (click)="setActive(e.id)"
+     class="relative text-left rounded-3xl p-8 flex flex-col h-full cursor-pointer transition-all duration-300 ease-out border-2 group hover:-translate-y-2 hover:shadow-2xl"
+     [class.scale-105]="e.highlight" 
+     [class.z-20]="e.highlight"
+     [class.bg-[#0D1B26]]="e.highlight" 
+     [class.border-[#11D6C3]]="e.highlight"
+     [class.shadow-[#11D6C3]/10]="e.highlight"
+     [class.z-10]="!e.highlight" 
+     [class.bg-white/5]="!e.highlight" 
+     [class.border-white/10]="!e.highlight"
+     [class.hover:border-[#11D6C3]/40]="!e.highlight">
+      
+        <div class="min-h-[3.5rem] flex items-start justify-between gap-4">
+          <h3 class="text-xl font-bold text-white">{{ e.name }}</h3>
+          <span *ngIf="getEngagementTag(e) as tag"
+            class="shrink-0 rounded-full border border-[#11D6C3]/30 bg-[#11D6C3]/10 px-3 py-1 text-xs font-bold text-[#11D6C3]">
+            {{ tag }}
+          </span>
+        </div>
+      
+      
+
+        <div class="min-h-[3rem] mt-1">
+          <p class="text-sm text-white/70 leading-relaxed">{{ e.subtitle }}</p>
+        </div>
+
+        <div class="mt-4 rounded-xl border border-white/10 bg-white/5 p-4">
+          <span class="text-sm font-bold text-[#11D6C3]">{{ e.priceLine }}</span>
+        </div>
+
+        <div class="min-h-[5rem] mt-6">
+          <p class="text-sm text-white/80 leading-relaxed">{{ e.description }}</p>
+        </div>
+
+        <ul class="mt-6 space-y-4 text-sm text-white/85 flex-grow">
+          <li *ngFor="let b of (e.bullets || [])" class="flex gap-3">
+            <span class="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-[#11D6C3] shadow-[0_0_8px_#11D6C3]"></span>
+            <span>{{ b }}</span>
+          </li>
+        </ul>
+
+        <div class="mt-8 w-full">
+          <a href="#contact"
+            class="w-full no-underline inline-flex items-center justify-center rounded-xl px-5 py-4 text-sm font-bold text-[#041018] bg-[#11D6C3] hover:brightness-110 hover:scale-[1.02] transition-all shadow-lg shadow-[#11D6C3]/20">
+            {{ e.id === 'patch' ? 'Request Quick Fix' : (e.id === 'launchpad' ? 'Plan My Migration' : 'Start Managed
+            Ops') }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

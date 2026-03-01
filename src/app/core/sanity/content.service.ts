@@ -2,23 +2,33 @@ import { Injectable } from '@angular/core';
 import { sanityClient, sanityEnabled } from './sanity.client';
 import { environment } from '../../../environments/environment';
 
-import type { Project } from '../../data/projects.data';
-import type { Service } from '../../data/services.data';
+export interface Project {
+  name: string;
+  outcome: string;
+  tags: string[];
+}
+
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  bullets: string[];
+  icon?: string;
+}
 
 export interface SiteSettings {
   brandLabel?: string;
+  heroTagline?: string;      
   heroHeadline?: string;
   heroSubheadline?: string;
-
+  heroBenefits?: string[];  
+  
   ctaPrimaryText?: string;
   ctaPrimaryHref?: string;
-
   ctaSecondaryText?: string;
   ctaSecondaryHref?: string;
-
   ctaTertiaryText?: string;
   ctaTertiaryHref?: string;
-
   contactEmail?: string;
 }
 
@@ -94,13 +104,15 @@ export class ContentService {
     return sanityClient;
   }
 
-  async getSiteSettings(): Promise<SiteSettings | null> {
+async getSiteSettings(): Promise<SiteSettings | null> {
     const client = this.getClient();
     return client.fetch(
       `*[_type == "siteSettings"][0]{
         brandLabel,
+        heroTagline,      
         heroHeadline,
         heroSubheadline,
+        heroBenefits,     
         ctaPrimaryText,
         ctaPrimaryHref,
         ctaSecondaryText,
@@ -111,6 +123,7 @@ export class ContentService {
       }`,
     );
   }
+
 
   async getServices(): Promise<Service[]> {
     const client = this.getClient();
@@ -135,32 +148,36 @@ export class ContentService {
     }));
   }
 
-  async getEngagements(): Promise<Engagement[]> {
-    const client = this.getClient();
-    const items = await client.fetch<EngagementDoc[]>(
-      `*[_type == "engagement"]|order(order asc){
-    id,
-    name,
-    subtitle,
-    priceLine,
-    description,
-    bullets,
-    "highlight": coalesce(highlight, false),
-    order
-  }`,
-    );
+ async getEngagements(): Promise<Engagement[]> {
+  const client = this.getClient();
+  
+  // We point this to "service" because that is the name of our Sanity Schema
+  const items = await client.fetch<any[]>(
+    `*[_type == "service"] | order(order asc){
+      id,
+      name,
+      subtitle,
+      priceLine,
+      description,
+      bullets,
+      highlight,
+      order
+    }`,
+  );
 
-    return (items ?? []).map((e) => ({
-      id: e.id ?? '',
-      name: e.name ?? '',
-      subtitle: e.subtitle ?? '',
-      priceLine: e.priceLine ?? '',
-      description: e.description ?? '',
-      bullets: e.bullets ?? [],
-      highlight: !!e.highlight,
-      order: e.order,
-    }));
-  }
+  console.log('🔍 Raw Services from Sanity:', items); // Debugging log
+
+  return (items ?? []).map((e) => ({
+    id: e.id ?? '',
+    name: e.name ?? '',
+    subtitle: e.subtitle ?? '',
+    priceLine: e.priceLine ?? '',
+    description: e.description ?? '',
+    bullets: e.bullets ?? [],
+    highlight: !!e.highlight,
+    order: e.order,
+  }));
+}
 
   async getProjects(): Promise<Project[]> {
     const client = this.getClient();

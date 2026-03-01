@@ -1,0 +1,40 @@
+<section id="automations" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    
+    <app-section-title title="Automations (The Circuit)"
+      subtitle="We build lightweight automations that remove manual admin and stop leads from leaking—without buying a massive CRM."></app-section-title>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <h3 class="text-base font-semibold text-white">Common Automations</h3>
+
+        <ol class="mt-6 space-y-5">
+          <li *ngFor="let step of displaySteps" class="flex gap-4 items-start">
+            <span class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/10 text-xs font-semibold text-[#11D6C3]">
+              {{ step.name.substring(0,1) }}
+            </span>
+            <div>
+              <p class="text-sm font-semibold text-white">{{ step.name }}</p>
+              <p class="mt-1 text-sm text-white/70">{{ step.description }}</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02] flex flex-col justify-center">
+        <div class="rounded-xl border border-[#11D6C3]/20 bg-[#11D6C3]/[0.06] p-6 text-center">
+          <h3 class="text-lg font-semibold text-white mb-3">Stop losing leads to manual errors</h3>
+          <p class="text-sm text-white/80 mb-6">
+            Automations run quietly in the background, ensuring your customers get instant replies and your team gets notified.
+          </p>
+          <a href="#contact"
+            class="no-underline inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/20">
+            Ask about automations
+          </a>
+          <p class="mt-3 text-xs text-white/70">(Included with Managed Ops)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

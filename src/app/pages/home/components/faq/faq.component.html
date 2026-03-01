@@ -1,0 +1,17 @@
+<section id="faq" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    
+    <app-section-title title="FAQ" subtitle="Common questions from business owners."></app-section-title>
+
+    <div class="mt-10 space-y-3 max-w-4xl mx-auto">
+      <details *ngFor="let item of displayFaq" class="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 outline-none">
+          <span class="text-sm font-semibold text-white">{{ item.question }}</span>
+          <span class="text-white/80 group-open:rotate-45 transition-transform duration-300">+</span>
+        </summary>
+        <p class="mt-4 text-sm text-white/70 leading-relaxed">{{ item.answer }}</p>
+      </details>
+    </div>
+
+  </div>
+</section>

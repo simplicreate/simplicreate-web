@@ -1,0 +1,22 @@
+<section id="work" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    
+    <app-section-title title="Work & Examples"
+      subtitle="Real-world technical problems we've solved."></app-section-title>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      <div *ngFor="let project of displayProjects" class="rounded-2xl border border-white/10 p-6 bg-white/5 transition hover:bg-white/10 hover:border-[#11D6C3]/40">
+        <h3 class="text-base font-semibold text-white">{{ project.name }}</h3>
+        <p class="mt-2 text-sm text-white/80">{{ project.outcome }}</p>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span *ngFor="let tag of project.tags"
+            class="rounded-full border border-white/10 px-3 py-1 text-xs text-white/80 bg-white/5">
+            {{ tag }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<section id="contact" class="scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    <app-section-title title="Book a Call or Request a Fix"
+      subtitle="Send a message and we'll respond within 1 business day."></app-section-title>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-2">
+      <div class="rounded-2xl border border-white/10 p-6 bg-white/5">
+        <form class="space-y-4" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label class="text-sm font-medium text-white">Name</label>
+            <input type="text" formControlName="name"
+              class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50 transition-colors"
+              placeholder="Your name" />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-white">Email</label>
+            <input type="email" formControlName="email"
+              class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50 transition-colors"
+              placeholder="you@company.com" />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-white">Engagement Type</label>
+            <select formControlName="engagementType"
+              class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50 transition-colors">
+              <option value="patch">Patch</option>
+              <option value="launchpad">Launchpad</option>
+              <option value="operator">Operator</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-sm font-medium text-white">Message</label>
+            <textarea rows="4" formControlName="message"
+              class="mt-2 w-full rounded-xl border border-white/10 bg-[#070B14] px-4 py-3 text-sm text-white outline-none focus:border-[#11D6C3]/50 transition-colors"
+              placeholder="What do you need help with?"></textarea>
+          </div>
+
+          <div class="hidden" aria-hidden="true">
+            <input type="text" formControlName="website" tabindex="-1" />
+          </div>
+
+          <button type="submit" aria-label="Submit" [disabled]="submitting || contactForm.invalid"
+            class="w-full inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-[#041018] bg-[#11D6C3] hover:brightness-110 transition shadow-lg shadow-[#11D6C3]/20 disabled:opacity-50 disabled:cursor-not-allowed mt-2">
+            <span *ngIf="!submitting">Send Message</span>
+            <span *ngIf="submitting">Sending&hellip;</span>
+          </button>
+
+          <p *ngIf="submitSuccess" class="text-sm text-emerald-400 text-center mt-3">Message sent successfully.</p>
+          <p *ngIf="submitError" class="text-sm text-red-400 text-center mt-3">{{ submitError }}</p>
+        </form>
+      </div>
+
+      <div class="rounded-2xl border border-white/10 p-6 bg-gradient-to-b from-white/5 to-white/[0.02] flex flex-col">
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-2 text-white">Direct Access</h3>
+          <p class="text-sm text-white/70 mb-6 leading-relaxed">
+            Based in Cape Town, serving SMEs across South Africa. When you reach out, you speak directly to the
+            engineer doing the work—no account managers or call centres.
+          </p>
+
+          <a href="https://wa.me/27616434495" target="_blank" rel="noopener noreferrer"
+            class="no-underline inline-flex items-center gap-2 rounded-xl border border-green-500/30 bg-green-500/10 px-5 py-3 text-sm font-medium text-green-400 hover:bg-green-500/20 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 3.825 0 6.938 3.112 6.938 6.937 0 3.825-3.113 6.938-6.938 6.938z" />
+            </svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+
+        <div class="mt-auto border-t border-white/10 pt-6">
+          <h4 class="text-sm font-semibold mb-2 text-white">Email</h4>
+          <p class="text-sm text-[#11D6C3]">hello&#64;simplicreate.tech</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
