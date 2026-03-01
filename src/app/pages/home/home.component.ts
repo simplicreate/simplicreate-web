@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit {
   // Fallbacks...
   readonly fallbackHero = { /* your fallback data */ };
   readonly circuitSteps: CircuitStep[] = [ /* your steps */];
-  faq: FaqItem[] | undefined;
+ faq: FaqItem[] = [];
 
   constructor(
     private content: ContentService,
@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
       // Mapping the batched results to your component variables
       this.siteSettings = data.siteSettings;
       this.projects = data.projects;
-      this.faq = data.faq.length > 0 ? data.faq : FALLBACK_FAQ;
+      this.faq = (data.faq && data.faq.length > 0) ? data.faq : FALLBACK_FAQ;
       this.services = data.engagements.length > 0 ? data.engagements : FALLBACK_ENGAGEMENTS;
       this.contactSettings = data.contactSettings;
 
