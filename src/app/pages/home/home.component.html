@@ -4,7 +4,9 @@
   <main>
     <app-hero [siteSettings]="siteSettings!"></app-hero>
 
-    <app-services [services]="services"></app-services>
+    <section id="services" class="min-h-[400px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <app-services [services]="services"></app-services> 
+</section>
 
     @defer (on viewport) {
     <app-golden-path></app-golden-path>
@@ -20,7 +22,9 @@
     <div class="min-h-[400px]"></div>
     }
 
-    <app-projects [projects]="projects"></app-projects>
+    <section id="work" class="min-h-[600px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+  <app-projects [projects]="projects"></app-projects>
+</section>
 
     <app-faq [faq]="faq"></app-faq>
 
