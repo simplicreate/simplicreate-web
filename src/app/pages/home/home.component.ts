@@ -20,6 +20,7 @@ import type {
   FaqItem,
   ContactSettings,
   Engagement as CmsEngagement,
+  HomeData,
 } from '../../core/sanity/content.service';
 import { SiteHeaderComponent } from '../../core/layout/site-header/site-header.component';
 
@@ -133,29 +134,23 @@ export class HomeComponent implements OnInit {
   ) { }
   // 2. Removed the setTimeout so it fetches INSTANTLY
   async ngOnInit(): Promise<void> {
-    try {
-      const [s, sanityProjects, f, cs, sanityEngagements] = await Promise.all([
-        this.content.getSiteSettings(),
-        this.content.getProjects(),
-        this.content.getFaq(),
-        this.content.getContactSettings(),
-        this.content.getEngagements()
-      ]);
+  try {
+    const data: HomeData = await this.content.getFullHomeData();
+    
+    // Mapping the batched results to your component variables
+    this.siteSettings = data.siteSettings;
+    this.projects = data.projects;
+    this.faq = data.faq.length > 0 ? data.faq : FALLBACK_FAQ;
+    this.services = data.engagements.length > 0 ? data.engagements : FALLBACK_ENGAGEMENTS;
+    this.contactSettings = data.contactSettings;
 
-      console.log('Sanity Data Received:', { s, sanityProjects, f, cs, sanityEngagements });
+    this.loading = false;
+    this.cdr.detectChanges();
+  } catch (e) {
+    this.loading = false;
+    console.error('CMS fetch failed', e);
+  }
 
-      // 3. Map the data directly to the variables
-      this.siteSettings = s || null;
-      this.projects = sanityProjects || [];
-      this.faq = f || FALLBACK_FAQ; // Use fallback only if Sanity is empty
-      this.services = sanityEngagements || FALLBACK_ENGAGEMENTS;
-
-      this.loading = false; // Data is ready!
-      this.cdr.detectChanges(); // Force UI update
-    } catch (e) {
-      this.loading = false; // Show fallbacks on error
-      console.error('CMS fetch failed', e);
-    };
     setTimeout(() => { 100 }); // <-- This is just to trigger change detection after the async call, you can remove it if not needed.
     // ... keep your helper functions below this line ..., 
 
