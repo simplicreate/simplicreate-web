@@ -1,23 +1,26 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Engagement } from '../../../../core/sanity/content.service';
-import { SectionTitleComponent } from '../../../../shared/components/section-title.component';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, SectionTitleComponent], 
+  imports: [CommonModule],
   templateUrl: './services.component.html'
 })
 export class ServicesComponent {
   @Input() services: Engagement[] = [];
-  // This is what the Home component will pass down to keep everything in sync
-  @Input() activeEngagementId: string = 'patch'; 
+  @Input() activeEngagementId: string = 'launchpad'; // Match your center card ID
 
   @Output() selectionChange = new EventEmitter<string>();
 
-  // Use the @for or *ngFor loop variable, don't define 'e' here.
-  
+  hoveredId: string | null = null;
+
+  // This makes the card "pop" when you hover, even before you click
+  get visualActiveId(): string {
+    return this.hoveredId ?? this.activeEngagementId;
+  }
+
   getEngagementTag(e: Engagement): string | null {
     if (e.highlight) return 'Most Popular';
     switch (e.id) {
@@ -27,11 +30,11 @@ export class ServicesComponent {
     }
   }
 
-  setActive(id: string) {
-    this.selectionChange.emit(id);
+  setHovered(id: string | null) {
+    this.hoveredId = id;
   }
 
-  trackByEngagementId(index: number, engagement: Engagement): string {
-    return engagement.id;
+  setActive(id: string) {
+    this.selectionChange.emit(id);
   }
 }

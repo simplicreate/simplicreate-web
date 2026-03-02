@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
   loading = true;
   // 1. Fixed the variable names to match your HTML exactly!
   siteSettings: SiteSettings | null = null;
-  activeService: string = 'migration';
+  activeService: string = 'launchpad';
   services: CmsEngagement[] = []; // renamed from 'engagements'
   projects: Project[] = [];
   contactSettings: ContactSettings | null = null;
