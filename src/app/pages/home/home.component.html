@@ -2,7 +2,11 @@
 
 <main>
   <div class="min-h-[600px] md:min-h-[800px]">
-    <app-hero [siteSettings]="siteSettings!"></app-hero>
+    
+    @if (siteSettings) {
+      <app-hero [siteSettings]="siteSettings"></app-hero>
+    }
+
   </div>
 
   <app-trust-bar></app-trust-bar>
