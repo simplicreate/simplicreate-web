@@ -1,46 +1,37 @@
-﻿<ng-container *ngIf="!loading; else loader">
-  <app-site-header class="fixed top-0 left-0 w-full z-50"></app-site-header>
+﻿<app-site-header class="fixed top-0 left-0 w-full z-50"></app-site-header>
 
-  <main class="min-h-screen">
-    <div class="min-h-[600px] md:min-h-[800px]">
-      <app-hero [siteSettings]="siteSettings!"></app-hero>
-    </div>
-
-    <app-trust-bar></app-trust-bar>
-
-    <app-services 
-  [services]="services" 
-  [activeEngagementId]="activeService"
-  (selectionChange)="setActive($event)">
-</app-services>
-
-    @defer (on viewport) {
-    <app-golden-path></app-golden-path>
-    } @placeholder {
-    <div class="min-h-[400px]"></div>
-    }
-
-    <app-automations [circuitSteps]="circuitSteps"></app-automations>
-
-    @defer (on viewport) {
-    <app-deployment></app-deployment>
-    } @placeholder {
-    <div class="min-h-[400px]"></div>
-    }
-
-    <section id="work" class="min-h-[600px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
-      <app-projects [projects]="projects"></app-projects>
-    </section>
-
-    <app-faq [faq]="faq"></app-faq>
-
-    <app-contact></app-contact>
-
-  </main>
-</ng-container>
-
-<ng-template #loader>
-  <div class="fixed inset-0 bg-[#070B14] flex items-center justify-center z-[100]">
-    <div class="text-[#11D6C3] animate-pulse font-bold tracking-widest text-xl">SIMPLICREATE</div>
+<main>
+  <div class="min-h-[600px] md:min-h-[800px]">
+    <app-hero [siteSettings]="siteSettings!"></app-hero>
   </div>
-</ng-template>
+
+  <app-trust-bar></app-trust-bar>
+
+  <app-services 
+    [services]="services" 
+    [activeEngagementId]="activeService"
+    (selectionChange)="setActive($event)">
+  </app-services>
+
+  @defer (on viewport) {
+    <app-golden-path></app-golden-path>
+  } @placeholder {
+    <div class="min-h-[400px]"></div>
+  }
+
+  <app-automations [circuitSteps]="circuitSteps"></app-automations>
+
+  @defer (on viewport) {
+    <app-deployment></app-deployment>
+  } @placeholder {
+    <div class="min-h-[400px]"></div>
+  }
+
+  <section id="work" class="min-h-[600px] scroll-mt-24 py-16 sm:py-20 border-t border-white/10">
+    <app-projects [projects]="projects"></app-projects>
+  </section>
+
+  <app-faq [faq]="faq"></app-faq>
+
+  <app-contact></app-contact>
+</main>
