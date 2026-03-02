@@ -22,7 +22,7 @@ export class ContactComponent {
   name: ['', Validators.required],
   email: ['', [Validators.required, Validators.email]],
   // FIXED: Default value is 'patch', Validators are in the second argument as an array
-  engagementType: ['patch', [Validators.required]], 
+  engagementType: ['', [Validators.required]], 
   message: ['', Validators.required],
   website: [''], 
   source: ['website_form']
