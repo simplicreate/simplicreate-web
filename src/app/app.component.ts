@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 // 1. Import the Vercel inject function
-import { inject } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 
 import { SimpliaiWidgetComponent } from './components/simpliai-widget/simpliai-widget.component';
 
@@ -24,6 +24,6 @@ export class AppComponent implements OnInit {
 
   // 2. Fire it when the app starts
   ngOnInit() {
-    inject();
+   injectSpeedInsights();
   }
 }
