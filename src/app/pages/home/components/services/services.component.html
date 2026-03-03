@@ -1,12 +1,12 @@
-<section id="services" class="scroll-mt-24>
+<section id="services" class="scroll-mt-24 ">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 py-12 items-center">
   @for (e of services; track e.id) {
     <div (click)="setActive(e.id)" (mouseenter)="setHovered(e.id)" (mouseleave)="setHovered(null)" 
       [ngClass]="
         visualActiveId === e.id
           ? 'border-[#11D6C3] scale-105 z-20 opacity-100 shadow-[0_0_50px_rgba(17,214,195,0.25)] bg-white/[0.05]'
-          : 'border-white/10 scale-95 opacity-70 z-10 grayscale'
-      "
+          : 'border-white/10 scale-95 opacity-70 z-10 grayscale'"
+
       class="group relative cursor-pointer transition-all duration-500 ease-in-out border rounded-3xl p-8 bg-[#070B14] flex flex-col h-full">
       
       @if (getEngagementTag(e)) {
