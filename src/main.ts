@@ -1,4 +1,4 @@
-import { bootstrapApplication } from '@angular/platform-browser';
+import { bootstrapApplication, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
@@ -25,7 +25,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     // Use empty array as fallback if providers is missing
     ...(appConfig?.providers || []), 
-    provideHttpClient()
+    provideHttpClient(), provideClientHydration(withEventReplay())
   ]
 })
   .catch((err) => console.error(err));
