@@ -42,7 +42,12 @@ export class AppComponent implements OnInit {
         content: 'We build enterprise-grade, high-performance web infrastructure',
       },
       { property: 'og:url', content: 'https://simplicreate.tech/' },
-    ]);
+
+      { property: 'twitter:card', content: 'summary_large_image' },
+      { property: 'og:image', content: 'https://simplicreate/com/assets/brand/simplicreate-social-card.webp'},
+    ])
+    
+  
 
     injectSpeedInsights();
   }
