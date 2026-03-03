@@ -9,6 +9,7 @@ import { Engagement } from '../../../../core/sanity/content.service';
   templateUrl: './services.component.html'
 })
 export class ServicesComponent {
+  
   @Input() services: Engagement[] = [];
   @Input() activeEngagementId: string = 'launchpad'; // Match your center card ID
 
@@ -36,5 +37,26 @@ export class ServicesComponent {
 
   setActive(id: string) {
     this.selectionChange.emit(id);
+  }
+
+  // --- NEW: Dynamic Button Text ---
+  getButtonText(id: string): string {
+    switch (id) {
+      case 'patch': return 'Start a Quick Fix';
+      case 'launchpad': return 'Begin Site Migration';
+      case 'operator': return 'Start Managed Ops';
+      default: return 'Get Started';
+    }
+  }
+
+  // --- NEW: Smooth Scroll to Contact Form ---
+  scrollToContact(id: string) {
+    this.setActive(id); // Ensure this card is officially selected
+    
+    // Find the contact section and smoothly scroll down to it
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }
