@@ -43,7 +43,7 @@ export class ServicesComponent {
   getButtonText(id: string): string {
     switch (id) {
       case 'patch': return 'Start a Quick Fix';
-      case 'launchpad': return 'Begin Site Migration';
+      case 'launchpad': return 'Start Site Migration';
       case 'operator': return 'Start Managed Ops';
       default: return 'Get Started';
     }
