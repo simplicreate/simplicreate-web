@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { sanityClient, sanityEnabled } from './sanity.client';
 import { environment } from '../../../environments/environment';
 
@@ -60,8 +61,16 @@ export interface HomeData {
   contactSettings: ContactSettings;
 }
 
+// 1. Create the unique cache key for your batched query
+const HOME_DATA_KEY = makeStateKey<HomeData>('home-data-cache');
+
 @Injectable({ providedIn: 'root' })
 export class ContentService {
+  
+  // 2. Inject Angular's platform and transfer state tools
+  private transferState = inject(TransferState);
+  private platformId = inject(PLATFORM_ID);
+
   get enabled(): boolean {
     return !!environment?.sanity?.projectId;
   }
@@ -76,8 +85,18 @@ export class ContentService {
   /**
    * BATCHED MEGA-QUERY
    * Slashes latency by combining multiple trips into one.
+   * Now with TransferState to completely eliminate the client-side double fetch!
    */
   async getFullHomeData(): Promise<HomeData> {
+    
+    // 3. Client Check: Does the HTML already contain the server-rendered Sanity data?
+    if (this.transferState.hasKey(HOME_DATA_KEY)) {
+      const cachedData = this.transferState.get(HOME_DATA_KEY, null);
+      if (cachedData) {
+        return cachedData; // Return instantly! No network call.
+      }
+    }
+
     const client = this.getClient();
     
     const query = `{
@@ -101,6 +120,14 @@ export class ContentService {
       }
     }`;
 
-    return await client.fetch<HomeData>(query);
+    // 4. Fetch the data normally
+    const data = await client.fetch<HomeData>(query);
+
+    // 5. Server Check: If the Vercel server is running this, save the JSON directly into the HTML
+    if (isPlatformServer(this.platformId)) {
+      this.transferState.set(HOME_DATA_KEY, data);
+    }
+
+    return data;
   }
 }
