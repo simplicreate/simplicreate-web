@@ -1,5 +1,7 @@
 import { Injectable, inject, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { sanityClient, sanityEnabled } from './sanity.client';
 import { environment } from '../../../environments/environment';
 
@@ -67,14 +69,16 @@ const HOME_DATA_KEY = makeStateKey<HomeData>('home-data-cache');
 @Injectable({ providedIn: 'root' })
 export class ContentService {
   
-  // 2. Inject Angular's platform and transfer state tools
+  // 2. Inject Angular's platform, transfer state, and HTTP tools
   private transferState = inject(TransferState);
   private platformId = inject(PLATFORM_ID);
+  private http = inject(HttpClient);
 
   get enabled(): boolean {
     return !!environment?.sanity?.projectId;
   }
 
+  // Keeping this intact just in case you need the raw Sanity client for other methods later
   private getClient() {
     if (!sanityEnabled || !sanityClient) {
       throw new Error('Sanity not configured: set environment.sanity.projectId');
@@ -85,7 +89,7 @@ export class ContentService {
   /**
    * BATCHED MEGA-QUERY
    * Slashes latency by combining multiple trips into one.
-   * Now with TransferState to completely eliminate the client-side double fetch!
+   * Now uses HttpClient to force Zone.js to wait during SSR, eliminating skeleton flickers!
    */
   async getFullHomeData(): Promise<HomeData> {
     
@@ -97,8 +101,6 @@ export class ContentService {
       }
     }
 
-    const client = this.getClient();
-    
     const query = `{
       "siteSettings": *[_type == "siteSettings"][0]{
         brandLabel, heroTagline, heroHeadline, heroSubheadline, heroBenefits,
@@ -120,10 +122,21 @@ export class ContentService {
       }
     }`;
 
-    // 4. Fetch the data normally
-    const data = await client.fetch<HomeData>(query);
+    // Ensure we have a project ID before trying to fetch
+    if (!this.enabled) {
+      throw new Error('Sanity not configured: set environment.sanity.projectId');
+    }
 
-    // 5. Server Check: If the Vercel server is running this, save the JSON directly into the HTML
+    // 4. Construct the raw Sanity API URL 
+    const projectId = environment.sanity.projectId;
+    const dataset = environment.sanity.dataset || 'production';
+    const apiUrl = `https://${projectId}.apicdn.sanity.io/v2024-01-01/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+
+    // 5. Fetch using Angular HttpClient (Sanity wraps the actual data in a 'result' object)
+    const response = await firstValueFrom(this.http.get<{result: HomeData}>(apiUrl));
+    const data = response.result;
+
+    // 6. Server Check: If the Vercel server is running this, save the JSON directly into the HTML
     if (isPlatformServer(this.platformId)) {
       this.transferState.set(HOME_DATA_KEY, data);
     }

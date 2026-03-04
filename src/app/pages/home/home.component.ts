@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 // Services
 import { ContentService } from '../../core/sanity/content.service';
@@ -124,20 +125,22 @@ export class HomeComponent implements OnInit {
   projects: Project[] = [];
   contactSettings: ContactSettings | null = null;
   activeEngagementId: string = 'patch';
+  private route = inject(ActivatedRoute);
+  private contentService = inject(ContentService);
+  private cdr = inject(ChangeDetectorRef);
 
   // Fallbacks...
   readonly fallbackHero = { /* your fallback data */ };
   readonly circuitSteps: CircuitStep[] = [ /* your steps */];
  faq: FaqItem[] = [];
 
-  constructor(
-    private content: ContentService,
-    private cdr: ChangeDetectorRef
-  ) { }
+  constructor() { }
+
   // 2. Removed the setTimeout so it fetches INSTANTLY
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     try {
-      const data: HomeData = await this.content.getFullHomeData();
+      // 3. Grab the data synchronously from the Route Bouncer
+      const data: HomeData = this.route.snapshot.data['homeData'];
 
       // Mapping the batched results to your component variables
       this.siteSettings = data.siteSettings;
@@ -152,7 +155,7 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       console.error('CMS fetch failed', e);
     }
-  };
+  }
   
 
   getEngagementTag(e: CmsEngagement): string | null {
